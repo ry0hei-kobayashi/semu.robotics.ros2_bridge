@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -114,7 +116,7 @@ class GetPrimAttribute_Request(metaclass=Metaclass_GetPrimAttribute_Request):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def path(self):
         """Message field 'path'."""
         return self._path
@@ -127,7 +129,7 @@ class GetPrimAttribute_Request(metaclass=Metaclass_GetPrimAttribute_Request):
                 "The 'path' field must be of type 'str'"
         self._path = value
 
-    @property
+    @builtins.property
     def attribute(self):
         """Message field 'attribute'."""
         return self._attribute
@@ -142,6 +144,9 @@ class GetPrimAttribute_Request(metaclass=Metaclass_GetPrimAttribute_Request):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -265,7 +270,7 @@ class GetPrimAttribute_Response(metaclass=Metaclass_GetPrimAttribute_Response):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def value(self):
         """Message field 'value'."""
         return self._value
@@ -278,7 +283,7 @@ class GetPrimAttribute_Response(metaclass=Metaclass_GetPrimAttribute_Response):
                 "The 'value' field must be of type 'str'"
         self._value = value
 
-    @property  # noqa: A003
+    @builtins.property  # noqa: A003
     def type(self):  # noqa: A003
         """Message field 'type'."""
         return self._type
@@ -291,7 +296,7 @@ class GetPrimAttribute_Response(metaclass=Metaclass_GetPrimAttribute_Response):
                 "The 'type' field must be of type 'str'"
         self._type = value
 
-    @property
+    @builtins.property
     def success(self):
         """Message field 'success'."""
         return self._success
@@ -304,7 +309,7 @@ class GetPrimAttribute_Response(metaclass=Metaclass_GetPrimAttribute_Response):
                 "The 'success' field must be of type 'bool'"
         self._success = value
 
-    @property
+    @builtins.property
     def message(self):
         """Message field 'message'."""
         return self._message

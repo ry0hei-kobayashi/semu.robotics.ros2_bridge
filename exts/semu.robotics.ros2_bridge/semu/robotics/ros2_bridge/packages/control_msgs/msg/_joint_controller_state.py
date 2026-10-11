@@ -5,6 +5,10 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
+import math  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -179,7 +183,7 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def header(self):
         """Message field 'header'."""
         return self._header
@@ -193,7 +197,7 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
                 "The 'header' field must be a sub message of type 'Header'"
         self._header = value
 
-    @property
+    @builtins.property
     def set_point(self):
         """Message field 'set_point'."""
         return self._set_point
@@ -204,9 +208,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'set_point' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'set_point' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._set_point = value
 
-    @property
+    @builtins.property
     def process_value(self):
         """Message field 'process_value'."""
         return self._process_value
@@ -217,9 +223,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'process_value' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'process_value' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._process_value = value
 
-    @property
+    @builtins.property
     def process_value_dot(self):
         """Message field 'process_value_dot'."""
         return self._process_value_dot
@@ -230,9 +238,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'process_value_dot' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'process_value_dot' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._process_value_dot = value
 
-    @property
+    @builtins.property
     def error(self):
         """Message field 'error'."""
         return self._error
@@ -243,9 +253,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'error' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'error' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._error = value
 
-    @property
+    @builtins.property
     def time_step(self):
         """Message field 'time_step'."""
         return self._time_step
@@ -256,9 +268,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'time_step' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'time_step' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._time_step = value
 
-    @property
+    @builtins.property
     def command(self):
         """Message field 'command'."""
         return self._command
@@ -269,9 +283,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'command' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'command' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._command = value
 
-    @property
+    @builtins.property
     def p(self):
         """Message field 'p'."""
         return self._p
@@ -282,9 +298,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'p' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'p' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._p = value
 
-    @property
+    @builtins.property
     def i(self):
         """Message field 'i'."""
         return self._i
@@ -295,9 +313,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'i' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'i' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._i = value
 
-    @property
+    @builtins.property
     def d(self):
         """Message field 'd'."""
         return self._d
@@ -308,9 +328,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'd' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'd' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._d = value
 
-    @property
+    @builtins.property
     def i_clamp(self):
         """Message field 'i_clamp'."""
         return self._i_clamp
@@ -321,9 +343,11 @@ class JointControllerState(metaclass=Metaclass_JointControllerState):
             assert \
                 isinstance(value, float), \
                 "The 'i_clamp' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'i_clamp' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._i_clamp = value
 
-    @property
+    @builtins.property
     def antiwindup(self):
         """Message field 'antiwindup'."""
         return self._antiwindup

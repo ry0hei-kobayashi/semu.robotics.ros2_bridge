@@ -125,7 +125,7 @@ PyObject * add_on_msgs__srv__set_prim_attribute__request__convert_to_py(void * r
     field = PyUnicode_DecodeUTF8(
       ros_message->path.data,
       strlen(ros_message->path.data),
-      "strict");
+      "replace");
     if (!field) {
       return NULL;
     }
@@ -142,7 +142,7 @@ PyObject * add_on_msgs__srv__set_prim_attribute__request__convert_to_py(void * r
     field = PyUnicode_DecodeUTF8(
       ros_message->attribute.data,
       strlen(ros_message->attribute.data),
-      "strict");
+      "replace");
     if (!field) {
       return NULL;
     }
@@ -159,7 +159,7 @@ PyObject * add_on_msgs__srv__set_prim_attribute__request__convert_to_py(void * r
     field = PyUnicode_DecodeUTF8(
       ros_message->value.data,
       strlen(ros_message->value.data),
-      "strict");
+      "replace");
     if (!field) {
       return NULL;
     }
@@ -291,7 +291,7 @@ PyObject * add_on_msgs__srv__set_prim_attribute__response__convert_to_py(void * 
     field = PyUnicode_DecodeUTF8(
       ros_message->message.data,
       strlen(ros_message->message.data),
-      "strict");
+      "replace");
     if (!field) {
       return NULL;
     }

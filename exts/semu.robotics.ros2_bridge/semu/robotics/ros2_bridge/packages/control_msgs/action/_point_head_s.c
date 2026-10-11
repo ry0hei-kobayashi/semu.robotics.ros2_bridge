@@ -177,7 +177,7 @@ PyObject * control_msgs__action__point_head__goal__convert_to_py(void * raw_ros_
     field = PyUnicode_DecodeUTF8(
       ros_message->pointing_frame.data,
       strlen(ros_message->pointing_frame.data),
-      "strict");
+      "replace");
     if (!field) {
       return NULL;
     }

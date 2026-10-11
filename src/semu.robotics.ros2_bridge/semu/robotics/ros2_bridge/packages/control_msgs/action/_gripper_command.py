@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -113,7 +115,7 @@ class GripperCommand_Goal(metaclass=Metaclass_GripperCommand_Goal):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def command(self):
         """Message field 'command'."""
         return self._command
@@ -129,6 +131,11 @@ class GripperCommand_Goal(metaclass=Metaclass_GripperCommand_Goal):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
+
+import math  # noqa: E402, I100
 
 # already imported above
 # import rosidl_parser.definition
@@ -252,7 +259,7 @@ class GripperCommand_Result(metaclass=Metaclass_GripperCommand_Result):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def position(self):
         """Message field 'position'."""
         return self._position
@@ -263,9 +270,11 @@ class GripperCommand_Result(metaclass=Metaclass_GripperCommand_Result):
             assert \
                 isinstance(value, float), \
                 "The 'position' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'position' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._position = value
 
-    @property
+    @builtins.property
     def effort(self):
         """Message field 'effort'."""
         return self._effort
@@ -276,9 +285,11 @@ class GripperCommand_Result(metaclass=Metaclass_GripperCommand_Result):
             assert \
                 isinstance(value, float), \
                 "The 'effort' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'effort' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._effort = value
 
-    @property
+    @builtins.property
     def stalled(self):
         """Message field 'stalled'."""
         return self._stalled
@@ -291,7 +302,7 @@ class GripperCommand_Result(metaclass=Metaclass_GripperCommand_Result):
                 "The 'stalled' field must be of type 'bool'"
         self._stalled = value
 
-    @property
+    @builtins.property
     def reached_goal(self):
         """Message field 'reached_goal'."""
         return self._reached_goal
@@ -306,6 +317,12 @@ class GripperCommand_Result(metaclass=Metaclass_GripperCommand_Result):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
+
+# already imported above
+# import math
 
 # already imported above
 # import rosidl_parser.definition
@@ -429,7 +446,7 @@ class GripperCommand_Feedback(metaclass=Metaclass_GripperCommand_Feedback):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def position(self):
         """Message field 'position'."""
         return self._position
@@ -440,9 +457,11 @@ class GripperCommand_Feedback(metaclass=Metaclass_GripperCommand_Feedback):
             assert \
                 isinstance(value, float), \
                 "The 'position' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'position' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._position = value
 
-    @property
+    @builtins.property
     def effort(self):
         """Message field 'effort'."""
         return self._effort
@@ -453,9 +472,11 @@ class GripperCommand_Feedback(metaclass=Metaclass_GripperCommand_Feedback):
             assert \
                 isinstance(value, float), \
                 "The 'effort' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'effort' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._effort = value
 
-    @property
+    @builtins.property
     def stalled(self):
         """Message field 'stalled'."""
         return self._stalled
@@ -468,7 +489,7 @@ class GripperCommand_Feedback(metaclass=Metaclass_GripperCommand_Feedback):
                 "The 'stalled' field must be of type 'bool'"
         self._stalled = value
 
-    @property
+    @builtins.property
     def reached_goal(self):
         """Message field 'reached_goal'."""
         return self._reached_goal
@@ -483,6 +504,9 @@ class GripperCommand_Feedback(metaclass=Metaclass_GripperCommand_Feedback):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -604,7 +628,7 @@ class GripperCommand_SendGoal_Request(metaclass=Metaclass_GripperCommand_SendGoa
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -618,7 +642,7 @@ class GripperCommand_SendGoal_Request(metaclass=Metaclass_GripperCommand_SendGoa
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def goal(self):
         """Message field 'goal'."""
         return self._goal
@@ -634,6 +658,9 @@ class GripperCommand_SendGoal_Request(metaclass=Metaclass_GripperCommand_SendGoa
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -750,7 +777,7 @@ class GripperCommand_SendGoal_Response(metaclass=Metaclass_GripperCommand_SendGo
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def accepted(self):
         """Message field 'accepted'."""
         return self._accepted
@@ -763,7 +790,7 @@ class GripperCommand_SendGoal_Response(metaclass=Metaclass_GripperCommand_SendGo
                 "The 'accepted' field must be of type 'bool'"
         self._accepted = value
 
-    @property
+    @builtins.property
     def stamp(self):
         """Message field 'stamp'."""
         return self._stamp
@@ -815,6 +842,9 @@ class GripperCommand_SendGoal(metaclass=Metaclass_GripperCommand_SendGoal):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -925,7 +955,7 @@ class GripperCommand_GetResult_Request(metaclass=Metaclass_GripperCommand_GetRes
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -941,6 +971,9 @@ class GripperCommand_GetResult_Request(metaclass=Metaclass_GripperCommand_GetRes
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1057,7 +1090,7 @@ class GripperCommand_GetResult_Response(metaclass=Metaclass_GripperCommand_GetRe
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def status(self):
         """Message field 'status'."""
         return self._status
@@ -1072,7 +1105,7 @@ class GripperCommand_GetResult_Response(metaclass=Metaclass_GripperCommand_GetRe
                 "The 'status' field must be an integer in [-128, 127]"
         self._status = value
 
-    @property
+    @builtins.property
     def result(self):
         """Message field 'result'."""
         return self._result
@@ -1124,6 +1157,9 @@ class GripperCommand_GetResult(metaclass=Metaclass_GripperCommand_GetResult):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1245,7 +1281,7 @@ class GripperCommand_FeedbackMessage(metaclass=Metaclass_GripperCommand_Feedback
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -1259,7 +1295,7 @@ class GripperCommand_FeedbackMessage(metaclass=Metaclass_GripperCommand_Feedback
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def feedback(self):
         """Message field 'feedback'."""
         return self._feedback

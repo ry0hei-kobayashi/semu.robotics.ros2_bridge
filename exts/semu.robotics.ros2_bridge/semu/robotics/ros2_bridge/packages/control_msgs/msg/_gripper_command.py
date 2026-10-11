@@ -5,6 +5,10 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
+import math  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -114,7 +118,7 @@ class GripperCommand(metaclass=Metaclass_GripperCommand):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def position(self):
         """Message field 'position'."""
         return self._position
@@ -125,9 +129,11 @@ class GripperCommand(metaclass=Metaclass_GripperCommand):
             assert \
                 isinstance(value, float), \
                 "The 'position' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'position' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._position = value
 
-    @property
+    @builtins.property
     def max_effort(self):
         """Message field 'max_effort'."""
         return self._max_effort
@@ -138,4 +144,6 @@ class GripperCommand(metaclass=Metaclass_GripperCommand):
             assert \
                 isinstance(value, float), \
                 "The 'max_effort' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'max_effort' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._max_effort = value

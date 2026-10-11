@@ -122,7 +122,7 @@ PyObject * control_msgs__msg__joint_tolerance__convert_to_py(void * raw_ros_mess
     field = PyUnicode_DecodeUTF8(
       ros_message->name.data,
       strlen(ros_message->name.data),
-      "strict");
+      "replace");
     if (!field) {
       return NULL;
     }

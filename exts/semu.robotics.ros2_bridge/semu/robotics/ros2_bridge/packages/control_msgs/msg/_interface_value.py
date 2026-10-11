@@ -8,6 +8,10 @@
 # Member 'values'
 import array  # noqa: E402, I100
 
+import builtins  # noqa: E402, I100
+
+import math  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -117,7 +121,7 @@ class InterfaceValue(metaclass=Metaclass_InterfaceValue):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def interface_names(self):
         """Message field 'interface_names'."""
         return self._interface_names
@@ -140,7 +144,7 @@ class InterfaceValue(metaclass=Metaclass_InterfaceValue):
                 "The 'interface_names' field must be a set or sequence and each value of type 'str'"
         self._interface_names = value
 
-    @property
+    @builtins.property
     def values(self):
         """Message field 'values'."""
         return self._values
@@ -164,6 +168,6 @@ class InterfaceValue(metaclass=Metaclass_InterfaceValue):
                  not isinstance(value, str) and
                  not isinstance(value, UserString) and
                  all(isinstance(v, float) for v in value) and
-                 True), \
-                "The 'values' field must be a set or sequence and each value of type 'float'"
+                 all(not (val < -1.7976931348623157e+308 or val > 1.7976931348623157e+308) or math.isinf(val) for val in value)), \
+                "The 'values' field must be a set or sequence and each value of type 'float' and each double in [-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000, 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000]"
         self._values = array.array('d', value)

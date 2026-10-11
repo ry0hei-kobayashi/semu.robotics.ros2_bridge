@@ -37,6 +37,42 @@ ROSIDL_GENERATOR_C_IMPORT
 bool trajectory_msgs__msg__joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
 ROSIDL_GENERATOR_C_IMPORT
 PyObject * trajectory_msgs__msg__joint_trajectory_point__convert_to_py(void * raw_ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+bool trajectory_msgs__msg__joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * trajectory_msgs__msg__joint_trajectory_point__convert_to_py(void * raw_ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+bool trajectory_msgs__msg__joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * trajectory_msgs__msg__joint_trajectory_point__convert_to_py(void * raw_ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+bool trajectory_msgs__msg__joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * trajectory_msgs__msg__joint_trajectory_point__convert_to_py(void * raw_ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+bool trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(void * raw_ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+bool trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(void * raw_ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+bool trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(void * raw_ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+bool trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(void * raw_ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+bool trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(void * raw_ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+bool trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(void * raw_ros_message);
 
 ROSIDL_GENERATOR_C_EXPORT
 bool control_msgs__msg__joint_trajectory_controller_state__convert_from_py(PyObject * _pymsg, void * _ros_message)
@@ -87,42 +123,88 @@ bool control_msgs__msg__joint_trajectory_controller_state__convert_from_py(PyObj
     if (!field) {
       return false;
     }
-    PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'joint_names'");
-    if (!seq_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_ssize_t size = PySequence_Size(field);
-    if (-1 == size) {
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    if (!rosidl_runtime_c__String__Sequence__init(&(ros_message->joint_names), size)) {
-      PyErr_SetString(PyExc_RuntimeError, "unable to create String__Sequence ros_message");
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    rosidl_runtime_c__String * dest = ros_message->joint_names.data;
-    for (Py_ssize_t i = 0; i < size; ++i) {
-      PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
-      if (!item) {
+    {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'joint_names'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      assert(PyUnicode_Check(item));
-      PyObject * encoded_item = PyUnicode_AsUTF8String(item);
-      if (!encoded_item) {
+      if (!rosidl_runtime_c__String__Sequence__init(&(ros_message->joint_names), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create String__Sequence ros_message");
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      rosidl_runtime_c__String__assign(&dest[i], PyBytes_AS_STRING(encoded_item));
-      Py_DECREF(encoded_item);
+      rosidl_runtime_c__String * dest = ros_message->joint_names.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyUnicode_Check(item));
+        PyObject * encoded_item = PyUnicode_AsUTF8String(item);
+        if (!encoded_item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        rosidl_runtime_c__String__assign(&dest[i], PyBytes_AS_STRING(encoded_item));
+        Py_DECREF(encoded_item);
+      }
+      Py_DECREF(seq_field);
     }
-    Py_DECREF(seq_field);
+    Py_DECREF(field);
+  }
+  {  // reference
+    PyObject * field = PyObject_GetAttrString(_pymsg, "reference");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__joint_trajectory_point__convert_from_py(field, &ros_message->reference)) {
+      Py_DECREF(field);
+      return false;
+    }
+    Py_DECREF(field);
+  }
+  {  // feedback
+    PyObject * field = PyObject_GetAttrString(_pymsg, "feedback");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__joint_trajectory_point__convert_from_py(field, &ros_message->feedback)) {
+      Py_DECREF(field);
+      return false;
+    }
+    Py_DECREF(field);
+  }
+  {  // error
+    PyObject * field = PyObject_GetAttrString(_pymsg, "error");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__joint_trajectory_point__convert_from_py(field, &ros_message->error)) {
+      Py_DECREF(field);
+      return false;
+    }
+    Py_DECREF(field);
+  }
+  {  // output
+    PyObject * field = PyObject_GetAttrString(_pymsg, "output");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__joint_trajectory_point__convert_from_py(field, &ros_message->output)) {
+      Py_DECREF(field);
+      return false;
+    }
     Py_DECREF(field);
   }
   {  // desired
@@ -147,12 +229,112 @@ bool control_msgs__msg__joint_trajectory_controller_state__convert_from_py(PyObj
     }
     Py_DECREF(field);
   }
-  {  // error
-    PyObject * field = PyObject_GetAttrString(_pymsg, "error");
+  {  // multi_dof_joint_names
+    PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_joint_names");
     if (!field) {
       return false;
     }
-    if (!trajectory_msgs__msg__joint_trajectory_point__convert_from_py(field, &ros_message->error)) {
+    {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'multi_dof_joint_names'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
+        Py_DECREF(seq_field);
+        Py_DECREF(field);
+        return false;
+      }
+      if (!rosidl_runtime_c__String__Sequence__init(&(ros_message->multi_dof_joint_names), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create String__Sequence ros_message");
+        Py_DECREF(seq_field);
+        Py_DECREF(field);
+        return false;
+      }
+      rosidl_runtime_c__String * dest = ros_message->multi_dof_joint_names.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyUnicode_Check(item));
+        PyObject * encoded_item = PyUnicode_AsUTF8String(item);
+        if (!encoded_item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        rosidl_runtime_c__String__assign(&dest[i], PyBytes_AS_STRING(encoded_item));
+        Py_DECREF(encoded_item);
+      }
+      Py_DECREF(seq_field);
+    }
+    Py_DECREF(field);
+  }
+  {  // multi_dof_reference
+    PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_reference");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(field, &ros_message->multi_dof_reference)) {
+      Py_DECREF(field);
+      return false;
+    }
+    Py_DECREF(field);
+  }
+  {  // multi_dof_feedback
+    PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_feedback");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(field, &ros_message->multi_dof_feedback)) {
+      Py_DECREF(field);
+      return false;
+    }
+    Py_DECREF(field);
+  }
+  {  // multi_dof_error
+    PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_error");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(field, &ros_message->multi_dof_error)) {
+      Py_DECREF(field);
+      return false;
+    }
+    Py_DECREF(field);
+  }
+  {  // multi_dof_output
+    PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_output");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(field, &ros_message->multi_dof_output)) {
+      Py_DECREF(field);
+      return false;
+    }
+    Py_DECREF(field);
+  }
+  {  // multi_dof_desired
+    PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_desired");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(field, &ros_message->multi_dof_desired)) {
+      Py_DECREF(field);
+      return false;
+    }
+    Py_DECREF(field);
+  }
+  {  // multi_dof_actual
+    PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_actual");
+    if (!field) {
+      return false;
+    }
+    if (!trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(field, &ros_message->multi_dof_actual)) {
       Py_DECREF(field);
       return false;
     }
@@ -203,7 +385,7 @@ PyObject * control_msgs__msg__joint_trajectory_controller_state__convert_to_py(v
       return NULL;
     }
     for (size_t i = 0; i < size; ++i) {
-      PyObject * decoded_item = PyUnicode_DecodeUTF8(src[i].data, strlen(src[i].data), "strict");
+      PyObject * decoded_item = PyUnicode_DecodeUTF8(src[i].data, strlen(src[i].data), "replace");
       if (!decoded_item) {
         return NULL;
       }
@@ -214,6 +396,62 @@ PyObject * control_msgs__msg__joint_trajectory_controller_state__convert_to_py(v
     assert(PySequence_Check(field));
     {
       int rc = PyObject_SetAttrString(_pymessage, "joint_names", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // reference
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__joint_trajectory_point__convert_to_py(&ros_message->reference);
+    if (!field) {
+      return NULL;
+    }
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "reference", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // feedback
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__joint_trajectory_point__convert_to_py(&ros_message->feedback);
+    if (!field) {
+      return NULL;
+    }
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "feedback", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // error
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__joint_trajectory_point__convert_to_py(&ros_message->error);
+    if (!field) {
+      return NULL;
+    }
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "error", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // output
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__joint_trajectory_point__convert_to_py(&ros_message->output);
+    if (!field) {
+      return NULL;
+    }
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "output", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;
@@ -248,14 +486,110 @@ PyObject * control_msgs__msg__joint_trajectory_controller_state__convert_to_py(v
       }
     }
   }
-  {  // error
+  {  // multi_dof_joint_names
     PyObject * field = NULL;
-    field = trajectory_msgs__msg__joint_trajectory_point__convert_to_py(&ros_message->error);
+    size_t size = ros_message->multi_dof_joint_names.size;
+    rosidl_runtime_c__String * src = ros_message->multi_dof_joint_names.data;
+    field = PyList_New(size);
+    if (!field) {
+      return NULL;
+    }
+    for (size_t i = 0; i < size; ++i) {
+      PyObject * decoded_item = PyUnicode_DecodeUTF8(src[i].data, strlen(src[i].data), "replace");
+      if (!decoded_item) {
+        return NULL;
+      }
+      int rc = PyList_SetItem(field, i, decoded_item);
+      (void)rc;
+      assert(rc == 0);
+    }
+    assert(PySequence_Check(field));
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "multi_dof_joint_names", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // multi_dof_reference
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(&ros_message->multi_dof_reference);
     if (!field) {
       return NULL;
     }
     {
-      int rc = PyObject_SetAttrString(_pymessage, "error", field);
+      int rc = PyObject_SetAttrString(_pymessage, "multi_dof_reference", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // multi_dof_feedback
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(&ros_message->multi_dof_feedback);
+    if (!field) {
+      return NULL;
+    }
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "multi_dof_feedback", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // multi_dof_error
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(&ros_message->multi_dof_error);
+    if (!field) {
+      return NULL;
+    }
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "multi_dof_error", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // multi_dof_output
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(&ros_message->multi_dof_output);
+    if (!field) {
+      return NULL;
+    }
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "multi_dof_output", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // multi_dof_desired
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(&ros_message->multi_dof_desired);
+    if (!field) {
+      return NULL;
+    }
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "multi_dof_desired", field);
+      Py_DECREF(field);
+      if (rc) {
+        return NULL;
+      }
+    }
+  }
+  {  // multi_dof_actual
+    PyObject * field = NULL;
+    field = trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(&ros_message->multi_dof_actual);
+    if (!field) {
+      return NULL;
+    }
+    {
+      int rc = PyObject_SetAttrString(_pymessage, "multi_dof_actual", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;

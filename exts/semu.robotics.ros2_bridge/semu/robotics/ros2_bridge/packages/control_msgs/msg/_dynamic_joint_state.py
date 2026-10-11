@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -129,7 +131,7 @@ class DynamicJointState(metaclass=Metaclass_DynamicJointState):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def header(self):
         """Message field 'header'."""
         return self._header
@@ -143,7 +145,7 @@ class DynamicJointState(metaclass=Metaclass_DynamicJointState):
                 "The 'header' field must be a sub message of type 'Header'"
         self._header = value
 
-    @property
+    @builtins.property
     def joint_names(self):
         """Message field 'joint_names'."""
         return self._joint_names
@@ -166,7 +168,7 @@ class DynamicJointState(metaclass=Metaclass_DynamicJointState):
                 "The 'joint_names' field must be a set or sequence and each value of type 'str'"
         self._joint_names = value
 
-    @property
+    @builtins.property
     def interface_values(self):
         """Message field 'interface_values'."""
         return self._interface_values

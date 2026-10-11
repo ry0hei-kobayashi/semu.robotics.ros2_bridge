@@ -9,6 +9,10 @@
 # Member 'velocities'
 import array  # noqa: E402, I100
 
+import builtins  # noqa: E402, I100
+
+import math  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -141,7 +145,7 @@ class JointJog(metaclass=Metaclass_JointJog):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def header(self):
         """Message field 'header'."""
         return self._header
@@ -155,7 +159,7 @@ class JointJog(metaclass=Metaclass_JointJog):
                 "The 'header' field must be a sub message of type 'Header'"
         self._header = value
 
-    @property
+    @builtins.property
     def joint_names(self):
         """Message field 'joint_names'."""
         return self._joint_names
@@ -178,7 +182,7 @@ class JointJog(metaclass=Metaclass_JointJog):
                 "The 'joint_names' field must be a set or sequence and each value of type 'str'"
         self._joint_names = value
 
-    @property
+    @builtins.property
     def displacements(self):
         """Message field 'displacements'."""
         return self._displacements
@@ -202,11 +206,11 @@ class JointJog(metaclass=Metaclass_JointJog):
                  not isinstance(value, str) and
                  not isinstance(value, UserString) and
                  all(isinstance(v, float) for v in value) and
-                 True), \
-                "The 'displacements' field must be a set or sequence and each value of type 'float'"
+                 all(not (val < -1.7976931348623157e+308 or val > 1.7976931348623157e+308) or math.isinf(val) for val in value)), \
+                "The 'displacements' field must be a set or sequence and each value of type 'float' and each double in [-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000, 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000]"
         self._displacements = array.array('d', value)
 
-    @property
+    @builtins.property
     def velocities(self):
         """Message field 'velocities'."""
         return self._velocities
@@ -230,11 +234,11 @@ class JointJog(metaclass=Metaclass_JointJog):
                  not isinstance(value, str) and
                  not isinstance(value, UserString) and
                  all(isinstance(v, float) for v in value) and
-                 True), \
-                "The 'velocities' field must be a set or sequence and each value of type 'float'"
+                 all(not (val < -1.7976931348623157e+308 or val > 1.7976931348623157e+308) or math.isinf(val) for val in value)), \
+                "The 'velocities' field must be a set or sequence and each value of type 'float' and each double in [-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000, 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000]"
         self._velocities = array.array('d', value)
 
-    @property
+    @builtins.property
     def duration(self):
         """Message field 'duration'."""
         return self._duration
@@ -245,4 +249,6 @@ class JointJog(metaclass=Metaclass_JointJog):
             assert \
                 isinstance(value, float), \
                 "The 'duration' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'duration' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._duration = value

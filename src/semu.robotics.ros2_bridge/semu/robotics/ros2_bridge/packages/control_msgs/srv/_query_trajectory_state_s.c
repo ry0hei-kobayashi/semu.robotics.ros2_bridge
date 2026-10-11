@@ -189,42 +189,44 @@ bool control_msgs__srv__query_trajectory_state__response__convert_from_py(PyObje
     if (!field) {
       return false;
     }
-    PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'name'");
-    if (!seq_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_ssize_t size = PySequence_Size(field);
-    if (-1 == size) {
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    if (!rosidl_runtime_c__String__Sequence__init(&(ros_message->name), size)) {
-      PyErr_SetString(PyExc_RuntimeError, "unable to create String__Sequence ros_message");
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    rosidl_runtime_c__String * dest = ros_message->name.data;
-    for (Py_ssize_t i = 0; i < size; ++i) {
-      PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
-      if (!item) {
+    {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'name'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      assert(PyUnicode_Check(item));
-      PyObject * encoded_item = PyUnicode_AsUTF8String(item);
-      if (!encoded_item) {
+      if (!rosidl_runtime_c__String__Sequence__init(&(ros_message->name), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create String__Sequence ros_message");
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      rosidl_runtime_c__String__assign(&dest[i], PyBytes_AS_STRING(encoded_item));
-      Py_DECREF(encoded_item);
+      rosidl_runtime_c__String * dest = ros_message->name.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyUnicode_Check(item));
+        PyObject * encoded_item = PyUnicode_AsUTF8String(item);
+        if (!encoded_item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        rosidl_runtime_c__String__assign(&dest[i], PyBytes_AS_STRING(encoded_item));
+        Py_DECREF(encoded_item);
+      }
+      Py_DECREF(seq_field);
     }
-    Py_DECREF(seq_field);
     Py_DECREF(field);
   }
   {  // position
@@ -232,36 +234,61 @@ bool control_msgs__srv__query_trajectory_state__response__convert_from_py(PyObje
     if (!field) {
       return false;
     }
-    PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'position'");
-    if (!seq_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_ssize_t size = PySequence_Size(field);
-    if (-1 == size) {
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->position), size)) {
-      PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    double * dest = ros_message->position.data;
-    for (Py_ssize_t i = 0; i < size; ++i) {
-      PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
-      if (!item) {
+    if (PyObject_CheckBuffer(field)) {
+      // Optimization for converting arrays of primitives
+      Py_buffer view;
+      int rc = PyObject_GetBuffer(field, &view, PyBUF_SIMPLE);
+      if (rc < 0) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = view.len / sizeof(double);
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->position), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->position.data;
+      rc = PyBuffer_ToContiguous(dest, &view, view.len, 'C');
+      if (rc < 0) {
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      PyBuffer_Release(&view);
+    } else {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'position'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      assert(PyFloat_Check(item));
-      double tmp = PyFloat_AS_DOUBLE(item);
-      memcpy(&dest[i], &tmp, sizeof(double));
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->position), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        Py_DECREF(seq_field);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->position.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyFloat_Check(item));
+        double tmp = PyFloat_AS_DOUBLE(item);
+        memcpy(&dest[i], &tmp, sizeof(double));
+      }
+      Py_DECREF(seq_field);
     }
-    Py_DECREF(seq_field);
     Py_DECREF(field);
   }
   {  // velocity
@@ -269,36 +296,61 @@ bool control_msgs__srv__query_trajectory_state__response__convert_from_py(PyObje
     if (!field) {
       return false;
     }
-    PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'velocity'");
-    if (!seq_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_ssize_t size = PySequence_Size(field);
-    if (-1 == size) {
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->velocity), size)) {
-      PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    double * dest = ros_message->velocity.data;
-    for (Py_ssize_t i = 0; i < size; ++i) {
-      PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
-      if (!item) {
+    if (PyObject_CheckBuffer(field)) {
+      // Optimization for converting arrays of primitives
+      Py_buffer view;
+      int rc = PyObject_GetBuffer(field, &view, PyBUF_SIMPLE);
+      if (rc < 0) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = view.len / sizeof(double);
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->velocity), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->velocity.data;
+      rc = PyBuffer_ToContiguous(dest, &view, view.len, 'C');
+      if (rc < 0) {
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      PyBuffer_Release(&view);
+    } else {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'velocity'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      assert(PyFloat_Check(item));
-      double tmp = PyFloat_AS_DOUBLE(item);
-      memcpy(&dest[i], &tmp, sizeof(double));
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->velocity), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        Py_DECREF(seq_field);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->velocity.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyFloat_Check(item));
+        double tmp = PyFloat_AS_DOUBLE(item);
+        memcpy(&dest[i], &tmp, sizeof(double));
+      }
+      Py_DECREF(seq_field);
     }
-    Py_DECREF(seq_field);
     Py_DECREF(field);
   }
   {  // acceleration
@@ -306,36 +358,61 @@ bool control_msgs__srv__query_trajectory_state__response__convert_from_py(PyObje
     if (!field) {
       return false;
     }
-    PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'acceleration'");
-    if (!seq_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_ssize_t size = PySequence_Size(field);
-    if (-1 == size) {
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->acceleration), size)) {
-      PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    double * dest = ros_message->acceleration.data;
-    for (Py_ssize_t i = 0; i < size; ++i) {
-      PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
-      if (!item) {
+    if (PyObject_CheckBuffer(field)) {
+      // Optimization for converting arrays of primitives
+      Py_buffer view;
+      int rc = PyObject_GetBuffer(field, &view, PyBUF_SIMPLE);
+      if (rc < 0) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = view.len / sizeof(double);
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->acceleration), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->acceleration.data;
+      rc = PyBuffer_ToContiguous(dest, &view, view.len, 'C');
+      if (rc < 0) {
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      PyBuffer_Release(&view);
+    } else {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'acceleration'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      assert(PyFloat_Check(item));
-      double tmp = PyFloat_AS_DOUBLE(item);
-      memcpy(&dest[i], &tmp, sizeof(double));
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->acceleration), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        Py_DECREF(seq_field);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->acceleration.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyFloat_Check(item));
+        double tmp = PyFloat_AS_DOUBLE(item);
+        memcpy(&dest[i], &tmp, sizeof(double));
+      }
+      Py_DECREF(seq_field);
     }
-    Py_DECREF(seq_field);
     Py_DECREF(field);
   }
 
@@ -376,7 +453,7 @@ PyObject * control_msgs__srv__query_trajectory_state__response__convert_to_py(vo
     field = PyUnicode_DecodeUTF8(
       ros_message->message.data,
       strlen(ros_message->message.data),
-      "strict");
+      "replace");
     if (!field) {
       return NULL;
     }
@@ -397,7 +474,7 @@ PyObject * control_msgs__srv__query_trajectory_state__response__convert_to_py(vo
       return NULL;
     }
     for (size_t i = 0; i < size; ++i) {
-      PyObject * decoded_item = PyUnicode_DecodeUTF8(src[i].data, strlen(src[i].data), "strict");
+      PyObject * decoded_item = PyUnicode_DecodeUTF8(src[i].data, strlen(src[i].data), "replace");
       if (!decoded_item) {
         return NULL;
       }

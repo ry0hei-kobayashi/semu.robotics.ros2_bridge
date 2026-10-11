@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>add_on_msgs</name>
+  <version>1.0.0</version>
+  <description>
+    Service definitions used by semu.robotics.ros2_bridge (get/set USD prim attributes).
+    Reconstructed from the upstream README and the generated Python code shipped with
+    semu.robotics.ros2_bridge v0.1.1 (the original source package was never committed).
+  </description>
+  <maintainer email="noreply@example.com">semu.robotics.ros2_bridge fork maintainers</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

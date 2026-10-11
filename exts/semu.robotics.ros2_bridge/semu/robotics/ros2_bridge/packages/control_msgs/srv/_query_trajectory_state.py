@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -113,7 +115,7 @@ class QueryTrajectoryState_Request(metaclass=Metaclass_QueryTrajectoryState_Requ
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def time(self):
         """Message field 'time'."""
         return self._time
@@ -134,6 +136,11 @@ class QueryTrajectoryState_Request(metaclass=Metaclass_QueryTrajectoryState_Requ
 # Member 'velocity'
 # Member 'acceleration'
 import array  # noqa: E402, I100
+
+# already imported above
+# import builtins
+
+import math  # noqa: E402, I100
 
 # already imported above
 # import rosidl_parser.definition
@@ -269,7 +276,7 @@ class QueryTrajectoryState_Response(metaclass=Metaclass_QueryTrajectoryState_Res
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def success(self):
         """Message field 'success'."""
         return self._success
@@ -282,7 +289,7 @@ class QueryTrajectoryState_Response(metaclass=Metaclass_QueryTrajectoryState_Res
                 "The 'success' field must be of type 'bool'"
         self._success = value
 
-    @property
+    @builtins.property
     def message(self):
         """Message field 'message'."""
         return self._message
@@ -295,7 +302,7 @@ class QueryTrajectoryState_Response(metaclass=Metaclass_QueryTrajectoryState_Res
                 "The 'message' field must be of type 'str'"
         self._message = value
 
-    @property
+    @builtins.property
     def name(self):
         """Message field 'name'."""
         return self._name
@@ -318,7 +325,7 @@ class QueryTrajectoryState_Response(metaclass=Metaclass_QueryTrajectoryState_Res
                 "The 'name' field must be a set or sequence and each value of type 'str'"
         self._name = value
 
-    @property
+    @builtins.property
     def position(self):
         """Message field 'position'."""
         return self._position
@@ -342,11 +349,11 @@ class QueryTrajectoryState_Response(metaclass=Metaclass_QueryTrajectoryState_Res
                  not isinstance(value, str) and
                  not isinstance(value, UserString) and
                  all(isinstance(v, float) for v in value) and
-                 True), \
-                "The 'position' field must be a set or sequence and each value of type 'float'"
+                 all(not (val < -1.7976931348623157e+308 or val > 1.7976931348623157e+308) or math.isinf(val) for val in value)), \
+                "The 'position' field must be a set or sequence and each value of type 'float' and each double in [-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000, 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000]"
         self._position = array.array('d', value)
 
-    @property
+    @builtins.property
     def velocity(self):
         """Message field 'velocity'."""
         return self._velocity
@@ -370,11 +377,11 @@ class QueryTrajectoryState_Response(metaclass=Metaclass_QueryTrajectoryState_Res
                  not isinstance(value, str) and
                  not isinstance(value, UserString) and
                  all(isinstance(v, float) for v in value) and
-                 True), \
-                "The 'velocity' field must be a set or sequence and each value of type 'float'"
+                 all(not (val < -1.7976931348623157e+308 or val > 1.7976931348623157e+308) or math.isinf(val) for val in value)), \
+                "The 'velocity' field must be a set or sequence and each value of type 'float' and each double in [-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000, 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000]"
         self._velocity = array.array('d', value)
 
-    @property
+    @builtins.property
     def acceleration(self):
         """Message field 'acceleration'."""
         return self._acceleration
@@ -398,8 +405,8 @@ class QueryTrajectoryState_Response(metaclass=Metaclass_QueryTrajectoryState_Res
                  not isinstance(value, str) and
                  not isinstance(value, UserString) and
                  all(isinstance(v, float) for v in value) and
-                 True), \
-                "The 'acceleration' field must be a set or sequence and each value of type 'float'"
+                 all(not (val < -1.7976931348623157e+308 or val > 1.7976931348623157e+308) or math.isinf(val) for val in value)), \
+                "The 'acceleration' field must be a set or sequence and each value of type 'float' and each double in [-179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000, 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.000000]"
         self._acceleration = array.array('d', value)
 
 

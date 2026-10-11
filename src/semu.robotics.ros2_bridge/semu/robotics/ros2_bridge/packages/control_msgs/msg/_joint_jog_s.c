@@ -75,42 +75,44 @@ bool control_msgs__msg__joint_jog__convert_from_py(PyObject * _pymsg, void * _ro
     if (!field) {
       return false;
     }
-    PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'joint_names'");
-    if (!seq_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_ssize_t size = PySequence_Size(field);
-    if (-1 == size) {
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    if (!rosidl_runtime_c__String__Sequence__init(&(ros_message->joint_names), size)) {
-      PyErr_SetString(PyExc_RuntimeError, "unable to create String__Sequence ros_message");
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    rosidl_runtime_c__String * dest = ros_message->joint_names.data;
-    for (Py_ssize_t i = 0; i < size; ++i) {
-      PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
-      if (!item) {
+    {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'joint_names'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      assert(PyUnicode_Check(item));
-      PyObject * encoded_item = PyUnicode_AsUTF8String(item);
-      if (!encoded_item) {
+      if (!rosidl_runtime_c__String__Sequence__init(&(ros_message->joint_names), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create String__Sequence ros_message");
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      rosidl_runtime_c__String__assign(&dest[i], PyBytes_AS_STRING(encoded_item));
-      Py_DECREF(encoded_item);
+      rosidl_runtime_c__String * dest = ros_message->joint_names.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyUnicode_Check(item));
+        PyObject * encoded_item = PyUnicode_AsUTF8String(item);
+        if (!encoded_item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        rosidl_runtime_c__String__assign(&dest[i], PyBytes_AS_STRING(encoded_item));
+        Py_DECREF(encoded_item);
+      }
+      Py_DECREF(seq_field);
     }
-    Py_DECREF(seq_field);
     Py_DECREF(field);
   }
   {  // displacements
@@ -118,36 +120,61 @@ bool control_msgs__msg__joint_jog__convert_from_py(PyObject * _pymsg, void * _ro
     if (!field) {
       return false;
     }
-    PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'displacements'");
-    if (!seq_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_ssize_t size = PySequence_Size(field);
-    if (-1 == size) {
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->displacements), size)) {
-      PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    double * dest = ros_message->displacements.data;
-    for (Py_ssize_t i = 0; i < size; ++i) {
-      PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
-      if (!item) {
+    if (PyObject_CheckBuffer(field)) {
+      // Optimization for converting arrays of primitives
+      Py_buffer view;
+      int rc = PyObject_GetBuffer(field, &view, PyBUF_SIMPLE);
+      if (rc < 0) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = view.len / sizeof(double);
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->displacements), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->displacements.data;
+      rc = PyBuffer_ToContiguous(dest, &view, view.len, 'C');
+      if (rc < 0) {
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      PyBuffer_Release(&view);
+    } else {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'displacements'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      assert(PyFloat_Check(item));
-      double tmp = PyFloat_AS_DOUBLE(item);
-      memcpy(&dest[i], &tmp, sizeof(double));
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->displacements), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        Py_DECREF(seq_field);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->displacements.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyFloat_Check(item));
+        double tmp = PyFloat_AS_DOUBLE(item);
+        memcpy(&dest[i], &tmp, sizeof(double));
+      }
+      Py_DECREF(seq_field);
     }
-    Py_DECREF(seq_field);
     Py_DECREF(field);
   }
   {  // velocities
@@ -155,36 +182,61 @@ bool control_msgs__msg__joint_jog__convert_from_py(PyObject * _pymsg, void * _ro
     if (!field) {
       return false;
     }
-    PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'velocities'");
-    if (!seq_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_ssize_t size = PySequence_Size(field);
-    if (-1 == size) {
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->velocities), size)) {
-      PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    double * dest = ros_message->velocities.data;
-    for (Py_ssize_t i = 0; i < size; ++i) {
-      PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
-      if (!item) {
+    if (PyObject_CheckBuffer(field)) {
+      // Optimization for converting arrays of primitives
+      Py_buffer view;
+      int rc = PyObject_GetBuffer(field, &view, PyBUF_SIMPLE);
+      if (rc < 0) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = view.len / sizeof(double);
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->velocities), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->velocities.data;
+      rc = PyBuffer_ToContiguous(dest, &view, view.len, 'C');
+      if (rc < 0) {
+        PyBuffer_Release(&view);
+        Py_DECREF(field);
+        return false;
+      }
+      PyBuffer_Release(&view);
+    } else {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'velocities'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      assert(PyFloat_Check(item));
-      double tmp = PyFloat_AS_DOUBLE(item);
-      memcpy(&dest[i], &tmp, sizeof(double));
+      if (!rosidl_runtime_c__double__Sequence__init(&(ros_message->velocities), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create double__Sequence ros_message");
+        Py_DECREF(seq_field);
+        Py_DECREF(field);
+        return false;
+      }
+      double * dest = ros_message->velocities.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyFloat_Check(item));
+        double tmp = PyFloat_AS_DOUBLE(item);
+        memcpy(&dest[i], &tmp, sizeof(double));
+      }
+      Py_DECREF(seq_field);
     }
-    Py_DECREF(seq_field);
     Py_DECREF(field);
   }
   {  // duration
@@ -241,7 +293,7 @@ PyObject * control_msgs__msg__joint_jog__convert_to_py(void * raw_ros_message)
       return NULL;
     }
     for (size_t i = 0; i < size; ++i) {
-      PyObject * decoded_item = PyUnicode_DecodeUTF8(src[i].data, strlen(src[i].data), "strict");
+      PyObject * decoded_item = PyUnicode_DecodeUTF8(src[i].data, strlen(src[i].data), "replace");
       if (!decoded_item) {
         return NULL;
       }

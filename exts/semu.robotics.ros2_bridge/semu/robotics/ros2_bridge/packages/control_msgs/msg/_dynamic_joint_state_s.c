@@ -80,42 +80,44 @@ bool control_msgs__msg__dynamic_joint_state__convert_from_py(PyObject * _pymsg, 
     if (!field) {
       return false;
     }
-    PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'joint_names'");
-    if (!seq_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_ssize_t size = PySequence_Size(field);
-    if (-1 == size) {
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    if (!rosidl_runtime_c__String__Sequence__init(&(ros_message->joint_names), size)) {
-      PyErr_SetString(PyExc_RuntimeError, "unable to create String__Sequence ros_message");
-      Py_DECREF(seq_field);
-      Py_DECREF(field);
-      return false;
-    }
-    rosidl_runtime_c__String * dest = ros_message->joint_names.data;
-    for (Py_ssize_t i = 0; i < size; ++i) {
-      PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
-      if (!item) {
+    {
+      PyObject * seq_field = PySequence_Fast(field, "expected a sequence in 'joint_names'");
+      if (!seq_field) {
+        Py_DECREF(field);
+        return false;
+      }
+      Py_ssize_t size = PySequence_Size(field);
+      if (-1 == size) {
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      assert(PyUnicode_Check(item));
-      PyObject * encoded_item = PyUnicode_AsUTF8String(item);
-      if (!encoded_item) {
+      if (!rosidl_runtime_c__String__Sequence__init(&(ros_message->joint_names), size)) {
+        PyErr_SetString(PyExc_RuntimeError, "unable to create String__Sequence ros_message");
         Py_DECREF(seq_field);
         Py_DECREF(field);
         return false;
       }
-      rosidl_runtime_c__String__assign(&dest[i], PyBytes_AS_STRING(encoded_item));
-      Py_DECREF(encoded_item);
+      rosidl_runtime_c__String * dest = ros_message->joint_names.data;
+      for (Py_ssize_t i = 0; i < size; ++i) {
+        PyObject * item = PySequence_Fast_GET_ITEM(seq_field, i);
+        if (!item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        assert(PyUnicode_Check(item));
+        PyObject * encoded_item = PyUnicode_AsUTF8String(item);
+        if (!encoded_item) {
+          Py_DECREF(seq_field);
+          Py_DECREF(field);
+          return false;
+        }
+        rosidl_runtime_c__String__assign(&dest[i], PyBytes_AS_STRING(encoded_item));
+        Py_DECREF(encoded_item);
+      }
+      Py_DECREF(seq_field);
     }
-    Py_DECREF(seq_field);
     Py_DECREF(field);
   }
   {  // interface_values
@@ -196,7 +198,7 @@ PyObject * control_msgs__msg__dynamic_joint_state__convert_to_py(void * raw_ros_
       return NULL;
     }
     for (size_t i = 0; i < size; ++i) {
-      PyObject * decoded_item = PyUnicode_DecodeUTF8(src[i].data, strlen(src[i].data), "strict");
+      PyObject * decoded_item = PyUnicode_DecodeUTF8(src[i].data, strlen(src[i].data), "replace");
       if (!decoded_item) {
         return NULL;
       }

@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -108,7 +110,7 @@ class GetPrims_Request(metaclass=Metaclass_GetPrims_Request):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def path(self):
         """Message field 'path'."""
         return self._path
@@ -123,6 +125,9 @@ class GetPrims_Request(metaclass=Metaclass_GetPrims_Request):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -246,7 +251,7 @@ class GetPrims_Response(metaclass=Metaclass_GetPrims_Response):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def paths(self):
         """Message field 'paths'."""
         return self._paths
@@ -269,7 +274,7 @@ class GetPrims_Response(metaclass=Metaclass_GetPrims_Response):
                 "The 'paths' field must be a set or sequence and each value of type 'str'"
         self._paths = value
 
-    @property
+    @builtins.property
     def types(self):
         """Message field 'types'."""
         return self._types
@@ -292,7 +297,7 @@ class GetPrims_Response(metaclass=Metaclass_GetPrims_Response):
                 "The 'types' field must be a set or sequence and each value of type 'str'"
         self._types = value
 
-    @property
+    @builtins.property
     def success(self):
         """Message field 'success'."""
         return self._success
@@ -305,7 +310,7 @@ class GetPrims_Response(metaclass=Metaclass_GetPrims_Response):
                 "The 'success' field must be of type 'bool'"
         self._success = value
 
-    @property
+    @builtins.property
     def message(self):
         """Message field 'message'."""
         return self._message

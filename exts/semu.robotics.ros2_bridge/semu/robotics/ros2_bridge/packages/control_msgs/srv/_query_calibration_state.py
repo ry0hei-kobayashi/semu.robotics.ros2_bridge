@@ -105,6 +105,8 @@ class QueryCalibrationState_Request(metaclass=Metaclass_QueryCalibrationState_Re
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 # already imported above
 # import rosidl_parser.definition
 
@@ -209,7 +211,7 @@ class QueryCalibrationState_Response(metaclass=Metaclass_QueryCalibrationState_R
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def is_calibrated(self):
         """Message field 'is_calibrated'."""
         return self._is_calibrated

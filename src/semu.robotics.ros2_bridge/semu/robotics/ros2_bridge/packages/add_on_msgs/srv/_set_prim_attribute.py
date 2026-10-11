@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -120,7 +122,7 @@ class SetPrimAttribute_Request(metaclass=Metaclass_SetPrimAttribute_Request):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def path(self):
         """Message field 'path'."""
         return self._path
@@ -133,7 +135,7 @@ class SetPrimAttribute_Request(metaclass=Metaclass_SetPrimAttribute_Request):
                 "The 'path' field must be of type 'str'"
         self._path = value
 
-    @property
+    @builtins.property
     def attribute(self):
         """Message field 'attribute'."""
         return self._attribute
@@ -146,7 +148,7 @@ class SetPrimAttribute_Request(metaclass=Metaclass_SetPrimAttribute_Request):
                 "The 'attribute' field must be of type 'str'"
         self._attribute = value
 
-    @property
+    @builtins.property
     def value(self):
         """Message field 'value'."""
         return self._value
@@ -161,6 +163,9 @@ class SetPrimAttribute_Request(metaclass=Metaclass_SetPrimAttribute_Request):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -272,7 +277,7 @@ class SetPrimAttribute_Response(metaclass=Metaclass_SetPrimAttribute_Response):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def success(self):
         """Message field 'success'."""
         return self._success
@@ -285,7 +290,7 @@ class SetPrimAttribute_Response(metaclass=Metaclass_SetPrimAttribute_Response):
                 "The 'success' field must be of type 'bool'"
         self._success = value
 
-    @property
+    @builtins.property
     def message(self):
         """Message field 'message'."""
         return self._message

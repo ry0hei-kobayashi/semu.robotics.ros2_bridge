@@ -1,154 +1,103 @@
-## ROS2 Bridge (external extension) for NVIDIA Omniverse Isaac Sim
+## semu.robotics.ros2_bridge — Isaac Sim 5.1 / ROS 2 Humble port
 
-> This extension enables the ROS2 action server interfaces for controlling robots (particularly those used by MoveIt to talk to robot controllers: [FollowJointTrajectory](http://docs.ros.org/en/api/control_msgs/html/action/FollowJointTrajectory.html) and [GripperCommand](http://docs.ros.org/en/api/control_msgs/html/action/GripperCommand.html)) and enables services for agile prototyping of robotic applications in [ROS2](https://docs.ros.org/)
+Fork of [Toni-SM/semu.robotics.ros2_bridge](https://github.com/Toni-SM/semu.robotics.ros2_bridge)
+(MIT License). Branch `isaac5.1-humble` is the same extension rebuilt for Isaac Sim 5.1 /
+Python 3.11 / ROS 2 Humble: the **Attribute** services (`add_on_msgs`), the
+**FollowJointTrajectory** and **GripperCommand** action servers and a
+`joint_trajectory` topic interface for an Isaac Sim articulation. It can be used either
+as a Kit extension (`exts/semu.robotics.ros2_bridge`) or as a plain Python module imported
+by the host application (this is how
+[hsr-omniverse2](https://github.com/ry0hei-kobayashi/hsr-omniverse2) uses it, as a git
+submodule).
 
-<br>
+What changed relative to upstream (details in
+[docs/CHANGELOG.md](src/semu.robotics.ros2_bridge/docs/CHANGELOG.md)):
 
-**Target applications:** NVIDIA Omniverse Isaac Sim
+- All Python-3.7 / Foxy artifacts were rebuilt for Python 3.11 / Humble:
+  `bin/` and `packages/` (`control_msgs`, `add_on_msgs`), the Cython-compiled
+  `_ros2_bridge.cpython-311-*.so` and the packaged `exts/` tree. `tools/build.sh`
+  regenerates all of them with Docker (see below). As upstream did, the built
+  artifacts are committed.
+- `add_on_msgs` is now also available as **source** (`src/add_on_msgs`, reconstructed
+  from the upstream README / generated code; upstream never committed it).
+- Components are no longer discovered through `semu.usd.schemas` prims. In extension
+  mode they are listed in the setting `/exts/semu.robotics.ros2_bridge/components`
+  (JSON, see `config/extension.toml`); in module mode the host constructs them.
+- `physics_step()` / `update_step()` merged into `step(dt)`; topic-mode trajectories,
+  controller state publishers and trajectory validation were added.
 
-**Supported OS:** Linux
+Upstream targets Isaac Sim 2022 (Python 3.7, Foxy message binaries, USD-schema
+driven configuration). None of that works on Isaac Sim 5.1 (Python 3.11, bundled
+ROS 2 Humble), hence this port. See [docs/CHANGELOG.md](src/semu.robotics.ros2_bridge/docs/CHANGELOG.md)
+for the exact list of changes relative to upstream.
 
-**Changelog:** [CHANGELOG.md](src/semu.robotics.ros2_bridge/docs/CHANGELOG.md)
+### Building (Python 3.11 artifacts)
 
-**Table of Contents:**
+```bash
+bash tools/build.sh            # needs Docker; uses nvcr.io/nvidia/isaac-sim:5.1.0
+```
 
-- [Prerequisites](#prerequisites)
-- [Extension setup](#setup)
-- [Extension usage](#usage)
-- [Supported components](#components)
-    - [Attribute](#ros-attribute)
-    - [FollowJointTrajectory](#ros-follow-joint-trajectory)
-    - [GripperCommand](#ros-gripper-command)
+1. `tools/Dockerfile.msgbuild` builds `control_msgs` (humble) and `src/add_on_msgs`
+   for Python 3.11 in a 22.04 Humble box and writes `bin/` + `packages/`
+   (RUNPATH set to `$ORIGIN/../../bin`, so no `LD_LIBRARY_PATH` is needed).
+2. The Isaac Sim image compiles `ros2_bridge.py` with Cython
+   (`compile_extension.bash`) and packages `exts/` (`package_extension.bash`).
 
-<br>
-<hr>
+### Requirements
 
-<a name="prerequisites"></a>
-### Prerequisites
+- Isaac Sim 4.5 or 5.1 (`isaacsim.core.utils`, `omni.isaac.dynamic_control` — the
+  latter is deprecated since 4.5 but still shipped in `extsDeprecated/` in 5.1).
+- ROS 2 Humble Python packages importable from Isaac's Python: `rclpy`,
+  `trajectory_msgs`, `control_msgs`. On Isaac 5.1 use the bundled
+  `/isaac-sim/exts/isaacsim.ros2.bridge/humble/rclpy`; `control_msgs` is not bundled
+  and has to be built for Python 3.11 separately.
 
-All prerequisites described in [ROS & ROS2 Bridge](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/ext_omni_isaac_ros_bridge.html) must be fulfilled before running this extension. In addition, this extension requires the following extensions to be present in Isaac Sim:
+### Usage as a Kit extension
 
-- [semu.usd.schemas](https://github.com/Toni-SM/semu.usd.schemas): USD schemas
-- [semu.robotics.ros_bridge_ui](https://github.com/Toni-SM/semu.robotics.ros_bridge_ui): Menu and commands
+Add `exts/` to the extension search path and enable `semu.robotics.ros2_bridge`, e.g.
+`SimulationApp({...}, extra_args=["--ext-folder", "<repo>/exts"])` followed by
+`enable_extension("semu.robotics.ros2_bridge")`. When the timeline starts playing the
+components listed in `/exts/semu.robotics.ros2_bridge/components` are created; the
+default is the Attribute services (`/get_prims`, `/get_prim_attributes`,
+`/get_prim_attribute`, `/set_prim_attribute`).
 
-<hr>
+### Usage as a Python module
 
-<a name="setup"></a>
-### Extension setup
+```python
+import sys
+sys.path.insert(0, '<path to this repo>/src/semu.robotics.ros2_bridge')
+from semu.robotics.ros2_bridge.ros2_bridge import (
+    RosControlFollowJointTrajectory, RosControllerGripperCommand)
 
-1. Add the extension using the [Extension Manager](https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_extension-manager.html) or by following the steps in [Extension Search Paths](https://docs.omniverse.nvidia.com/py/kit/docs/guide/extensions.html#extension-search-paths)
+from omni.isaac.dynamic_control import _dynamic_control
+dci = _dynamic_control.acquire_dynamic_control_interface()
 
-    * Git url (git+https) as extension search path
-    
-        ```
-        git+https://github.com/Toni-SM/semu.robotics.ros2_bridge.git?branch=main&dir=exts
-        ```
+arm = RosControlFollowJointTrajectory(node, dci)        # node: rclpy.node.Node
+arm.start('/hsrb', '/arm_trajectory_controller/follow_joint_trajectory')
+...
+def on_physics_step(dt):
+    arm.step(dt)                                       # call every physics step
+```
 
-        To install the source code version use the following url
+- `start(articulation_path, action_name)` creates the action server, a
+  `<controller>/joint_trajectory` topic subscriber and `<controller>/state`
+  publishers. `stop()` tears them down.
+- `controlled_joints` (class attribute, optional) restricts the joints reported in
+  the controller state message.
+- Trajectories are interpolated linearly between points at every `step(dt)`.
 
-        ```
-        git+https://github.com/Toni-SM/semu.robotics.ros2_bridge.git?branch=main&dir=src
-        ```
+### Differences from upstream (summary)
 
-    * Compressed (.zip) file for import
+- No `semu.usd.schemas` / `semu.robotics.ros_bridge_ui` dependency. `Ros2Bridge`
+  creates its components from the `components` setting; `RosAttribute`,
+  `RosControlFollowJointTrajectory` and `RosControllerGripperCommand` are
+  constructed with `(node, dci)` and started with explicit service/action names.
+- `physics_step()` / `update_step()` merged into a single `step(dt)`.
+- Added topic-mode trajectories (`/<controller>/joint_trajectory`), controller
+  state publishing, zero `time_from_start` padding and goal preemption.
+- `bin/` and `packages/` contain Humble `control_msgs` and `add_on_msgs` built for
+  Python 3.11 (`tools/build.sh`) instead of the Foxy / Python 3.7 binaries.
 
-        [semu.robotics.ros2_bridge.zip](https://github.com/Toni-SM/semu.robotics.ros2_bridge/releases)
+### License
 
-2. Enable the extension using the [Extension Manager](https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_extension-manager.html) or by following the steps in [Extension Enabling/Disabling](https://docs.omniverse.nvidia.com/py/kit/docs/guide/extensions.html#extension-enabling-disabling)
-
-<hr>
-
-<a name="usage"></a>
-### Extension usage
-
-Enabling the extension initializes a ROS node named `/SemuRos2Bridge` (configurable in the `extension.toml` file). This node will enable, when the simulation starts, the ROS topics, services and actions protocols according to the ROS prims (and their configurations) existing in the current stage
-
-Disabling the extension shutdowns the ROS node and its respective active communication protocols
-
-> **Note:** The current implementation only implements position control (velocity or effort control is not yet supported) for the FollowJointTrajectory and GripperCommand actions 
-
-<hr>
-
-<a name="components"></a>
-### Supported components
-
-The following components are supported:
-
-<a name="ros-attribute"></a>
-* **Attribute (ROS2 service):** enables the ervices for getting and setting the attributes of a prim according to the service definitions described bellow 
-
-    The ROS2 package [add_on_msgs](https://github.com/Toni-SM/semu.robotics.ros2_bridge/releases) contains the definition of the messages (download and add it to a ROS2 workspace). A sample code of a [python client application](https://github.com/Toni-SM/semu.robotics.ros2_bridge/releases) is also provided
-
-    Prim attributes are retrieved and modified as JSON (applied directly to the data, without keys). Arrays, vectors, matrixes and other numeric classes (```pxr.Gf.Vec3f```, ```pxr.Gf.Matrix4d```, ```pxr.Gf.Quatf```, ```pxr.Vt.Vec2fArray```, etc.) are interpreted as a list of numbers (row first)
-
-    * **add_on_msgs.srv.GetPrims**: Get all prim path under the specified path
-
-        ```yaml
-        string path             # get prims at path
-        ---
-        string[] paths          # list of prim paths
-        string[] types          # prim type names
-        bool success            # indicate a successful execution of the service
-        string message          # informational, e.g. for error messages
-        ```
-    
-    * **add_on_msgs.srv.GetPrimAttributes**: Get prim attribute names and their types
-        
-        ```yaml
-        string path             # prim path
-        ---
-        string[] names          # list of attribute base names (name used to Get or Set an attribute)
-        string[] displays       # list of attribute display names (name displayed in Property tab)
-        string[] types          # list of attribute data types
-        bool success            # indicate a successful execution of the service
-        string message          # informational, e.g. for error messages
-        ```
-    
-    * **add_on_msgs.srv.GetPrimAttribute**: Get prim attribute
-        
-        ```yaml
-        string path             # prim path
-        string attribute        # attribute name
-        ---
-        string value            # attribute value (as JSON)
-        string type             # attribute type
-        bool success            # indicate a successful execution of the service
-        string message          # informational, e.g. for error messages
-        ```
-    
-    * **add_on_msgs.srv.SetPrimAttribute**: Set prim attribute
-        
-        ```yaml
-        string path             # prim path
-        string attribute        # attribute name
-        string value            # attribute value (as JSON)
-        ---
-        bool success            # indicate a successful execution of the service
-        string message          # informational, e.g. for error messages
-        ```
-
-<a name="ros-follow-joint-trajectory"></a>
-* **FollowJointTrajectory (ROS2 action):** enables the actions for a robot to follow a given trajectory
-
-    To add a FollowJointTrajectory action go to the ***Create > Isaac > ROS Control*** menu and select ***Follow Joint Trajectory*** 
-
-    Select, by clicking the **Add Target(s)** button under the `articulationPrim` field, the root of the robot's articulation tree to control and edit the fields that define the namespace of the communication. The communication will take place in the namespace defined by the following fields:
-
-    ```
-    controllerName + actionNamespace
-    ```
-
-<a name="ros-gripper-command"></a>
-* **GripperCommand (ROS2 action):** enables the actions to control a gripper
-
-    To add a GripperCommand action go to the ***Create > Isaac > ROS Control*** menu and select ***Gripper Command*** 
-
-    Select, by clicking the **Add Target(s)** button under the `articulationPrim` field, the root of the robot's articulation tree to which the end-effector belongs and then add the joints (of the gripper) to control
-    
-    Also, edit the fields that define the namespace of the communication. The communication will take place in the namespace defined by the following fields:
-
-    ```
-    controllerName + actionNamespace
-    ```
-
-    > **Note:** The GripperCommand action definition doesn't specify which joints will be controlled. The value manage by this action will affect all the specified joints equally
+MIT, see [LICENSE](LICENSE). Copyright (c) 2021 Toni-SM for the original work.

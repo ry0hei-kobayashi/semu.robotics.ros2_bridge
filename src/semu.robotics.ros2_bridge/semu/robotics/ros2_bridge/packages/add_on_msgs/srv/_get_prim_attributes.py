@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -108,7 +110,7 @@ class GetPrimAttributes_Request(metaclass=Metaclass_GetPrimAttributes_Request):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def path(self):
         """Message field 'path'."""
         return self._path
@@ -123,6 +125,9 @@ class GetPrimAttributes_Request(metaclass=Metaclass_GetPrimAttributes_Request):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -252,7 +257,7 @@ class GetPrimAttributes_Response(metaclass=Metaclass_GetPrimAttributes_Response)
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def names(self):
         """Message field 'names'."""
         return self._names
@@ -275,7 +280,7 @@ class GetPrimAttributes_Response(metaclass=Metaclass_GetPrimAttributes_Response)
                 "The 'names' field must be a set or sequence and each value of type 'str'"
         self._names = value
 
-    @property
+    @builtins.property
     def displays(self):
         """Message field 'displays'."""
         return self._displays
@@ -298,7 +303,7 @@ class GetPrimAttributes_Response(metaclass=Metaclass_GetPrimAttributes_Response)
                 "The 'displays' field must be a set or sequence and each value of type 'str'"
         self._displays = value
 
-    @property
+    @builtins.property
     def types(self):
         """Message field 'types'."""
         return self._types
@@ -321,7 +326,7 @@ class GetPrimAttributes_Response(metaclass=Metaclass_GetPrimAttributes_Response)
                 "The 'types' field must be a set or sequence and each value of type 'str'"
         self._types = value
 
-    @property
+    @builtins.property
     def success(self):
         """Message field 'success'."""
         return self._success
@@ -334,7 +339,7 @@ class GetPrimAttributes_Response(metaclass=Metaclass_GetPrimAttributes_Response)
                 "The 'success' field must be of type 'bool'"
         self._success = value
 
-    @property
+    @builtins.property
     def message(self):
         """Message field 'message'."""
         return self._message

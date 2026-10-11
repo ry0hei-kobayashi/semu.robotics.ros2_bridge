@@ -5,6 +5,10 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
+import math  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -126,7 +130,7 @@ class JointTolerance(metaclass=Metaclass_JointTolerance):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def name(self):
         """Message field 'name'."""
         return self._name
@@ -139,7 +143,7 @@ class JointTolerance(metaclass=Metaclass_JointTolerance):
                 "The 'name' field must be of type 'str'"
         self._name = value
 
-    @property
+    @builtins.property
     def position(self):
         """Message field 'position'."""
         return self._position
@@ -150,9 +154,11 @@ class JointTolerance(metaclass=Metaclass_JointTolerance):
             assert \
                 isinstance(value, float), \
                 "The 'position' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'position' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._position = value
 
-    @property
+    @builtins.property
     def velocity(self):
         """Message field 'velocity'."""
         return self._velocity
@@ -163,9 +169,11 @@ class JointTolerance(metaclass=Metaclass_JointTolerance):
             assert \
                 isinstance(value, float), \
                 "The 'velocity' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'velocity' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._velocity = value
 
-    @property
+    @builtins.property
     def acceleration(self):
         """Message field 'acceleration'."""
         return self._acceleration
@@ -176,4 +184,6 @@ class JointTolerance(metaclass=Metaclass_JointTolerance):
             assert \
                 isinstance(value, float), \
                 "The 'acceleration' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'acceleration' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._acceleration = value

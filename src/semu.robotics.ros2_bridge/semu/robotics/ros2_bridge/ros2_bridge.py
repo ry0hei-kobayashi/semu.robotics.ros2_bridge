@@ -1,5 +1,14 @@
+# semu.robotics.ros2_bridge -- ROS 2 action/topic bridge for Isaac Sim articulations
+#
+# Upstream: https://github.com/Toni-SM/semu.robotics.ros2_bridge (MIT License, Toni-SM)
+# This fork (branch isaac5.1-humble) is a port to Isaac Sim 5.1 / Python 3.11 /
+# ROS 2 Humble. It is no longer a Kit extension: the controllers are plain Python
+# classes created by the host application. See docs/CHANGELOG.md for the list of
+# changes relative to upstream.
+
 from typing import List, Any
 
+import math
 import time
 import json
 import asyncio
@@ -10,30 +19,43 @@ import carb
 import omni.kit
 from pxr import Usd, Gf, PhysxSchema
 from omni.isaac.dynamic_control import _dynamic_control
-from omni.isaac.core.utils.stage import get_stage_units
+# isaacsim.* is the Isaac Sim >= 4.5 namespace. omni.isaac.dynamic_control is
+# deprecated since 4.5 but still shipped (extsDeprecated) in 5.1; the dynamic
+# control interface itself is injected by the caller (see __init__ of the
+# controllers), this module only needs its constants.
+from isaacsim.core.utils.stage import get_stage_units
 
 import rclpy
 from rclpy.node import Node
 from rclpy.duration import Duration
 from rclpy.action import ActionServer, CancelResponse, GoalResponse
-from trajectory_msgs.msg import JointTrajectoryPoint
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+from control_msgs.action import FollowJointTrajectory
+from control_msgs.action import GripperCommand
+from control_msgs.msg import JointTrajectoryControllerState
 
-import semu.usd.schemas.RosBridgeSchema as ROSSchema
-import semu.usd.schemas.RosControlBridgeSchema as ROSControlSchema
+# add_on_msgs (get/set prim attribute services) is built by tools/build.sh and shipped in
+# packages/. It is optional (hosts that only use the action servers may not have it) and
+# it is imported lazily: as a Kit extension this module is imported by scripts/extension.py
+# before on_startup() has added packages/ to sys.path.
+GetPrims = GetPrimAttributes = GetPrimAttribute = SetPrimAttribute = None
 
 
-# message types
-GetPrims = None
-GetPrimAttributes = None
-GetPrimAttribute = None
-SetPrimAttribute = None
-FollowJointTrajectory = None
-GripperCommand = None
+def _load_add_on_msgs() -> bool:
+    """Import the add_on_msgs services (idempotent). Returns True when available."""
+    global GetPrims, GetPrimAttributes, GetPrimAttribute, SetPrimAttribute
+    if GetPrims is not None:
+        return True
+    try:
+        from add_on_msgs.srv import GetPrims as _p, GetPrimAttributes as _as, GetPrimAttribute as _a, SetPrimAttribute as _s
+    except ImportError:
+        return False
+    GetPrims, GetPrimAttributes, GetPrimAttribute, SetPrimAttribute = _p, _as, _a, _s
+    return True
 
 
 def acquire_ros2_bridge_interface(ext_id: str = "") -> 'Ros2Bridge':
-    """
-    Acquire the Ros2Bridge interface
+    """Acquire the Ros2Bridge interface (extension entry point)
 
     :param ext_id: The extension id
     :type ext_id: str
@@ -41,48 +63,48 @@ def acquire_ros2_bridge_interface(ext_id: str = "") -> 'Ros2Bridge':
     :returns: The Ros2Bridge interface
     :rtype: Ros2Bridge
     """
-    global GetPrims, GetPrimAttributes, GetPrimAttribute, SetPrimAttribute, FollowJointTrajectory, GripperCommand
-    
-    from add_on_msgs.srv import GetPrims as get_prims_srv
-    from add_on_msgs.srv import GetPrimAttributes as get_prim_attributes_srv
-    from add_on_msgs.srv import GetPrimAttribute as get_prim_attribute_srv
-    from add_on_msgs.srv import SetPrimAttribute as set_prim_attribute_srv
-    from control_msgs.action import FollowJointTrajectory as follow_joint_trajectory_action
-    from control_msgs.action import GripperCommand as gripper_command_action
-
-    GetPrims = get_prims_srv
-    GetPrimAttributes = get_prim_attributes_srv
-    GetPrimAttribute = get_prim_attribute_srv
-    SetPrimAttribute = set_prim_attribute_srv
-    FollowJointTrajectory = follow_joint_trajectory_action
-    GripperCommand = gripper_command_action
-
-    rclpy.init()
+    if not rclpy.ok():
+        rclpy.init()
     bridge = Ros2Bridge()
 
     executor = rclpy.executors.MultiThreadedExecutor()
     executor.add_node(bridge)
-    threading.Thread(target=executor.spin).start()
+    threading.Thread(target=executor.spin, daemon=True).start()
 
     return bridge
 
+
 def release_ros2_bridge_interface(bridge: 'Ros2Bridge') -> None:
-    """
-    Release the Ros2Bridge interface
-    
+    """Release the Ros2Bridge interface
+
     :param bridge: The Ros2Bridge interface
     :type bridge: Ros2Bridge
     """
     bridge.shutdown()
 
 
+def _setting(name: str, default):
+    """Read /exts/semu.robotics.ros2_bridge/<name> from carb settings, with a default
+    for hosts that use this module without the extension (settings not populated)."""
+    try:
+        value = carb.settings.get_settings().get("/exts/semu.robotics.ros2_bridge/{}".format(name))
+    except Exception:
+        value = None
+    return default if value is None else value
+
+
 class Ros2Bridge(Node):
+    """ROS 2 node that owns the bridge components when the module is used as a Kit extension.
+
+    Upstream discovered the components from ``semu.usd.schemas`` prims on the stage.
+    This port has no schema dependency: the components are listed in the extension
+    setting ``/exts/semu.robotics.ros2_bridge/components`` (JSON, see config/extension.toml)
+    and are (re)created every time the timeline starts playing.
+    """
     def __init__(self) -> None:
-        """Initialize the Ros2Bridge interface
-        """
         self._components = []
-        self._node_name = carb.settings.get_settings().get("/exts/semu.robotics.ros2_bridge/nodeName")
-        
+        self._node_name = _setting("nodeName", "SemuRos2Bridge")
+
         super().__init__(self._node_name)
 
         # omni objects and interfaces
@@ -90,40 +112,29 @@ class Ros2Bridge(Node):
         self._timeline = omni.timeline.get_timeline_interface()
         self._physx_interface = omni.physx.acquire_physx_interface()
         self._dci = _dynamic_control.acquire_dynamic_control_interface()
-        
+
         # events
-        self._update_event = omni.kit.app.get_app().get_update_event_stream().create_subscription_to_pop(self._on_update_event)
         self._timeline_event = self._timeline.get_timeline_event_stream().create_subscription_to_pop(self._on_timeline_event)
-        self._stage_event = self._usd_context.get_stage_event_stream().create_subscription_to_pop(self._on_stage_event)
         self._physx_event = self._physx_interface.subscribe_physics_step_events(self._on_physics_event)
 
     def shutdown(self) -> None:
         """Shutdown the Ros2Bridge interface
         """
-        self._update_event = None
         self._timeline_event = None
-        self._stage_event = None
+        self._physx_event = None
 
         self._stop_components()
         self.destroy_node()
-        rclpy.shutdown()
 
-    def _get_ros_bridge_schemas(self) -> List['ROSSchema.RosBridgeComponent']:
-        """Get the ROS bridge schemas in the current stage
-
-        :returns: The ROS bridge schemas
-        :rtype: list of RosBridgeComponent
-        """
-        schemas = []
-        stage = self._usd_context.get_stage()
-        for prim in Usd.PrimRange.AllPrims(stage.GetPrimAtPath("/")):
-            if prim.GetTypeName() == "RosAttribute":
-                schemas.append(ROSSchema.RosAttribute(prim))
-            elif prim.GetTypeName() == "RosControlFollowJointTrajectory":
-                schemas.append(ROSControlSchema.RosControlFollowJointTrajectory(prim))
-            elif prim.GetTypeName() == "RosControlGripperCommand":
-                schemas.append(ROSControlSchema.RosControlGripperCommand(prim))
-        return schemas
+    def _component_specs(self) -> list:
+        """Parse the ``components`` setting (JSON list of dicts)."""
+        raw = _setting("components", "[]")
+        try:
+            specs = json.loads(raw) if isinstance(raw, str) else list(raw)
+        except (TypeError, ValueError) as exc:
+            print("[Error][semu.robotics.ros2_bridge] Ros2Bridge: invalid 'components' setting ({}): {}".format(exc, raw))
+            return []
+        return [spec for spec in specs if isinstance(spec, dict)]
 
     def _stop_components(self) -> None:
         """Stop all components
@@ -132,61 +143,45 @@ class Ros2Bridge(Node):
             component.stop()
 
     def _reload_components(self) -> None:
-        """Reload all components
+        """Recreate and start all components from the ``components`` setting
         """
-        # stop components
         self._stop_components()
-        # load components
         self._components = []
-        self._skip_update_step = True
-        for schema in self._get_ros_bridge_schemas():
-            if schema.__class__.__name__ == "RosAttribute":
-                self._components.append(RosAttribute(self, self._usd_context, schema, self._dci))
-            elif schema.__class__.__name__ == "RosControlFollowJointTrajectory":
-                self._components.append(RosControlFollowJointTrajectory(self, self._usd_context, schema, self._dci))
-            elif schema.__class__.__name__ == "RosControlGripperCommand":
-                self._components.append(RosControllerGripperCommand(self, self._usd_context, schema, self._dci))
-                
-    def _on_update_event(self, event: 'carb.events._events.IEvent') -> None:
-        """Handle the kit update event
+        for spec in self._component_specs():
+            kind = spec.get("type", "")
+            try:
+                if kind == "Attribute":
+                    component = RosAttribute(self, self._dci)
+                    component.start(prims_srv=spec.get("prims_srv", "/get_prims"),
+                                    get_attribute_srv=spec.get("get_attribute_srv", "/get_prim_attribute"),
+                                    attributes_srv=spec.get("attributes_srv", "/get_prim_attributes"),
+                                    set_attribute_srv=spec.get("set_attribute_srv", "/set_prim_attribute"))
+                elif kind == "FollowJointTrajectory":
+                    component = RosControlFollowJointTrajectory(self, self._dci)
+                    component.start(spec["articulation"], spec["action"])
+                elif kind == "GripperCommand":
+                    component = RosControllerGripperCommand(self, self._dci)
+                    component.start(spec["articulation"], spec["action"])
+                else:
+                    print("[Warning][semu.robotics.ros2_bridge] Ros2Bridge: unknown component type '{}'".format(kind))
+                    continue
+            except KeyError as exc:
+                print("[Error][semu.robotics.ros2_bridge] Ros2Bridge: component {} is missing key {}".format(spec, exc))
+                continue
+            self._components.append(component)
 
-        :param event: Event
-        :type event: carb.events._events.IEvent
-        """
-        if self._timeline.is_playing():
-            for component in self._components:
-                if self._skip_update_step:
-                    self._skip_update_step = False
-                    return
-                # start components
-                if not component.started:
-                    component.start()
-                    return
-                # step
-                component.update_step(event.payload["dt"])
-    
     def _on_timeline_event(self, event: 'carb.events._events.IEvent') -> None:
         """Handle the timeline event
 
         :param event: Event
         :type event: carb.events._events.IEvent
         """
-        # reload components
         if event.type == int(omni.timeline.TimelineEventType.PLAY):
             self._reload_components()
-            print("[Info][semu.robotics.ros2_bridge] RosControlBridge: components reloaded")
-        # stop components
-        elif event.type == int(omni.timeline.TimelineEventType.STOP) or event.type == int(omni.timeline.TimelineEventType.PAUSE):
+            print("[Info][semu.robotics.ros2_bridge] Ros2Bridge: components reloaded ({})".format(len(self._components)))
+        elif event.type in (int(omni.timeline.TimelineEventType.STOP), int(omni.timeline.TimelineEventType.PAUSE)):
             self._stop_components()
-            print("[Info][semu.robotics.ros2_bridge] RosControlBridge: components stopped")
-
-    def _on_stage_event(self, event: 'carb.events._events.IEvent') -> None:
-        """Handle the stage event
-
-        :param event: The stage event
-        :type event: carb.events._events.IEvent
-        """
-        pass
+            print("[Info][semu.robotics.ros2_bridge] Ros2Bridge: components stopped")
 
     def _on_physics_event(self, step: float) -> None:
         """Handle the physics event
@@ -195,24 +190,17 @@ class Ros2Bridge(Node):
         :type step: float
         """
         for component in self._components:
-            component.physics_step(step)
+            component.step(step)
 
 
 class RosController:
-    def __init__(self, node: Node, usd_context: 'omni.usd._usd.UsdContext', schema: 'ROSSchema.RosBridgeComponent') -> None:
+    def __init__(self, node: Node) -> None:
         """Base class for RosController
 
         :param node: ROS2 node
         :type node: Node
-        :param usd_context: USD context
-        :type usd_context: omni.usd._usd.UsdContext
-        :param schema: The ROS bridge schema
-        :type schema: ROSSchema.RosBridgeComponent
         """
-        self._node = node
-        self._usd_context = usd_context
-        self._schema = schema
-        
+        self._node = node        
         self.started = False
     
     def start(self) -> None:
@@ -223,18 +211,10 @@ class RosController:
     def stop(self) -> None:
         """Stop the component
         """
-        print("[Info][semu.robotics.ros2_bridge] RosController: stopping {}".format(self._schema.__class__.__name__))
+        print("[Info][semu.robotics.ros2_bridge] RosController: stopping")
         self.started = False
 
-    def update_step(self, dt: float) -> None:
-        """Kit update step
-        
-        :param dt: The delta time
-        :type dt: float
-        """
-        raise NotImplementedError
-
-    def physics_step(self, dt: float) -> None:
+    def step(self, dt: float) -> None:
         """Physics update step
 
         :param dt: The physics delta time
@@ -244,25 +224,20 @@ class RosController:
 
 
 class RosAttribute(RosController):
-    def __init__(self, 
-                 node: Node, 
-                 usd_context: 'omni.usd._usd.UsdContext', 
-                 schema: 'ROSSchema.RosBridgeComponent', 
-                 dci: 'omni.isaac.dynamic_control.DynamicControl') -> None:
-        """RosAttribute interface
+    def __init__(self, node: Node, dci: 'omni.isaac.dynamic_control.DynamicControl') -> None:
+        """RosAttribute interface: ROS 2 services to list prims and get/set prim attributes
 
         :param node: The ROS node
         :type node: rclpy.node.Node
-        :param usd_context: USD context
-        :type usd_context: omni.usd._usd.UsdContext
-        :param schema: The ROS bridge schema
-        :type schema: ROSSchema.RosAttribute
         :param dci: The dynamic control interface
         :type dci: omni.isaac.dynamic_control.DynamicControl
         """
-        super().__init__(node, usd_context, schema)
+        super().__init__(node)
+        if not _load_add_on_msgs():
+            raise ImportError("add_on_msgs is not importable: build it with tools/build.sh and add packages/ to sys.path")
 
         self._dci = dci
+        self._usd_context = omni.usd.get_context()
 
         self._srv_prims = None
         self._srv_attributes = None
@@ -275,13 +250,12 @@ class RosAttribute(RosController):
         self._event = threading.Event()
         self._event.set()
 
-        self.__event_timeout = carb.settings.get_settings().get("/exts/semu.robotics.ros2_bridge/eventTimeout")
-        self.__set_attribute_using_asyncio = \
-            carb.settings.get_settings().get("/exts/semu.robotics.ros2_bridge/setAttributeUsingAsyncio")
+        self.__event_timeout = float(_setting("eventTimeout", 5.0))
+        self.__set_attribute_using_asyncio = bool(_setting("setAttributeUsingAsyncio", False))
         print("[Info][semu.robotics.ros2_bridge] RosAttribute: asyncio: {}".format(self.__set_attribute_using_asyncio))
         print("[Info][semu.robotics.ros2_bridge] RosAttribute: event timeout: {}".format(self.__event_timeout))
 
-    async def _set_attribute(self, attribute: 'pxr.Usd.Attribute', attribute_value: Any) -> None:
+    async def _set_attribute(self, attribute: 'Usd.Attribute', attribute_value: Any) -> None:
         """Set the attribute value using asyncio
 
         :param attribute: The prim's attribute to set
@@ -289,10 +263,10 @@ class RosAttribute(RosController):
         :param attribute_value: The attribute value
         :type attribute_value: Any
         """
-        ret = attribute.Set(attribute_value)
+        attribute.Set(attribute_value)
 
-    def _process_setter_request(self, 
-                                request: 'SetPrimAttribute.Request', 
+    def _process_setter_request(self,
+                                request: 'SetPrimAttribute.Request',
                                 response: 'SetPrimAttribute.Response') -> 'SetPrimAttribute.Response':
         """Process the setter request
 
@@ -305,97 +279,94 @@ class RosAttribute(RosController):
         :rtype: SetPrimAttribute.Response
         """
         response.success = False
-        if self._schema.GetEnabledAttr().Get():
-            stage = self._usd_context.get_stage()
-            # get prim
-            if stage.GetPrimAtPath(request.path).IsValid():
-                prim = stage.GetPrimAtPath(request.path)
-                if request.attribute and prim.HasAttribute(request.attribute):
-                    # attribute
-                    attribute = prim.GetAttribute(request.attribute)
-                    attribute_type = type(attribute.Get()).__name__
-                    # value
-                    try:
-                        value = json.loads(request.value)
-                        attribute_value = None
-                    except json.JSONDecodeError:
-                        print("[Error][semu.robotics.ros2_bridge] RosAttribute: invalid value: {}".format(request.value))
-                        response.success = False
-                        response.message = "Invalid value '{}'".format(request.value)
-                        return response
-                    # parse data
-                    try:
-                        if attribute_type in ['Vec2d', 'Vec2f', 'Vec2h', 'Vec2i']:
-                            attribute_value = type(attribute.Get())(value)
-                        elif attribute_type in ['Vec3d', 'Vec3f', 'Vec3h', 'Vec3i']:
-                            attribute_value = type(attribute.Get())(value)
-                        elif attribute_type in ['Vec4d', 'Vec4f', 'Vec4h', 'Vec4i']:
-                            attribute_value = type(attribute.Get())(value)
-                        elif attribute_type in ['Quatd', 'Quatf', 'Quath']:
-                            attribute_value = type(attribute.Get())(*value)
-                        elif attribute_type in ['Matrix4d', 'Matrix4f']:
-                            attribute_value = type(attribute.Get())(value)
-                        elif attribute_type.startswith('Vec') and attribute_type.endswith('Array'):
-                            attribute_value = type(attribute.Get())(value)
-                        elif attribute_type.startswith('Matrix') and attribute_type.endswith('Array'):
-                            if attribute_type.endswith("dArray"):
-                                attribute_value = type(attribute.Get())([Gf.Matrix2d(v) for v in value])
-                            elif attribute_type.endswith("fArray"):
-                                attribute_value = type(attribute.Get())([Gf.Matrix2f(v) for v in value])
-                        elif attribute_type.startswith('Quat') and attribute_type.endswith('Array'):
-                            if attribute_type.endswith("dArray"):
-                                attribute_value = type(attribute.Get())([Gf.Quatd(*v) for v in value])
-                            elif attribute_type.endswith("fArray"):
-                                attribute_value = type(attribute.Get())([Gf.Quatf(*v) for v in value]) 
-                            elif attribute_type.endswith("hArray"):
-                                attribute_value = type(attribute.Get())([Gf.Quath(*v) for v in value])
-                        elif attribute_type.endswith('Array'):
-                            attribute_value = type(attribute.Get())(value)
-                        elif attribute_type in ['AssetPath']:
-                            attribute_value = type(attribute.Get())(value)
-                        elif attribute_type in ['NoneType']:
-                            pass
-                        else:
-                            attribute_value = type(attribute.Get())(value)
-                        
-                        # set attribute
-                        if attribute_value is not None:
-                            # set attribute usign asyncio
-                            if self.__set_attribute_using_asyncio:
-                                try:
-                                    loop = asyncio.get_event_loop()
-                                except:
-                                    loop = asyncio.new_event_loop()
-                                asyncio.set_event_loop(loop)
-                                future = asyncio.ensure_future(self._set_attribute(attribute, attribute_value))
-                                loop.run_until_complete(future)
-                                response.success = True
-                            # set attribute in the physics event
-                            else:
-                                self._attribute = attribute
-                                self._value = attribute_value
+        stage = self._usd_context.get_stage()
+        # get prim
+        if stage.GetPrimAtPath(request.path).IsValid():
+            prim = stage.GetPrimAtPath(request.path)
+            if request.attribute and prim.HasAttribute(request.attribute):
+                # attribute
+                attribute = prim.GetAttribute(request.attribute)
+                attribute_type = type(attribute.Get()).__name__
+                # value
+                try:
+                    value = json.loads(request.value)
+                    attribute_value = None
+                except json.JSONDecodeError:
+                    print("[Error][semu.robotics.ros2_bridge] RosAttribute: invalid value: {}".format(request.value))
+                    response.success = False
+                    response.message = "Invalid value '{}'".format(request.value)
+                    return response
+                # parse data
+                try:
+                    if attribute_type in ['Vec2d', 'Vec2f', 'Vec2h', 'Vec2i']:
+                        attribute_value = type(attribute.Get())(value)
+                    elif attribute_type in ['Vec3d', 'Vec3f', 'Vec3h', 'Vec3i']:
+                        attribute_value = type(attribute.Get())(value)
+                    elif attribute_type in ['Vec4d', 'Vec4f', 'Vec4h', 'Vec4i']:
+                        attribute_value = type(attribute.Get())(value)
+                    elif attribute_type in ['Quatd', 'Quatf', 'Quath']:
+                        attribute_value = type(attribute.Get())(*value)
+                    elif attribute_type in ['Matrix4d', 'Matrix4f']:
+                        attribute_value = type(attribute.Get())(value)
+                    elif attribute_type.startswith('Vec') and attribute_type.endswith('Array'):
+                        attribute_value = type(attribute.Get())(value)
+                    elif attribute_type.startswith('Matrix') and attribute_type.endswith('Array'):
+                        if attribute_type.endswith("dArray"):
+                            attribute_value = type(attribute.Get())([Gf.Matrix2d(v) for v in value])
+                        elif attribute_type.endswith("fArray"):
+                            attribute_value = type(attribute.Get())([Gf.Matrix2f(v) for v in value])
+                    elif attribute_type.startswith('Quat') and attribute_type.endswith('Array'):
+                        if attribute_type.endswith("dArray"):
+                            attribute_value = type(attribute.Get())([Gf.Quatd(*v) for v in value])
+                        elif attribute_type.endswith("fArray"):
+                            attribute_value = type(attribute.Get())([Gf.Quatf(*v) for v in value])
+                        elif attribute_type.endswith("hArray"):
+                            attribute_value = type(attribute.Get())([Gf.Quath(*v) for v in value])
+                    elif attribute_type.endswith('Array'):
+                        attribute_value = type(attribute.Get())(value)
+                    elif attribute_type in ['AssetPath']:
+                        attribute_value = type(attribute.Get())(value)
+                    elif attribute_type in ['NoneType']:
+                        pass
+                    else:
+                        attribute_value = type(attribute.Get())(value)
 
-                                self._event.clear()
-                                response.success = self._event.wait(self.__event_timeout)
-                                if not response.success:
-                                    response.message = "The timeout ({} s) for setting the attribute value has been reached" \
-                                        .format(self.__event_timeout)
-                                
-                    except Exception as e:
-                        print("[Error][semu.robotics.ros2_bridge] RosAttribute: srv {} request for {} ({}: {}): {}" \
-                            .format(self._srv_setter.resolved_name, request.path, request.attribute, value, e))
-                        response.success = False
-                        response.message = str(e)
-                else:
-                    response.message = "Prim has not attribute {}".format(request.attribute)
+                    # set attribute
+                    if attribute_value is not None:
+                        # set attribute using asyncio
+                        if self.__set_attribute_using_asyncio:
+                            try:
+                                loop = asyncio.get_event_loop()
+                            except Exception:
+                                loop = asyncio.new_event_loop()
+                            asyncio.set_event_loop(loop)
+                            future = asyncio.ensure_future(self._set_attribute(attribute, attribute_value))
+                            loop.run_until_complete(future)
+                            response.success = True
+                        # set attribute in the physics step
+                        else:
+                            self._attribute = attribute
+                            self._value = attribute_value
+
+                            self._event.clear()
+                            response.success = self._event.wait(self.__event_timeout)
+                            if not response.success:
+                                response.message = "The timeout ({} s) for setting the attribute value has been reached" \
+                                    .format(self.__event_timeout)
+
+                except Exception as e:
+                    print("[Error][semu.robotics.ros2_bridge] RosAttribute: srv {} request for {} ({}: {}): {}" \
+                        .format(self._srv_setter.srv_name, request.path, request.attribute, value, e))
+                    response.success = False
+                    response.message = str(e)
             else:
-                response.message = "Invalid prim ({})".format(request.path)
+                response.message = "Prim has not attribute {}".format(request.attribute)
         else:
-            response.message = "RosAttribute prim is not enabled"
+            response.message = "Invalid prim ({})".format(request.path)
         return response
-        
-    def _process_getter_request(self, 
-                                request: 'GetPrimAttribute.Request', 
+
+    def _process_getter_request(self,
+                                request: 'GetPrimAttribute.Request',
                                 response: 'GetPrimAttribute.Response') -> 'GetPrimAttribute.Response':
         """Process the getter request
 
@@ -408,72 +379,67 @@ class RosAttribute(RosController):
         :rtype: GetPrimAttribute.Response
         """
         response.success = False
-        if self._schema.GetEnabledAttr().Get():
-            stage = self._usd_context.get_stage()
-            # get prim
-            if stage.GetPrimAtPath(request.path).IsValid():
-                prim = stage.GetPrimAtPath(request.path)
-                if request.attribute and prim.HasAttribute(request.attribute):
-                    attribute = prim.GetAttribute(request.attribute)
-                    response.type = type(attribute.Get()).__name__
-                    # parse data
-                    response.success = True
-                    if response.type in ['Vec2d', 'Vec2f', 'Vec2h', 'Vec2i']:
-                        data = attribute.Get()
-                        response.value = json.dumps([data[i] for i in range(2)])
-                    elif response.type in ['Vec3d', 'Vec3f', 'Vec3h', 'Vec3i']:
-                        data = attribute.Get()
-                        response.value = json.dumps([data[i] for i in range(3)])
-                    elif response.type in ['Vec4d', 'Vec4f', 'Vec4h', 'Vec4i']:
-                        data = attribute.Get()
-                        response.value = json.dumps([data[i] for i in range(4)])
-                    elif response.type in ['Quatd', 'Quatf', 'Quath']:
-                        data = attribute.Get()
-                        response.value = json.dumps([data.real, data.imaginary[0], data.imaginary[1], data.imaginary[2]])                    
-                    elif response.type in ['Matrix4d', 'Matrix4f']:
-                        data = attribute.Get()
-                        response.value = json.dumps([[data.GetRow(i)[j] for j in range(data.dimension[1])] \
-                            for i in range(data.dimension[0])])
-                    elif response.type.startswith('Vec') and response.type.endswith('Array'):
-                        data = attribute.Get()
-                        response.value = json.dumps([[d[i] for i in range(len(d))] for d in data])
-                    elif response.type.startswith('Matrix') and response.type.endswith('Array'):
-                        data = attribute.Get()
-                        response.value = json.dumps([[[d.GetRow(i)[j] for j in range(d.dimension[1])] \
-                            for i in range(d.dimension[0])] for d in data])
-                    elif response.type.startswith('Quat') and response.type.endswith('Array'):
-                        data = attribute.Get()
-                        response.value = json.dumps([[d.real, d.imaginary[0], d.imaginary[1], d.imaginary[2]] for d in data])
-                    elif response.type.endswith('Array'):
-                        try:
-                            response.value = json.dumps(list(attribute.Get()))
-                        except Exception as e:
-                            print("[Warning][semu.robotics.ros2_bridge] RosAttribute: Unknow attribute type {}" \
-                                .format(type(attribute.Get())))
-                            print("  |-- Please, report a new issue (https://github.com/Toni-SM/semu.robotics.ros2_bridge/issues)")
-                            response.success = False
-                            response.message = "Unknow type {}".format(type(attribute.Get()))
-                    elif response.type in ['AssetPath']:
-                        response.value = json.dumps(str(attribute.Get().path))
-                    else:
-                        try:
-                            response.value = json.dumps(attribute.Get())
-                        except Exception as e:
-                            print("[Warning][semu.robotics.ros2_bridge] RosAttribute: Unknow {}: {}" \
-                                .format(type(attribute.Get()), attribute.Get()))
-                            print("  |-- Please, report a new issue (https://github.com/Toni-SM/semu.robotics.ros2_bridge/issues)")
-                            response.success = False
-                            response.message = "Unknow type {}".format(type(attribute.Get()))
+        stage = self._usd_context.get_stage()
+        # get prim
+        if stage.GetPrimAtPath(request.path).IsValid():
+            prim = stage.GetPrimAtPath(request.path)
+            if request.attribute and prim.HasAttribute(request.attribute):
+                attribute = prim.GetAttribute(request.attribute)
+                response.type = type(attribute.Get()).__name__
+                # parse data
+                response.success = True
+                if response.type in ['Vec2d', 'Vec2f', 'Vec2h', 'Vec2i']:
+                    data = attribute.Get()
+                    response.value = json.dumps([data[i] for i in range(2)])
+                elif response.type in ['Vec3d', 'Vec3f', 'Vec3h', 'Vec3i']:
+                    data = attribute.Get()
+                    response.value = json.dumps([data[i] for i in range(3)])
+                elif response.type in ['Vec4d', 'Vec4f', 'Vec4h', 'Vec4i']:
+                    data = attribute.Get()
+                    response.value = json.dumps([data[i] for i in range(4)])
+                elif response.type in ['Quatd', 'Quatf', 'Quath']:
+                    data = attribute.Get()
+                    response.value = json.dumps([data.real, data.imaginary[0], data.imaginary[1], data.imaginary[2]])
+                elif response.type in ['Matrix4d', 'Matrix4f']:
+                    data = attribute.Get()
+                    response.value = json.dumps([[data.GetRow(i)[j] for j in range(data.dimension[1])] \
+                        for i in range(data.dimension[0])])
+                elif response.type.startswith('Vec') and response.type.endswith('Array'):
+                    data = attribute.Get()
+                    response.value = json.dumps([[d[i] for i in range(len(d))] for d in data])
+                elif response.type.startswith('Matrix') and response.type.endswith('Array'):
+                    data = attribute.Get()
+                    response.value = json.dumps([[[d.GetRow(i)[j] for j in range(d.dimension[1])] \
+                        for i in range(d.dimension[0])] for d in data])
+                elif response.type.startswith('Quat') and response.type.endswith('Array'):
+                    data = attribute.Get()
+                    response.value = json.dumps([[d.real, d.imaginary[0], d.imaginary[1], d.imaginary[2]] for d in data])
+                elif response.type.endswith('Array'):
+                    try:
+                        response.value = json.dumps(list(attribute.Get()))
+                    except Exception:
+                        print("[Warning][semu.robotics.ros2_bridge] RosAttribute: Unknown attribute type {}" \
+                            .format(type(attribute.Get())))
+                        response.success = False
+                        response.message = "Unknown type {}".format(type(attribute.Get()))
+                elif response.type in ['AssetPath']:
+                    response.value = json.dumps(str(attribute.Get().path))
                 else:
-                    response.message = "Prim has not attribute {}".format(request.attribute)
+                    try:
+                        response.value = json.dumps(attribute.Get())
+                    except Exception:
+                        print("[Warning][semu.robotics.ros2_bridge] RosAttribute: Unknown {}: {}" \
+                            .format(type(attribute.Get()), attribute.Get()))
+                        response.success = False
+                        response.message = "Unknown type {}".format(type(attribute.Get()))
             else:
-                response.message = "Invalid prim ({})".format(request.path)
+                response.message = "Prim has not attribute {}".format(request.attribute)
         else:
-            response.message = "RosAttribute prim is not enabled"
+            response.message = "Invalid prim ({})".format(request.path)
         return response
 
-    def _process_attributes_request(self, 
-                                    request: 'GetPrimAttributes.Request', 
+    def _process_attributes_request(self,
+                                    request: 'GetPrimAttributes.Request',
                                     response: 'GetPrimAttributes.Response') -> 'GetPrimAttributes.Response':
         """Process the 'get all attributes' request
 
@@ -486,25 +452,22 @@ class RosAttribute(RosController):
         :rtype: GetPrimAttributes.Response
         """
         response.success = False
-        if self._schema.GetEnabledAttr().Get():
-            stage = self._usd_context.get_stage()
-            # get prim
-            if stage.GetPrimAtPath(request.path).IsValid():
-                prim = stage.GetPrimAtPath(request.path)
-                for attribute in prim.GetAttributes():
-                    if attribute.GetNamespace():
-                        response.names.append("{}:{}".format(attribute.GetNamespace(), attribute.GetBaseName()))
-                    else:
-                        response.names.append(attribute.GetBaseName())
-                    response.displays.append(attribute.GetDisplayName())
-                    response.types.append(type(attribute.Get()).__name__)
-                    response.success = True
-            else:
-                response.message = "Invalid prim ({})".format(request.path)
+        stage = self._usd_context.get_stage()
+        # get prim
+        if stage.GetPrimAtPath(request.path).IsValid():
+            prim = stage.GetPrimAtPath(request.path)
+            for attribute in prim.GetAttributes():
+                if attribute.GetNamespace():
+                    response.names.append("{}:{}".format(attribute.GetNamespace(), attribute.GetBaseName()))
+                else:
+                    response.names.append(attribute.GetBaseName())
+                response.displays.append(attribute.GetDisplayName())
+                response.types.append(type(attribute.Get()).__name__)
+                response.success = True
         else:
-            response.message = "RosAttribute prim is not enabled"
+            response.message = "Invalid prim ({})".format(request.path)
         return response
-    
+
     def _process_prims_request(self, request: 'GetPrims.Request', response: 'GetPrims.Response') -> 'GetPrims.Response':
         """Process the 'get all prims' request
 
@@ -517,75 +480,59 @@ class RosAttribute(RosController):
         :rtype: GetPrims.Response
         """
         response.success = False
-        if self._schema.GetEnabledAttr().Get():
-            stage = self._usd_context.get_stage()
-            # get prims
-            if not request.path or stage.GetPrimAtPath(request.path).IsValid():
-                path = request.path if request.path else "/"
-                for prim in Usd.PrimRange.AllPrims(stage.GetPrimAtPath(path)):
-                    response.paths.append(str(prim.GetPath()))
-                    response.types.append(prim.GetTypeName())
-                    response.success = True
-            else:
-                response.message = "Invalid search path ({})".format(request.path)
+        stage = self._usd_context.get_stage()
+        # get prims
+        if not request.path or stage.GetPrimAtPath(request.path).IsValid():
+            path = request.path if request.path else "/"
+            for prim in Usd.PrimRange.AllPrims(stage.GetPrimAtPath(path)):
+                response.paths.append(str(prim.GetPath()))
+                response.types.append(prim.GetTypeName())
+                response.success = True
         else:
-            response.message = "RosAttribute prim is not enabled"
+            response.message = "Invalid search path ({})".format(request.path)
         return response
 
-    def start(self) -> None:
+    def start(self,
+              prims_srv: str = "/get_prims",
+              get_attribute_srv: str = "/get_prim_attribute",
+              attributes_srv: str = "/get_prim_attributes",
+              set_attribute_srv: str = "/set_prim_attribute") -> None:
         """Start the services
-        """
-        print("[Info][semu.robotics.ros2_bridge] RosAttribute: starting {}".format(self._schema.__class__.__name__))
 
-        service_name = self._schema.GetPrimsSrvTopicAttr().Get()
-        self._srv_prims = self._node.create_service(GetPrims, service_name, self._process_prims_request)
+        :param prims_srv: Service name for GetPrims
+        :param get_attribute_srv: Service name for GetPrimAttribute
+        :param attributes_srv: Service name for GetPrimAttributes
+        :param set_attribute_srv: Service name for SetPrimAttribute
+        """
+        print("[Info][semu.robotics.ros2_bridge] RosAttribute: starting")
+
+        self._srv_prims = self._node.create_service(GetPrims, prims_srv, self._process_prims_request)
         print("[Info][semu.robotics.ros2_bridge] RosAttribute: register srv: {}".format(self._srv_prims.srv_name))
 
-        service_name = self._schema.GetGetAttrSrvTopicAttr().Get()
-        self._srv_getter = self._node.create_service(GetPrimAttribute, service_name, self._process_getter_request)
+        self._srv_getter = self._node.create_service(GetPrimAttribute, get_attribute_srv, self._process_getter_request)
         print("[Info][semu.robotics.ros2_bridge] RosAttribute: register srv: {}".format(self._srv_getter.srv_name))
 
-        service_name = self._schema.GetAttributesSrvTopicAttr().Get()
-        self._srv_attributes = self._node.create_service(GetPrimAttributes, service_name, self._process_attributes_request)
+        self._srv_attributes = self._node.create_service(GetPrimAttributes, attributes_srv, self._process_attributes_request)
         print("[Info][semu.robotics.ros2_bridge] RosAttribute: register srv: {}".format(self._srv_attributes.srv_name))
 
-        service_name = self._schema.GetSetAttrSrvTopicAttr().Get()
-        self._srv_setter = self._node.create_service(SetPrimAttribute, service_name, self._process_setter_request)
+        self._srv_setter = self._node.create_service(SetPrimAttribute, set_attribute_srv, self._process_setter_request)
         print("[Info][semu.robotics.ros2_bridge] RosAttribute: register srv: {}".format(self._srv_setter.srv_name))
-        
+
         self.started = True
 
     def stop(self) -> None:
         """Stop the services
         """
-        if self._srv_prims is not None:
-            print("[Info][semu.robotics.ros2_bridge] RosAttribute: unregister srv: {}".format(self._srv_prims.srv_name))
-            self._node.destroy_service(self._srv_prims)
-            self._srv_prims = None
-        if self._srv_getter is not None:
-            print("[Info][semu.robotics.ros2_bridge] RosAttribute: unregister srv: {}".format(self._srv_getter.srv_name))
-            self._node.destroy_service(self._srv_getter)
-            self._srv_getter = None
-        if self._srv_attributes is not None:
-            print("[Info][semu.robotics.ros2_bridge] RosAttribute: unregister srv: {}".format(self._srv_attributes.srv_name))
-            self._node.destroy_service(self._srv_attributes)
-            self._srv_attributes = None
-        if self._srv_setter is not None:
-            print("[Info][semu.robotics.ros2_bridge] RosAttribute: unregister srv: {}".format(self._srv_setter.srv_name))
-            self._node.destroy_service(self._srv_setter)
-            self._srv_setter = None
+        for name in ("_srv_prims", "_srv_getter", "_srv_attributes", "_srv_setter"):
+            srv = getattr(self, name)
+            if srv is not None:
+                print("[Info][semu.robotics.ros2_bridge] RosAttribute: unregister srv: {}".format(srv.srv_name))
+                self._node.destroy_service(srv)
+                setattr(self, name, None)
         super().stop()
 
-    def update_step(self, dt: float) -> None:
-        """Kit update step
-
-        :param dt: The delta time
-        :type dt: float
-        """
-        pass
-
-    def physics_step(self, dt: float) -> None:
-        """Physics update step
+    def step(self, dt: float) -> None:
+        """Physics update step: apply the pending attribute value on the simulation thread
 
         :param dt: The physics delta time
         :type dt: float
@@ -597,30 +544,30 @@ class RosAttribute(RosController):
         if self._dci.is_simulating():
             if not self._event.is_set():
                 if self._attribute is not None:
-                    ret = self._attribute.Set(self._value)
+                    self._attribute.Set(self._value)
                 self._event.set()
 
 
 class RosControlFollowJointTrajectory(RosController):
-    def __init__(self, 
-                 node: Node, 
-                 usd_context: 'omni.usd._usd.UsdContext', 
-                 schema: 'ROSSchema.RosBridgeComponent', 
-                 dci: 'omni.isaac.dynamic_control.DynamicControl') -> None:
+    # Joints this controller manages. None = publish all articulation joints
+    # (legacy behavior). Subclasses override with a list to scope the
+    # /controller_state msg to the joints the consumer expects (pumas
+    # arm_node segfaults when actual.positions oversized).
+    controlled_joints = None
+
+    def __init__(self,
+                 node: Node,
+                 _dci: 'omni.isaac.dynamic_control.DynamicControl') -> None:
         """FollowJointTrajectory interface
         
         :param node: The ROS node
         :type node: rclpy.node.Node
-        :param usd_context: The USD context
-        :type usd_context: omni.usd._usd.UsdContext
-        :param schema: The schema
-        :type schema: ROSSchema.RosBridgeComponent
         :param dci: The dynamic control interface
         :type dci: omni.isaac.dynamic_control.DynamicControl
         """
-        super().__init__(node, usd_context, schema)
-        
-        self._dci = dci
+        super().__init__(node)
+
+        self.dci = _dci
 
         self._articulation = _dynamic_control.INVALID_HANDLE
         self._joints = {}
@@ -636,39 +583,75 @@ class RosControlFollowJointTrajectory(RosController):
         # feedback / result
         self._action_result_message = None
         self._action_feedback_message = FollowJointTrajectory.Feedback()
-        
-    def start(self) -> None:
+
+        # publishers for controller state: legacy /<c>/state and the
+        # ros2_control standard /<c>/controller_state (pumas's arm_controller
+        # / viewpoint_controller subscribe to the latter)
+        self._state_pub = None
+        self._controller_state_pub = None
+
+        # topic-interface subscription for /<c>/joint_trajectory (mirrors
+        # ros2_control's JointTrajectoryController)
+        self._traj_sub = None
+
+        # Topic msgs are received on the ROS executor thread; the actual goal
+        # installation (which calls DCI for current joint state) is deferred
+        # to step() on the main thread to avoid racing with the physics step.
+        self._pending_topic_msg = None
+        self._pending_lock = threading.Lock()
+
+        # Pad `time_from_start == 0` to this many seconds so single-shot
+        # trajectories (e.g. pumas initial-pose publish) have time to
+        # physically reach the target before the trajectory ends.
+        self._zero_time_pad_sec = 1.0
+
+    def start(self, _articulation_path, _action_topic_name) -> None:
         """Start the action server
         """
-        print("[Info][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: starting {}" \
-            .format(self._schema.__class__.__name__))
-        
-        # get attributes and relationships
-        action_namespace = self._schema.GetActionNamespaceAttr().Get()
-        controller_name = self._schema.GetControllerNameAttr().Get()
+        print("[Info][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: starting")
 
-        relationships = self._schema.GetArticulationPrimRel().GetTargets()
-        if not len(relationships):
-            print("[Warning][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: empty relationships")
-            return
-        
-        # check for articulation API
-        stage = self._usd_context.get_stage()
-        path = relationships[0].GetPrimPath().pathString
-        if not stage.GetPrimAtPath(path).HasAPI(PhysxSchema.PhysxArticulationAPI):
-            print("[Warning][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: {} doesn't have PhysxArticulationAPI".format(path))
-            return
+        # get attributes and relationships
+        self.articulation_path = _articulation_path
+        self.action_topic_name = _action_topic_name
 
         # start action server
         self._action_server = ActionServer(self._node,
                                            FollowJointTrajectory,
-                                           controller_name + action_namespace,
+                                           self.action_topic_name,
                                            execute_callback=self._on_execute,
                                            goal_callback=self._on_goal,
                                            cancel_callback=self._on_cancel,
                                            handle_accepted_callback=self._on_handle_accepted)
         print("[Info][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: register action {}" \
-            .format(controller_name + action_namespace))
+            .format(self.action_topic_name))
+
+        # Controller state publishers — both topic names so topic-only clients
+        # (pumas) and legacy consumers see the same payload.
+        state_topic = self.action_topic_name.replace('/follow_joint_trajectory', '/state')
+        self._state_pub = self._node.create_publisher(
+            JointTrajectoryControllerState,
+            state_topic,
+            10,
+        )
+        controller_state_topic = self.action_topic_name.replace('/follow_joint_trajectory', '/controller_state')
+        self._controller_state_pub = self._node.create_publisher(
+            JointTrajectoryControllerState,
+            controller_state_topic,
+            10,
+        )
+
+        # Topic interface that mirrors ros2_control's JointTrajectoryController
+        traj_topic = self.action_topic_name.replace('/follow_joint_trajectory', '/joint_trajectory')
+        self._traj_sub = self._node.create_subscription(
+            JointTrajectory,
+            traj_topic,
+            self._on_trajectory_topic,
+            10,
+        )
+        print("[Info][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: subscribe topic {}" \
+            .format(traj_topic))
+        print("[Info][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: publish state on {} and {}" \
+            .format(state_topic, controller_state_topic))
 
         self.started = True
 
@@ -680,9 +663,16 @@ class RosControlFollowJointTrajectory(RosController):
         # destroy action server
         if self._action_server is not None:
             print("[Info][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: destroy action server: {}" \
-                .format(self._schema.GetPrim().GetPath()))
+                .format(self.action_topic_name))
             # self._action_server.destroy()
             self._action_server = None
+        # destroy topic subscription
+        if self._traj_sub is not None:
+            try:
+                self._node.destroy_subscription(self._traj_sub)
+            except Exception:
+                pass
+            self._traj_sub = None
         self._action_goal_handle = None
         self._action_goal = None
 
@@ -701,14 +691,12 @@ class RosControlFollowJointTrajectory(RosController):
         """Initialize the articulation and register joints
         """
         # get articulation
-        relationships = self._schema.GetArticulationPrimRel().GetTargets()
-        path = relationships[0].GetPrimPath().pathString
-        self._articulation = self._dci.get_articulation(path)
+        self._articulation = self.dci.get_articulation(self.articulation_path)
         if self._articulation == _dynamic_control.INVALID_HANDLE:
-            print("[Warning][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: {} is not an articulation".format(path))
+            print("[Warning][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: {} is not an articulation".format(self.articulation_path))
             return
-        
-        dof_props = self._dci.get_articulation_dof_properties(self._articulation)
+
+        dof_props = self.dci.get_articulation_dof_properties(self._articulation)
         if dof_props is None:
             return
 
@@ -717,21 +705,21 @@ class RosControlFollowJointTrajectory(RosController):
         has_limits = dof_props["hasLimits"]
 
         # get joints
-        for i in range(self._dci.get_articulation_dof_count(self._articulation)):
-            dof_ptr = self._dci.get_articulation_dof(self._articulation, i)
+        for i in range(self.dci.get_articulation_dof_count(self._articulation)):
+            dof_ptr = self.dci.get_articulation_dof(self._articulation, i)
             if dof_ptr != _dynamic_control.DofType.DOF_NONE:
-                dof_name = self._dci.get_dof_name(dof_ptr)
+                dof_name = self.dci.get_dof_name(dof_ptr)
                 if dof_name not in self._joints:
-                    _joint = self._dci.find_articulation_joint(self._articulation, dof_name)
+                    _joint = self.dci.find_articulation_joint(self._articulation, dof_name)
                     self._joints[dof_name] = {"joint": _joint,
-                                              "type": self._dci.get_joint_type(_joint),
-                                              "dof": self._dci.find_articulation_dof(self._articulation, dof_name), 
-                                              "lower": lower_limits[i], 
-                                              "upper": upper_limits[i], 
+                                              "type": self.dci.get_joint_type(_joint),
+                                              "dof": self.dci.find_articulation_dof(self._articulation, dof_name),
+                                              "lower": lower_limits[i],
+                                              "upper": upper_limits[i],
                                               "has_limits": has_limits[i]}
 
         if not self._joints:
-            print("[Warning][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: no joints found in {}".format(path))
+            print("[Warning][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: no joints found in {}".format(self.articulation_path))
             self.started = False
 
     def _set_joint_position(self, name: str, target_position: float) -> None:
@@ -742,6 +730,18 @@ class RosControlFollowJointTrajectory(RosController):
         :param target_position: The target position
         :type target_position: float
         """
+        # Planner/filter bugs must never inject NaN into PhysX: one non-finite DOF
+        # target invalidates the whole articulation (and all TF derived from it).
+        # Goals are validated on receipt; this is the last line of defense.
+        if not math.isfinite(float(target_position)):
+            key = (name, repr(target_position))
+            warned = getattr(self, '_invalid_target_warned', set())
+            if key not in warned:
+                warned.add(key)
+                self._invalid_target_warned = warned
+                print("[Warning][semu.robotics.ros2_bridge] {}: ignored non-finite target {}={}"
+                      .format(self.action_topic_name, name, target_position), flush=True)
+            return
         # clip target position
         if self._joints[name]["has_limits"]:
             target_position = min(max(target_position, self._joints[name]["lower"]), self._joints[name]["upper"])
@@ -749,7 +749,7 @@ class RosControlFollowJointTrajectory(RosController):
         if self._joints[name]["type"] == _dynamic_control.JOINT_PRISMATIC:
             target_position /= get_stage_units()
         # set target position
-        self._dci.set_dof_position_target(self._joints[name]["dof"], target_position)
+        self.dci.set_dof_position_target(self._joints[name]["dof"], target_position)
 
     def _get_joint_position(self, name: str) -> float:
         """Get the current position of a joint in the articulation
@@ -760,7 +760,7 @@ class RosControlFollowJointTrajectory(RosController):
         :return: The current position of the joint
         :rtype: float
         """
-        position = self._dci.get_dof_state(self._joints[name]["dof"], _dynamic_control.STATE_POS).pos
+        position = self.dci.get_dof_state(self._joints[name]["dof"], _dynamic_control.STATE_POS).pos
         if self._joints[name]["type"] == _dynamic_control.JOINT_PRISMATIC:
             return position * get_stage_units()
         return position
@@ -789,26 +789,149 @@ class RosControlFollowJointTrajectory(RosController):
                     .format(name, list(self._joints.keys())))
                 return GoalResponse.REJECT
 
-        # reject if there is an active goal
-        if self._action_goal is not None:
-            print("[Warning][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: multiple goals not supported")
+        # reject malformed trajectories (empty, short point, NaN/inf positions);
+        # NaN/inf velocities are replaced by 0 (they are only used for feedback)
+        joint_count = len(goal.trajectory.joint_names)
+        if not goal.trajectory.points:
+            print("[Warning][semu.robotics.ros2_bridge] {}: rejected empty trajectory"
+                  .format(self.action_topic_name), flush=True)
             return GoalResponse.REJECT
+        for point_index, point in enumerate(goal.trajectory.points):
+            if len(point.positions) < joint_count:
+                print("[Warning][semu.robotics.ros2_bridge] {}: rejected short positions at point {} ({} < {})"
+                      .format(self.action_topic_name, point_index, len(point.positions), joint_count), flush=True)
+                return GoalResponse.REJECT
+            invalid = [(goal.trajectory.joint_names[i], point.positions[i])
+                       for i in range(joint_count) if not math.isfinite(float(point.positions[i]))]
+            if invalid:
+                print("[Warning][semu.robotics.ros2_bridge] {}: rejected non-finite positions at point {}: {}"
+                      .format(self.action_topic_name, point_index, invalid), flush=True)
+                return GoalResponse.REJECT
+            if point.velocities:
+                sanitized = [float(v) if math.isfinite(float(v)) else 0.0 for v in point.velocities]
+                if sanitized != list(point.velocities):
+                    point.velocities = sanitized
+                    print("[Warning][semu.robotics.ros2_bridge] {}: replaced non-finite velocities with 0 at point {}"
+                          .format(self.action_topic_name, point_index), flush=True)
+
+        # Preempt any in-flight goal so streaming clients can replace the
+        # active trajectory. The previous _on_execute loop polls _action_goal
+        # and exits with INVALID_GOAL once we clear it.
+        if self._action_goal is not None:
+            old_handle = self._action_goal_handle
+            self._action_goal = None
+            if old_handle is not None and old_handle.is_active:
+                try:
+                    old_handle.abort()
+                except Exception as exc:
+                    print("[Warning][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: abort failed: {}" \
+                        .format(exc))
+            self._action_goal_handle = None
+
+        # Pad zero time_from_start so single-point trajectories become a
+        # 2-point interpolation with enough physical time to converge.
+        if goal.trajectory.points:
+            first_tfs = goal.trajectory.points[0].time_from_start
+            if first_tfs.sec == 0 and first_tfs.nanosec == 0:
+                pad_total_ns = int(self._zero_time_pad_sec * 1e9)
+                goal.trajectory.points[0].time_from_start.sec = pad_total_ns // 1_000_000_000
+                goal.trajectory.points[0].time_from_start.nanosec = pad_total_ns % 1_000_000_000
 
         # check initial position
         if goal.trajectory.points[0].time_from_start:
-            initial_point = JointTrajectoryPoint(positions=[self._get_joint_position(name) for name in goal.trajectory.joint_names],
-                                                 time_from_start=Duration().to_msg())
+            initial_point = JointTrajectoryPoint(
+                positions=[
+                    self._get_joint_position(name)
+                    for name in goal.trajectory.joint_names
+                ],
+                time_from_start=Duration().to_msg(),
+            )
             goal.trajectory.points.insert(0, initial_point)
-        
+
         # reset internal data
         self._action_goal_handle = None
         self._action_start_time = None
         self._action_result_message = None
+        self._action_point_index = 1
 
         # store goal data
         self._action_goal = goal
 
         return GoalResponse.ACCEPT
+
+    def _on_trajectory_topic(self, msg: JointTrajectory) -> None:
+        """Topic-interface entry point.
+
+        Runs on the ROS executor thread. To avoid racing with the physics
+        simulation on DCI calls, this method only validates the message and
+        stashes it. step() picks it up on the main thread.
+        """
+        for name in msg.joint_names:
+            if name not in self._joints:
+                print("[Warning][semu.robotics.ros2_bridge] RosControlFollowJointTrajectory: topic msg joints don't match ({} not in {})" \
+                    .format(name, list(self._joints.keys())))
+                return
+        if not msg.points:
+            return
+        joint_count = len(msg.joint_names)
+        for point_index, point in enumerate(msg.points):
+            if len(point.positions) < joint_count or any(
+                    not math.isfinite(float(v)) for v in point.positions[:joint_count]):
+                print("[Warning][semu.robotics.ros2_bridge] {}: ignored invalid topic trajectory point {}"
+                      .format(self.action_topic_name, point_index), flush=True)
+                return
+            if point.velocities:
+                point.velocities = [float(v) if math.isfinite(float(v)) else 0.0 for v in point.velocities]
+        with self._pending_lock:
+            self._pending_topic_msg = msg
+
+    def _install_pending_trajectory(self) -> None:
+        """Promote a pending topic msg to the active trajectory (main thread only)."""
+        with self._pending_lock:
+            msg = self._pending_topic_msg
+            self._pending_topic_msg = None
+        if msg is None:
+            return
+
+        # Preempt any in-flight trajectory.
+        if self._action_goal is not None:
+            self._action_goal = None
+            self._action_goal_handle = None
+
+        # Single-point trajectories are setpoint commands ("go to this pose").
+        # Bypass the interpolator entirely and write joint targets directly —
+        # the DCI position controller handles physical convergence. Running a
+        # state-machine interpolation per msg means each new streaming goal
+        # preempts the previous one mid-flight (pumas head_node at 10 Hz with
+        # 1 s pad → ~10% progress per cycle; pumas arm_node with 0.2 s →
+        # ~50% per cycle), which makes the joint barely track the stream.
+        # time_from_start on a single point is only a deadline hint, not a
+        # forced interpolation duration.
+        if len(msg.points) == 1:
+            self.dci.wake_up_articulation(self._articulation)
+            point = msg.points[0]
+            for i, name in enumerate(msg.joint_names):
+                if i < len(point.positions):
+                    self._set_joint_position(name, point.positions[i])
+            return
+
+        # Multi-point / non-zero trajectory: run the interpolator.
+        # Insert current state as t=0 anchor for interpolation.
+        initial_point = JointTrajectoryPoint(
+            positions=[
+                self._get_joint_position(name) for name in msg.joint_names
+            ],
+            time_from_start=Duration().to_msg(),
+        )
+        msg.points.insert(0, initial_point)
+
+        goal = FollowJointTrajectory.Goal()
+        goal.trajectory = msg
+        self._action_start_time = self._node.get_clock().now().nanoseconds / 1e9
+        self._action_result_message = None
+        self._action_point_index = 1
+        self._action_goal = goal
+        # _action_goal_handle stays None -> step() treats this as topic mode
 
     def _on_cancel(self, goal_handle: 'rclpy.action.server.ServerGoalHandle') -> 'rclpy.action.server.CancelResponse':
         """Callback function for handling cancel requests
@@ -826,9 +949,11 @@ class RosControlFollowJointTrajectory(RosController):
         self._action_goal_handle = None
         self._action_start_time = None
         self._action_result_message = None
-        goal_handle.destroy()
+        # Leave the ServerGoalHandle to rclpy's ActionServer. Destroying it here
+        # makes the result_timeout expiry destroy it a second time (KeyError in
+        # the executor), which kills every action server on this node.
         return CancelResponse.ACCEPT
-        
+
     def _on_execute(self, goal_handle: 'rclpy.action.server.ServerGoalHandle') -> 'FollowJointTrajectory.Result':
         """Callback function for processing accepted goals
 
@@ -854,15 +979,7 @@ class RosControlFollowJointTrajectory(RosController):
         self._action_goal_handle = None
         return self._action_result_message
 
-    def update_step(self, dt: float) -> None:
-        """Kit update step
-
-        :param dt: The delta time
-        :type dt: float
-        """
-        pass
-
-    def physics_step(self, dt: float) -> None:
+    def step(self, dt: float) -> None:
         """Physics update step
 
         :param dt: The physics delta time
@@ -874,21 +991,41 @@ class RosControlFollowJointTrajectory(RosController):
         if not self._joints:
             self._init_articulation()
             return
-        # update articulation
-        if self._action_goal is not None and self._action_goal_handle is not None:
+        # Promote any pending topic-mode trajectory (received on the ROS
+        # executor thread) so the DCI call for current joint state happens
+        # here on the main thread.
+        if self._pending_topic_msg is not None:
+            self._install_pending_trajectory()
+        # update articulation if a trajectory is active (action or topic mode)
+        if self._action_goal is not None:
             self._action_dt = dt
             # end of trajectory
             if self._action_point_index >= len(self._action_goal.trajectory.points):
+                handle = self._action_goal_handle
                 self._action_goal = None
-                self._action_result_message = FollowJointTrajectory.Result()
-                self._action_result_message.error_code = self._action_result_message.SUCCESSFUL
-                if self._action_goal_handle is not None:
-                    self._action_goal_handle.succeed()
+                # Set the terminal state BEFORE publishing the result message.
+                # _on_execute (executor thread) returns as soon as
+                # _action_result_message is set; if the handle has no terminal
+                # state yet rclpy aborts it, racing with our succeed() -> "invalid
+                # transition" exception -> the ROS thread dies and every action
+                # server stops responding.
+                result = FollowJointTrajectory.Result()
+                result.error_code = result.SUCCESSFUL
+                if handle is not None:
+                    if handle.is_active:
+                        try:
+                            handle.succeed()
+                        except Exception:
+                            pass
                     self._action_goal_handle = None
+                self._action_result_message = result
                 return
-            
+
             previous_point = self._action_goal.trajectory.points[self._action_point_index - 1]
             current_point = self._action_goal.trajectory.points[self._action_point_index]
+            if self._action_start_time is None:
+                # 開始時刻未設定のまま物理ステップが先行するレースのガード
+                self._action_start_time = self._node.get_clock().now().nanoseconds / 1e9
             time_passed = self._node.get_clock().now().nanoseconds / 1e9 - self._action_start_time
 
             # set target using linear interpolation
@@ -896,7 +1033,7 @@ class RosControlFollowJointTrajectory(RosController):
                 ratio = (time_passed - self._duration_to_seconds(previous_point.time_from_start)) \
                       / (self._duration_to_seconds(current_point.time_from_start) \
                           - self._duration_to_seconds(previous_point.time_from_start))
-                self._dci.wake_up_articulation(self._articulation)
+                self.dci.wake_up_articulation(self._articulation)
                 for i, name in enumerate(self._action_goal.trajectory.joint_names):
                     side = -1 if current_point.positions[i] < previous_point.positions[i] else 1
                     target_position = previous_point.positions[i] \
@@ -905,34 +1042,120 @@ class RosControlFollowJointTrajectory(RosController):
             # send feedback
             else:
                 self._action_point_index += 1
-                self._action_feedback_message.joint_names = list(self._action_goal.trajectory.joint_names)
-                self._action_feedback_message.actual.positions = [self._get_joint_position(name) \
-                    for name in self._action_goal.trajectory.joint_names]
-                self._action_feedback_message.actual.time_from_start = Duration(seconds=time_passed).to_msg()
+                # set joint targets for the new current point when advancing the index
+                if self._action_point_index < len(self._action_goal.trajectory.points):
+                    new_point = self._action_goal.trajectory.points[self._action_point_index]
+                    self.dci.wake_up_articulation(self._articulation)
+                    for i, name in enumerate(self._action_goal.trajectory.joint_names):
+                        if i < len(new_point.positions):
+                            target_position = new_point.positions[i]
+                            self._set_joint_position(name, target_position)
+                # feedback only when an action handle is attached
                 if self._action_goal_handle is not None:
-                    self._action_goal_handle.publish_feedback(self._action_feedback_message)
+                    self._action_feedback_message.joint_names = list(self._action_goal.trajectory.joint_names)
+                    self._action_feedback_message.actual.positions = [self._get_joint_position(name) \
+                        for name in self._action_goal.trajectory.joint_names]
+                    self._action_feedback_message.actual.time_from_start = Duration(seconds=time_passed).to_msg()
+                    try:
+                        self._action_goal_handle.publish_feedback(self._action_feedback_message)
+                    except Exception:
+                        pass
+        # publish controller state for this timestep
+        if self._state_pub is not None:
+            msg = JointTrajectoryControllerState()
+            msg.header.stamp = self._node.get_clock().now().to_msg()
 
+            # Scope joint_names to this controller's joints when declared;
+            # otherwise fall back to all articulation joints. Skip names that
+            # aren't registered in self._joints (defensive).
+            if self.controlled_joints:
+                joint_names = [n for n in self.controlled_joints if n in self._joints]
+            else:
+                joint_names = sorted(self._joints.keys())
+            msg.joint_names = joint_names
+
+            # actual state from articulation
+            actual_positions = []
+            actual_velocities = []
+            for name in joint_names:
+                try:
+                    pos = self._get_joint_position(name)
+                except Exception:
+                    pos = 0.0
+                actual_positions.append(pos)
+                try:
+                    vel = self.dci.get_dof_state(
+                        self._joints[name]["dof"],
+                        _dynamic_control.STATE_VEL,
+                    ).vel
+                except Exception:
+                    vel = 0.0
+                actual_velocities.append(vel)
+
+            msg.actual.positions = list(actual_positions)
+            msg.actual.velocities = list(actual_velocities)
+
+            # desired state from current trajectory point if a goal is active
+            desired_positions = list(actual_positions)
+            desired_velocities = [0.0] * len(joint_names)
+
+            if self._action_goal is not None and self._action_goal.trajectory.points:
+                # clamp index in case it's already at/after the end
+                point_index = min(self._action_point_index, len(self._action_goal.trajectory.points) - 1)
+                current_point = self._action_goal.trajectory.points[point_index]
+
+                # map trajectory joint order to controller joint order
+                for i, name in enumerate(self._action_goal.trajectory.joint_names):
+                    if name in self._joints and name in joint_names:
+                        j_idx = joint_names.index(name)
+                        if i < len(current_point.positions):
+                            desired_positions[j_idx] = current_point.positions[i]
+                        if i < len(current_point.velocities):
+                            desired_velocities[j_idx] = current_point.velocities[i]
+
+            msg.desired.positions = desired_positions
+            msg.desired.velocities = desired_velocities
+
+            # error = desired - actual
+            error_positions = [
+                dp - ap for dp, ap in zip(desired_positions, actual_positions)
+            ]
+            error_velocities = [
+                dv - av for dv, av in zip(desired_velocities, actual_velocities)
+            ]
+            msg.error.positions = error_positions
+            msg.error.velocities = error_velocities
+
+            # ROS 2 control_msgs/JointTrajectoryControllerState has BOTH the
+            # legacy fields (actual/desired/error) and the new ones
+            # (feedback/reference/error/output). pumas's arm_node reads
+            # `feedback.positions[i]` without a size check and segfaults if
+            # left empty — mirror the legacy data into the new fields.
+            msg.feedback.positions = list(actual_positions)
+            msg.feedback.velocities = list(actual_velocities)
+            msg.reference.positions = list(desired_positions)
+            msg.reference.velocities = list(desired_velocities)
+            msg.output.positions = list(desired_positions)
+            msg.output.velocities = list(desired_velocities)
+
+            self._state_pub.publish(msg)
+            if self._controller_state_pub is not None:
+                self._controller_state_pub.publish(msg)
 
 class RosControllerGripperCommand(RosController):
-    def __init__(self, 
-                 node: Node, 
-                 usd_context: 'omni.usd._usd.UsdContext', 
-                 schema: 'ROSSchema.RosBridgeComponent', 
-                 dci: 'omni.isaac.dynamic_control.DynamicControl') -> None:
+    def __init__(self,
+                 node: Node,
+                 _dci: 'omni.isaac.dynamic_control.DynamicControl') -> None:
         """GripperCommand interface
 
         :param node: The ROS node
         :type node: rclpy.node.Node
-        :param usd_context: The USD context
-        :type usd_context: omni.usd._usd.UsdContext
-        :param schema: The ROS bridge schema
-        :type schema: ROSSchema.RosBridgeComponent
         :param dci: The dynamic control interface
         :type dci: omni.isaac.dynamic_control.DynamicControl
         """
-        super().__init__(node, usd_context, schema)
+        super().__init__(node)
         
-        self._dci = dci
+        self.dci = _dci
 
         self._articulation = _dynamic_control.INVALID_HANDLE
         self._joints = {}
@@ -951,42 +1174,28 @@ class RosControllerGripperCommand(RosController):
         # feedback / result
         self._action_result_message = None
         self._action_feedback_message = GripperCommand.Feedback()
-        
-    def start(self) -> None:
+        self._action_type = GripperCommand  # サブクラスが実機の型に上書き可能
+
+    def start(self, _articulation_path, _action_topic_name) -> None:
         """Start the action server
         """
         print("[Info][semu.robotics.ros2_bridge] RosControllerGripperCommand: starting {}" \
-            .format(self._schema.__class__.__name__))
-        
-        # get attributes and relationships
-        action_namespace = self._schema.GetActionNamespaceAttr().Get()
-        controller_name = self._schema.GetControllerNameAttr().Get()
+            .format(_action_topic_name))
 
-        relationships = self._schema.GetArticulationPrimRel().GetTargets()
-        if not len(relationships):
-            print("[Warning][semu.robotics.ros2_bridge] RosControllerGripperCommand: empty relationships")
-            return
-        elif len(relationships) == 1:
-            print("[Warning][semu.robotics.ros2_bridge] RosControllerGripperCommand: relationship is not a group")
-            return
-        
-        # check for articulation API
-        stage = self._usd_context.get_stage()
-        path = relationships[0].GetPrimPath().pathString
-        if not stage.GetPrimAtPath(path).HasAPI(PhysxSchema.PhysxArticulationAPI):
-            print("[Warning][semu.robotics.ros2_bridge] RosControllerGripperCommand: {} doesn't have PhysxArticulationAPI".format(path))
-            return
+        # get attributes and relationships
+        self.articulation_path = _articulation_path
+        self.action_topic_name = _action_topic_name
 
         # start action server
         self._action_server = ActionServer(self._node,
-                                           GripperCommand,
-                                           controller_name + action_namespace,
+                                           self._action_type,
+                                           self.action_topic_name,
                                            execute_callback=self._on_execute,
                                            goal_callback=self._on_goal,
                                            cancel_callback=self._on_cancel,
                                            handle_accepted_callback=self._on_handle_accepted)
         print("[Info][semu.robotics.ros2_bridge] RosControllerGripperCommand: register action {}" \
-            .format(controller_name + action_namespace))
+            .format(self.action_topic_name))
 
         self.started = True
 
@@ -997,8 +1206,7 @@ class RosControllerGripperCommand(RosController):
         self._articulation = _dynamic_control.INVALID_HANDLE
         # destroy action server
         if self._action_server is not None:
-            print("[Info][semu.robotics.ros2_bridge] RosControllerGripperCommand: destroy action server: {}" \
-                .format(self._schema.GetPrim().GetPath()))
+            print("[Info][semu.robotics.ros2_bridge] RosControllerGripperCommand: destroy action server")
             # self._action_server.destroy()
             self._action_server = None
         self._action_goal_handle = None
@@ -1019,14 +1227,12 @@ class RosControllerGripperCommand(RosController):
         """Initialize the articulation and register joints
         """
         # get articulation
-        relationships = self._schema.GetArticulationPrimRel().GetTargets()
-        path = relationships[0].GetPrimPath().pathString
-        self._articulation = self._dci.get_articulation(path)
+        self._articulation = self.dci.get_articulation(self.articulation_path)
         if self._articulation == _dynamic_control.INVALID_HANDLE:
-            print("[Warning][semu.robotics.ros2_bridge] RosControllerGripperCommand: {} is not an articulation".format(path))
+            print("[Warning][semu.robotics.ros2_bridge] RosControllerGripperCommand: {} is not an articulation".format(self.articulation_path))
             return
-        
-        dof_props = self._dci.get_articulation_dof_properties(self._articulation)
+
+        dof_props = self.dci.get_articulation_dof_properties(self._articulation)
         if dof_props is None:
             return
 
@@ -1035,26 +1241,21 @@ class RosControllerGripperCommand(RosController):
         has_limits = dof_props["hasLimits"]
 
         # get joints
-        # TODO: move to another relationship in the schema
-        paths = [relationship.GetPrimPath().pathString for relationship in relationships[1:]]
-
-        for i in range(self._dci.get_articulation_dof_count(self._articulation)):
-            dof_ptr = self._dci.get_articulation_dof(self._articulation, i)
+        for i in range(self.dci.get_articulation_dof_count(self._articulation)):
+            dof_ptr = self.dci.get_articulation_dof(self._articulation, i)
             if dof_ptr != _dynamic_control.DofType.DOF_NONE:
-                # add only required joints
-                if self._dci.get_dof_path(dof_ptr) in paths:
-                    dof_name = self._dci.get_dof_name(dof_ptr)
-                    if dof_name not in self._joints:
-                        _joint = self._dci.find_articulation_joint(self._articulation, dof_name)
-                        self._joints[dof_name] = {"joint": _joint,
-                                                  "type": self._dci.get_joint_type(_joint),
-                                                  "dof": self._dci.find_articulation_dof(self._articulation, dof_name), 
-                                                  "lower": lower_limits[i], 
-                                                  "upper": upper_limits[i], 
-                                                  "has_limits": has_limits[i]}
+                dof_name = self.dci.get_dof_name(dof_ptr)
+                if dof_name not in self._joints:
+                    _joint = self.dci.find_articulation_joint(self._articulation, dof_name)
+                    self._joints[dof_name] = {"joint": _joint,
+                                                "type": self.dci.get_joint_type(_joint),
+                                                "dof": self.dci.find_articulation_dof(self._articulation, dof_name),
+                                                "lower": lower_limits[i],
+                                                "upper": upper_limits[i],
+                                                "has_limits": has_limits[i]}
 
         if not self._joints:
-            print("[Warning][semu.robotics.ros2_bridge] RosControllerGripperCommand: no joints found in {}".format(path))
+            print("[Warning][semu.robotics.ros2_bridge] RosControllerGripperCommand: no joints found in {}".format(self.articulation_path))
             self.started = False
 
     def _set_joint_position(self, name: str, target_position: float) -> None:
@@ -1065,6 +1266,18 @@ class RosControllerGripperCommand(RosController):
         :param target_position: The target position
         :type target_position: float
         """
+        # Planner/filter bugs must never inject NaN into PhysX: one non-finite DOF
+        # target invalidates the whole articulation (and all TF derived from it).
+        # Goals are validated on receipt; this is the last line of defense.
+        if not math.isfinite(float(target_position)):
+            key = (name, repr(target_position))
+            warned = getattr(self, '_invalid_target_warned', set())
+            if key not in warned:
+                warned.add(key)
+                self._invalid_target_warned = warned
+                print("[Warning][semu.robotics.ros2_bridge] {}: ignored non-finite target {}={}"
+                      .format(self.action_topic_name, name, target_position), flush=True)
+            return
         # clip target position
         if self._joints[name]["has_limits"]:
             target_position = min(max(target_position, self._joints[name]["lower"]), self._joints[name]["upper"])
@@ -1072,7 +1285,7 @@ class RosControllerGripperCommand(RosController):
         if self._joints[name]["type"] == _dynamic_control.JOINT_PRISMATIC:
             target_position /= get_stage_units()
         # set target position
-        self._dci.set_dof_position_target(self._joints[name]["dof"], target_position)
+        self.dci.set_dof_position_target(self._joints[name]["dof"], target_position)
 
     def _get_joint_position(self, name: str) -> float:
         """Get the current position of a joint in the articulation
@@ -1083,7 +1296,7 @@ class RosControllerGripperCommand(RosController):
         :return: The current position of the joint
         :rtype: float
         """
-        position = self._dci.get_dof_state(self._joints[name]["dof"], _dynamic_control.STATE_POS).pos
+        position = self.dci.get_dof_state(self._joints[name]["dof"], _dynamic_control.STATE_POS).pos
         if self._joints[name]["type"] == _dynamic_control.JOINT_PRISMATIC:
             return position * get_stage_units()
         return position
@@ -1105,11 +1318,10 @@ class RosControllerGripperCommand(RosController):
         :return: Whether the goal was accepted
         :rtype: rclpy.action.server.GoalResponse
         """
-        # reject if there is an active goal
+        # 以前のゴールが残っていても reject せず preempt (最新コマンド優先)
         if self._action_goal is not None:
-            print("[Warning][semu.robotics.ros2_bridge] RosControllerGripperCommand: multiple goals not supported")
-            return GoalResponse.REJECT
-        
+            print("[Info][semu.robotics.ros2_bridge] RosControllerGripperCommand: preempting previous goal")
+
         # reset internal data
         self._action_goal = None
         self._action_goal_handle = None
@@ -1136,7 +1348,7 @@ class RosControllerGripperCommand(RosController):
         self._action_start_time = None
         self._action_result_message = None
         self._action_previous_position_sum = float("inf")
-        goal_handle.destroy()
+        # see RosControlFollowJointTrajectory._on_cancel: rclpy owns the handle
         return CancelResponse.ACCEPT
 
     def _on_execute(self, goal_handle: 'rclpy.action.server.ServerGoalHandle') -> 'GripperCommand.Result':
@@ -1156,23 +1368,38 @@ class RosControllerGripperCommand(RosController):
         self._action_goal_handle = goal_handle
         self._action_goal = goal_handle.request
         # wait for the goal to be executed
-        while self._action_result_message is None: 
+        while self._action_result_message is None:
             if self._action_goal is None:
-                return GripperCommand.Result()
+                # サーバのアクション型に合った Result を返す
+                return self._action_type.Result()
             time.sleep(self._action_dt)
         self._action_goal = None
         self._action_goal_handle = None
         return self._action_result_message
 
-    def update_step(self, dt: float) -> None:
-        """Kit update step
+    def _finish(self, result: 'GripperCommand.Result', succeeded: bool) -> None:
+        """Terminate the active goal: terminal state first, result message last.
 
-        :param dt: The delta time
-        :type dt: float
+        _on_execute (executor thread) returns as soon as _action_result_message
+        is set. If the handle has no terminal state at that moment rclpy aborts
+        it, racing with our own succeed()/abort() ("invalid transition" -> the
+        ROS thread dies). So the handle is transitioned before the result is
+        published.
         """
-        pass
+        handle = self._action_goal_handle
+        if handle is not None:
+            if handle.is_active:
+                try:
+                    if succeeded:
+                        handle.succeed()
+                    else:
+                        handle.abort()
+                except Exception:
+                    pass
+            self._action_goal_handle = None
+        self._action_result_message = result
 
-    def physics_step(self, dt: float) -> None:
+    def step(self, dt: float) -> None:
         """Physics update step
 
         :param dt: The physics delta time
@@ -1189,7 +1416,7 @@ class RosControllerGripperCommand(RosController):
             self._action_dt = dt
             target_position = self._action_goal.command.position
             # set target
-            self._dci.wake_up_articulation(self._articulation)
+            self.dci.wake_up_articulation(self._articulation)
             for name in self._joints:
                 self._set_joint_position(name, target_position)
             # end (position reached)
@@ -1203,31 +1430,26 @@ class RosControllerGripperCommand(RosController):
                     position_reached = False
                     break
             if position_reached:
-                self._action_result_message = GripperCommand.Result()
-                self._action_result_message.position = position
-                self._action_result_message.stalled = False
-                self._action_result_message.reached_goal = True
-                if self._action_goal_handle is not None:
-                    self._action_goal_handle.succeed()
-                    self._action_goal_handle = None
+                # terminal state first, result message last (see
+                # RosControlFollowJointTrajectory.step for the reason)
+                result = GripperCommand.Result()
+                result.position = position
+                result.stalled = False
+                result.reached_goal = True
+                self._finish(result, succeeded=True)
                 return
             # end (stalled)
             if abs(current_position_sum - self._action_previous_position_sum) < 1e-6:
-                self._action_result_message = GripperCommand.Result()
-                self._action_result_message.position = position
-                self._action_result_message.stalled = True
-                self._action_result_message.reached_goal = False
-                if self._action_goal_handle is not None:
-                    self._action_goal_handle.succeed()
-                    self._action_goal_handle = None
+                result = GripperCommand.Result()
+                result.position = position
+                result.stalled = True
+                result.reached_goal = False
+                self._finish(result, succeeded=True)
                 return
             self._action_previous_position_sum = current_position_sum
             # end (timeout)
             time_passed = self._node.get_clock().now().nanoseconds / 1e9 - self._action_start_time
             if time_passed >= self._action_timeout:
-                self._action_result_message = GripperCommand.Result()
-                if self._action_goal_handle is not None:
-                    self._action_goal_handle.abort()
-                    self._action_goal_handle = None
+                self._finish(GripperCommand.Result(), succeeded=False)
             # TODO: send feedback
             # self._action_goal_handle.publish_feedback(self._action_feedback_message)

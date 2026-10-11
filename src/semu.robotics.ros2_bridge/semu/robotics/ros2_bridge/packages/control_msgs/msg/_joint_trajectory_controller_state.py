@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -48,6 +50,10 @@ class Metaclass_JointTrajectoryControllerState(type):
             if JointTrajectoryPoint.__class__._TYPE_SUPPORT is None:
                 JointTrajectoryPoint.__class__.__import_type_support__()
 
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            if MultiDOFJointTrajectoryPoint.__class__._TYPE_SUPPORT is None:
+                MultiDOFJointTrajectoryPoint.__class__.__import_type_support__()
+
     @classmethod
     def __prepare__(cls, name, bases, **kwargs):
         # list constant names here so that they appear in the help text of
@@ -63,17 +69,37 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
     __slots__ = [
         '_header',
         '_joint_names',
+        '_reference',
+        '_feedback',
+        '_error',
+        '_output',
         '_desired',
         '_actual',
-        '_error',
+        '_multi_dof_joint_names',
+        '_multi_dof_reference',
+        '_multi_dof_feedback',
+        '_multi_dof_error',
+        '_multi_dof_output',
+        '_multi_dof_desired',
+        '_multi_dof_actual',
     ]
 
     _fields_and_field_types = {
         'header': 'std_msgs/Header',
         'joint_names': 'sequence<string>',
+        'reference': 'trajectory_msgs/JointTrajectoryPoint',
+        'feedback': 'trajectory_msgs/JointTrajectoryPoint',
+        'error': 'trajectory_msgs/JointTrajectoryPoint',
+        'output': 'trajectory_msgs/JointTrajectoryPoint',
         'desired': 'trajectory_msgs/JointTrajectoryPoint',
         'actual': 'trajectory_msgs/JointTrajectoryPoint',
-        'error': 'trajectory_msgs/JointTrajectoryPoint',
+        'multi_dof_joint_names': 'sequence<string>',
+        'multi_dof_reference': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
+        'multi_dof_feedback': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
+        'multi_dof_error': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
+        'multi_dof_output': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
+        'multi_dof_desired': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
+        'multi_dof_actual': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
     }
 
     SLOT_TYPES = (
@@ -82,6 +108,16 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.UnboundedString()),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
@@ -92,11 +128,30 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
         self.header = kwargs.get('header', Header())
         self.joint_names = kwargs.get('joint_names', [])
         from trajectory_msgs.msg import JointTrajectoryPoint
+        self.reference = kwargs.get('reference', JointTrajectoryPoint())
+        from trajectory_msgs.msg import JointTrajectoryPoint
+        self.feedback = kwargs.get('feedback', JointTrajectoryPoint())
+        from trajectory_msgs.msg import JointTrajectoryPoint
+        self.error = kwargs.get('error', JointTrajectoryPoint())
+        from trajectory_msgs.msg import JointTrajectoryPoint
+        self.output = kwargs.get('output', JointTrajectoryPoint())
+        from trajectory_msgs.msg import JointTrajectoryPoint
         self.desired = kwargs.get('desired', JointTrajectoryPoint())
         from trajectory_msgs.msg import JointTrajectoryPoint
         self.actual = kwargs.get('actual', JointTrajectoryPoint())
-        from trajectory_msgs.msg import JointTrajectoryPoint
-        self.error = kwargs.get('error', JointTrajectoryPoint())
+        self.multi_dof_joint_names = kwargs.get('multi_dof_joint_names', [])
+        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+        self.multi_dof_reference = kwargs.get('multi_dof_reference', MultiDOFJointTrajectoryPoint())
+        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+        self.multi_dof_feedback = kwargs.get('multi_dof_feedback', MultiDOFJointTrajectoryPoint())
+        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+        self.multi_dof_error = kwargs.get('multi_dof_error', MultiDOFJointTrajectoryPoint())
+        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+        self.multi_dof_output = kwargs.get('multi_dof_output', MultiDOFJointTrajectoryPoint())
+        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+        self.multi_dof_desired = kwargs.get('multi_dof_desired', MultiDOFJointTrajectoryPoint())
+        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+        self.multi_dof_actual = kwargs.get('multi_dof_actual', MultiDOFJointTrajectoryPoint())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -131,11 +186,31 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
             return False
         if self.joint_names != other.joint_names:
             return False
+        if self.reference != other.reference:
+            return False
+        if self.feedback != other.feedback:
+            return False
+        if self.error != other.error:
+            return False
+        if self.output != other.output:
+            return False
         if self.desired != other.desired:
             return False
         if self.actual != other.actual:
             return False
-        if self.error != other.error:
+        if self.multi_dof_joint_names != other.multi_dof_joint_names:
+            return False
+        if self.multi_dof_reference != other.multi_dof_reference:
+            return False
+        if self.multi_dof_feedback != other.multi_dof_feedback:
+            return False
+        if self.multi_dof_error != other.multi_dof_error:
+            return False
+        if self.multi_dof_output != other.multi_dof_output:
+            return False
+        if self.multi_dof_desired != other.multi_dof_desired:
+            return False
+        if self.multi_dof_actual != other.multi_dof_actual:
             return False
         return True
 
@@ -144,7 +219,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def header(self):
         """Message field 'header'."""
         return self._header
@@ -158,7 +233,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
                 "The 'header' field must be a sub message of type 'Header'"
         self._header = value
 
-    @property
+    @builtins.property
     def joint_names(self):
         """Message field 'joint_names'."""
         return self._joint_names
@@ -181,7 +256,63 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
                 "The 'joint_names' field must be a set or sequence and each value of type 'str'"
         self._joint_names = value
 
-    @property
+    @builtins.property
+    def reference(self):
+        """Message field 'reference'."""
+        return self._reference
+
+    @reference.setter
+    def reference(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import JointTrajectoryPoint
+            assert \
+                isinstance(value, JointTrajectoryPoint), \
+                "The 'reference' field must be a sub message of type 'JointTrajectoryPoint'"
+        self._reference = value
+
+    @builtins.property
+    def feedback(self):
+        """Message field 'feedback'."""
+        return self._feedback
+
+    @feedback.setter
+    def feedback(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import JointTrajectoryPoint
+            assert \
+                isinstance(value, JointTrajectoryPoint), \
+                "The 'feedback' field must be a sub message of type 'JointTrajectoryPoint'"
+        self._feedback = value
+
+    @builtins.property
+    def error(self):
+        """Message field 'error'."""
+        return self._error
+
+    @error.setter
+    def error(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import JointTrajectoryPoint
+            assert \
+                isinstance(value, JointTrajectoryPoint), \
+                "The 'error' field must be a sub message of type 'JointTrajectoryPoint'"
+        self._error = value
+
+    @builtins.property
+    def output(self):
+        """Message field 'output'."""
+        return self._output
+
+    @output.setter
+    def output(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import JointTrajectoryPoint
+            assert \
+                isinstance(value, JointTrajectoryPoint), \
+                "The 'output' field must be a sub message of type 'JointTrajectoryPoint'"
+        self._output = value
+
+    @builtins.property
     def desired(self):
         """Message field 'desired'."""
         return self._desired
@@ -195,7 +326,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
                 "The 'desired' field must be a sub message of type 'JointTrajectoryPoint'"
         self._desired = value
 
-    @property
+    @builtins.property
     def actual(self):
         """Message field 'actual'."""
         return self._actual
@@ -209,16 +340,109 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
                 "The 'actual' field must be a sub message of type 'JointTrajectoryPoint'"
         self._actual = value
 
-    @property
-    def error(self):
-        """Message field 'error'."""
-        return self._error
+    @builtins.property
+    def multi_dof_joint_names(self):
+        """Message field 'multi_dof_joint_names'."""
+        return self._multi_dof_joint_names
 
-    @error.setter
-    def error(self, value):
+    @multi_dof_joint_names.setter
+    def multi_dof_joint_names(self, value):
         if __debug__:
-            from trajectory_msgs.msg import JointTrajectoryPoint
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
             assert \
-                isinstance(value, JointTrajectoryPoint), \
-                "The 'error' field must be a sub message of type 'JointTrajectoryPoint'"
-        self._error = value
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 all(isinstance(v, str) for v in value) and
+                 True), \
+                "The 'multi_dof_joint_names' field must be a set or sequence and each value of type 'str'"
+        self._multi_dof_joint_names = value
+
+    @builtins.property
+    def multi_dof_reference(self):
+        """Message field 'multi_dof_reference'."""
+        return self._multi_dof_reference
+
+    @multi_dof_reference.setter
+    def multi_dof_reference(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            assert \
+                isinstance(value, MultiDOFJointTrajectoryPoint), \
+                "The 'multi_dof_reference' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
+        self._multi_dof_reference = value
+
+    @builtins.property
+    def multi_dof_feedback(self):
+        """Message field 'multi_dof_feedback'."""
+        return self._multi_dof_feedback
+
+    @multi_dof_feedback.setter
+    def multi_dof_feedback(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            assert \
+                isinstance(value, MultiDOFJointTrajectoryPoint), \
+                "The 'multi_dof_feedback' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
+        self._multi_dof_feedback = value
+
+    @builtins.property
+    def multi_dof_error(self):
+        """Message field 'multi_dof_error'."""
+        return self._multi_dof_error
+
+    @multi_dof_error.setter
+    def multi_dof_error(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            assert \
+                isinstance(value, MultiDOFJointTrajectoryPoint), \
+                "The 'multi_dof_error' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
+        self._multi_dof_error = value
+
+    @builtins.property
+    def multi_dof_output(self):
+        """Message field 'multi_dof_output'."""
+        return self._multi_dof_output
+
+    @multi_dof_output.setter
+    def multi_dof_output(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            assert \
+                isinstance(value, MultiDOFJointTrajectoryPoint), \
+                "The 'multi_dof_output' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
+        self._multi_dof_output = value
+
+    @builtins.property
+    def multi_dof_desired(self):
+        """Message field 'multi_dof_desired'."""
+        return self._multi_dof_desired
+
+    @multi_dof_desired.setter
+    def multi_dof_desired(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            assert \
+                isinstance(value, MultiDOFJointTrajectoryPoint), \
+                "The 'multi_dof_desired' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
+        self._multi_dof_desired = value
+
+    @builtins.property
+    def multi_dof_actual(self):
+        """Message field 'multi_dof_actual'."""
+        return self._multi_dof_actual
+
+    @multi_dof_actual.setter
+    def multi_dof_actual(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            assert \
+                isinstance(value, MultiDOFJointTrajectoryPoint), \
+                "The 'multi_dof_actual' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
+        self._multi_dof_actual = value

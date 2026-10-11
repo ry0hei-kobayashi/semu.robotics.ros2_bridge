@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -44,6 +46,10 @@ class Metaclass_FollowJointTrajectory_Goal(type):
             if Duration.__class__._TYPE_SUPPORT is None:
                 Duration.__class__.__import_type_support__()
 
+            from control_msgs.msg import JointComponentTolerance
+            if JointComponentTolerance.__class__._TYPE_SUPPORT is None:
+                JointComponentTolerance.__class__.__import_type_support__()
+
             from control_msgs.msg import JointTolerance
             if JointTolerance.__class__._TYPE_SUPPORT is None:
                 JointTolerance.__class__.__import_type_support__()
@@ -51,6 +57,10 @@ class Metaclass_FollowJointTrajectory_Goal(type):
             from trajectory_msgs.msg import JointTrajectory
             if JointTrajectory.__class__._TYPE_SUPPORT is None:
                 JointTrajectory.__class__.__import_type_support__()
+
+            from trajectory_msgs.msg import MultiDOFJointTrajectory
+            if MultiDOFJointTrajectory.__class__._TYPE_SUPPORT is None:
+                MultiDOFJointTrajectory.__class__.__import_type_support__()
 
     @classmethod
     def __prepare__(cls, name, bases, **kwargs):
@@ -66,22 +76,31 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
 
     __slots__ = [
         '_trajectory',
+        '_multi_dof_trajectory',
         '_path_tolerance',
+        '_component_path_tolerance',
         '_goal_tolerance',
+        '_component_goal_tolerance',
         '_goal_time_tolerance',
     ]
 
     _fields_and_field_types = {
         'trajectory': 'trajectory_msgs/JointTrajectory',
+        'multi_dof_trajectory': 'trajectory_msgs/MultiDOFJointTrajectory',
         'path_tolerance': 'sequence<control_msgs/JointTolerance>',
+        'component_path_tolerance': 'sequence<control_msgs/JointComponentTolerance>',
         'goal_tolerance': 'sequence<control_msgs/JointTolerance>',
+        'component_goal_tolerance': 'sequence<control_msgs/JointComponentTolerance>',
         'goal_time_tolerance': 'builtin_interfaces/Duration',
     }
 
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectory'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectory'),  # noqa: E501
         rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.NamespacedType(['control_msgs', 'msg'], 'JointTolerance')),  # noqa: E501
+        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.NamespacedType(['control_msgs', 'msg'], 'JointComponentTolerance')),  # noqa: E501
         rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.NamespacedType(['control_msgs', 'msg'], 'JointTolerance')),  # noqa: E501
+        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.NamespacedType(['control_msgs', 'msg'], 'JointComponentTolerance')),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['builtin_interfaces', 'msg'], 'Duration'),  # noqa: E501
     )
 
@@ -91,8 +110,12 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from trajectory_msgs.msg import JointTrajectory
         self.trajectory = kwargs.get('trajectory', JointTrajectory())
+        from trajectory_msgs.msg import MultiDOFJointTrajectory
+        self.multi_dof_trajectory = kwargs.get('multi_dof_trajectory', MultiDOFJointTrajectory())
         self.path_tolerance = kwargs.get('path_tolerance', [])
+        self.component_path_tolerance = kwargs.get('component_path_tolerance', [])
         self.goal_tolerance = kwargs.get('goal_tolerance', [])
+        self.component_goal_tolerance = kwargs.get('component_goal_tolerance', [])
         from builtin_interfaces.msg import Duration
         self.goal_time_tolerance = kwargs.get('goal_time_tolerance', Duration())
 
@@ -127,9 +150,15 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
             return False
         if self.trajectory != other.trajectory:
             return False
+        if self.multi_dof_trajectory != other.multi_dof_trajectory:
+            return False
         if self.path_tolerance != other.path_tolerance:
             return False
+        if self.component_path_tolerance != other.component_path_tolerance:
+            return False
         if self.goal_tolerance != other.goal_tolerance:
+            return False
+        if self.component_goal_tolerance != other.component_goal_tolerance:
             return False
         if self.goal_time_tolerance != other.goal_time_tolerance:
             return False
@@ -140,7 +169,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def trajectory(self):
         """Message field 'trajectory'."""
         return self._trajectory
@@ -154,7 +183,21 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
                 "The 'trajectory' field must be a sub message of type 'JointTrajectory'"
         self._trajectory = value
 
-    @property
+    @builtins.property
+    def multi_dof_trajectory(self):
+        """Message field 'multi_dof_trajectory'."""
+        return self._multi_dof_trajectory
+
+    @multi_dof_trajectory.setter
+    def multi_dof_trajectory(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectory
+            assert \
+                isinstance(value, MultiDOFJointTrajectory), \
+                "The 'multi_dof_trajectory' field must be a sub message of type 'MultiDOFJointTrajectory'"
+        self._multi_dof_trajectory = value
+
+    @builtins.property
     def path_tolerance(self):
         """Message field 'path_tolerance'."""
         return self._path_tolerance
@@ -178,7 +221,31 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
                 "The 'path_tolerance' field must be a set or sequence and each value of type 'JointTolerance'"
         self._path_tolerance = value
 
-    @property
+    @builtins.property
+    def component_path_tolerance(self):
+        """Message field 'component_path_tolerance'."""
+        return self._component_path_tolerance
+
+    @component_path_tolerance.setter
+    def component_path_tolerance(self, value):
+        if __debug__:
+            from control_msgs.msg import JointComponentTolerance
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
+            assert \
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 all(isinstance(v, JointComponentTolerance) for v in value) and
+                 True), \
+                "The 'component_path_tolerance' field must be a set or sequence and each value of type 'JointComponentTolerance'"
+        self._component_path_tolerance = value
+
+    @builtins.property
     def goal_tolerance(self):
         """Message field 'goal_tolerance'."""
         return self._goal_tolerance
@@ -202,7 +269,31 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
                 "The 'goal_tolerance' field must be a set or sequence and each value of type 'JointTolerance'"
         self._goal_tolerance = value
 
-    @property
+    @builtins.property
+    def component_goal_tolerance(self):
+        """Message field 'component_goal_tolerance'."""
+        return self._component_goal_tolerance
+
+    @component_goal_tolerance.setter
+    def component_goal_tolerance(self, value):
+        if __debug__:
+            from control_msgs.msg import JointComponentTolerance
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
+            assert \
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 all(isinstance(v, JointComponentTolerance) for v in value) and
+                 True), \
+                "The 'component_goal_tolerance' field must be a set or sequence and each value of type 'JointComponentTolerance'"
+        self._component_goal_tolerance = value
+
+    @builtins.property
     def goal_time_tolerance(self):
         """Message field 'goal_time_tolerance'."""
         return self._goal_time_tolerance
@@ -218,6 +309,9 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -381,7 +475,7 @@ class FollowJointTrajectory_Result(metaclass=Metaclass_FollowJointTrajectory_Res
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def error_code(self):
         """Message field 'error_code'."""
         return self._error_code
@@ -396,7 +490,7 @@ class FollowJointTrajectory_Result(metaclass=Metaclass_FollowJointTrajectory_Res
                 "The 'error_code' field must be an integer in [-2147483648, 2147483647]"
         self._error_code = value
 
-    @property
+    @builtins.property
     def error_string(self):
         """Message field 'error_string'."""
         return self._error_string
@@ -411,6 +505,9 @@ class FollowJointTrajectory_Result(metaclass=Metaclass_FollowJointTrajectory_Res
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -456,6 +553,10 @@ class Metaclass_FollowJointTrajectory_Feedback(type):
             if JointTrajectoryPoint.__class__._TYPE_SUPPORT is None:
                 JointTrajectoryPoint.__class__.__import_type_support__()
 
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            if MultiDOFJointTrajectoryPoint.__class__._TYPE_SUPPORT is None:
+                MultiDOFJointTrajectoryPoint.__class__.__import_type_support__()
+
     @classmethod
     def __prepare__(cls, name, bases, **kwargs):
         # list constant names here so that they appear in the help text of
@@ -474,6 +575,10 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
         '_desired',
         '_actual',
         '_error',
+        '_multi_dof_joint_names',
+        '_multi_dof_desired',
+        '_multi_dof_actual',
+        '_multi_dof_error',
     ]
 
     _fields_and_field_types = {
@@ -482,6 +587,10 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
         'desired': 'trajectory_msgs/JointTrajectoryPoint',
         'actual': 'trajectory_msgs/JointTrajectoryPoint',
         'error': 'trajectory_msgs/JointTrajectoryPoint',
+        'multi_dof_joint_names': 'sequence<string>',
+        'multi_dof_desired': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
+        'multi_dof_actual': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
+        'multi_dof_error': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
     }
 
     SLOT_TYPES = (
@@ -490,6 +599,10 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.UnboundedString()),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
@@ -505,6 +618,13 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
         self.actual = kwargs.get('actual', JointTrajectoryPoint())
         from trajectory_msgs.msg import JointTrajectoryPoint
         self.error = kwargs.get('error', JointTrajectoryPoint())
+        self.multi_dof_joint_names = kwargs.get('multi_dof_joint_names', [])
+        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+        self.multi_dof_desired = kwargs.get('multi_dof_desired', MultiDOFJointTrajectoryPoint())
+        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+        self.multi_dof_actual = kwargs.get('multi_dof_actual', MultiDOFJointTrajectoryPoint())
+        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+        self.multi_dof_error = kwargs.get('multi_dof_error', MultiDOFJointTrajectoryPoint())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -545,6 +665,14 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
             return False
         if self.error != other.error:
             return False
+        if self.multi_dof_joint_names != other.multi_dof_joint_names:
+            return False
+        if self.multi_dof_desired != other.multi_dof_desired:
+            return False
+        if self.multi_dof_actual != other.multi_dof_actual:
+            return False
+        if self.multi_dof_error != other.multi_dof_error:
+            return False
         return True
 
     @classmethod
@@ -552,7 +680,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def header(self):
         """Message field 'header'."""
         return self._header
@@ -566,7 +694,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
                 "The 'header' field must be a sub message of type 'Header'"
         self._header = value
 
-    @property
+    @builtins.property
     def joint_names(self):
         """Message field 'joint_names'."""
         return self._joint_names
@@ -589,7 +717,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
                 "The 'joint_names' field must be a set or sequence and each value of type 'str'"
         self._joint_names = value
 
-    @property
+    @builtins.property
     def desired(self):
         """Message field 'desired'."""
         return self._desired
@@ -603,7 +731,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
                 "The 'desired' field must be a sub message of type 'JointTrajectoryPoint'"
         self._desired = value
 
-    @property
+    @builtins.property
     def actual(self):
         """Message field 'actual'."""
         return self._actual
@@ -617,7 +745,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
                 "The 'actual' field must be a sub message of type 'JointTrajectoryPoint'"
         self._actual = value
 
-    @property
+    @builtins.property
     def error(self):
         """Message field 'error'."""
         return self._error
@@ -631,8 +759,76 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
                 "The 'error' field must be a sub message of type 'JointTrajectoryPoint'"
         self._error = value
 
+    @builtins.property
+    def multi_dof_joint_names(self):
+        """Message field 'multi_dof_joint_names'."""
+        return self._multi_dof_joint_names
+
+    @multi_dof_joint_names.setter
+    def multi_dof_joint_names(self, value):
+        if __debug__:
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
+            assert \
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 all(isinstance(v, str) for v in value) and
+                 True), \
+                "The 'multi_dof_joint_names' field must be a set or sequence and each value of type 'str'"
+        self._multi_dof_joint_names = value
+
+    @builtins.property
+    def multi_dof_desired(self):
+        """Message field 'multi_dof_desired'."""
+        return self._multi_dof_desired
+
+    @multi_dof_desired.setter
+    def multi_dof_desired(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            assert \
+                isinstance(value, MultiDOFJointTrajectoryPoint), \
+                "The 'multi_dof_desired' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
+        self._multi_dof_desired = value
+
+    @builtins.property
+    def multi_dof_actual(self):
+        """Message field 'multi_dof_actual'."""
+        return self._multi_dof_actual
+
+    @multi_dof_actual.setter
+    def multi_dof_actual(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            assert \
+                isinstance(value, MultiDOFJointTrajectoryPoint), \
+                "The 'multi_dof_actual' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
+        self._multi_dof_actual = value
+
+    @builtins.property
+    def multi_dof_error(self):
+        """Message field 'multi_dof_error'."""
+        return self._multi_dof_error
+
+    @multi_dof_error.setter
+    def multi_dof_error(self, value):
+        if __debug__:
+            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+            assert \
+                isinstance(value, MultiDOFJointTrajectoryPoint), \
+                "The 'multi_dof_error' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
+        self._multi_dof_error = value
+
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -754,7 +950,7 @@ class FollowJointTrajectory_SendGoal_Request(metaclass=Metaclass_FollowJointTraj
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -768,7 +964,7 @@ class FollowJointTrajectory_SendGoal_Request(metaclass=Metaclass_FollowJointTraj
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def goal(self):
         """Message field 'goal'."""
         return self._goal
@@ -784,6 +980,9 @@ class FollowJointTrajectory_SendGoal_Request(metaclass=Metaclass_FollowJointTraj
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -900,7 +1099,7 @@ class FollowJointTrajectory_SendGoal_Response(metaclass=Metaclass_FollowJointTra
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def accepted(self):
         """Message field 'accepted'."""
         return self._accepted
@@ -913,7 +1112,7 @@ class FollowJointTrajectory_SendGoal_Response(metaclass=Metaclass_FollowJointTra
                 "The 'accepted' field must be of type 'bool'"
         self._accepted = value
 
-    @property
+    @builtins.property
     def stamp(self):
         """Message field 'stamp'."""
         return self._stamp
@@ -965,6 +1164,9 @@ class FollowJointTrajectory_SendGoal(metaclass=Metaclass_FollowJointTrajectory_S
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1075,7 +1277,7 @@ class FollowJointTrajectory_GetResult_Request(metaclass=Metaclass_FollowJointTra
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -1091,6 +1293,9 @@ class FollowJointTrajectory_GetResult_Request(metaclass=Metaclass_FollowJointTra
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1207,7 +1412,7 @@ class FollowJointTrajectory_GetResult_Response(metaclass=Metaclass_FollowJointTr
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def status(self):
         """Message field 'status'."""
         return self._status
@@ -1222,7 +1427,7 @@ class FollowJointTrajectory_GetResult_Response(metaclass=Metaclass_FollowJointTr
                 "The 'status' field must be an integer in [-128, 127]"
         self._status = value
 
-    @property
+    @builtins.property
     def result(self):
         """Message field 'result'."""
         return self._result
@@ -1274,6 +1479,9 @@ class FollowJointTrajectory_GetResult(metaclass=Metaclass_FollowJointTrajectory_
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1395,7 +1603,7 @@ class FollowJointTrajectory_FeedbackMessage(metaclass=Metaclass_FollowJointTraje
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -1409,7 +1617,7 @@ class FollowJointTrajectory_FeedbackMessage(metaclass=Metaclass_FollowJointTraje
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def feedback(self):
         """Message field 'feedback'."""
         return self._feedback

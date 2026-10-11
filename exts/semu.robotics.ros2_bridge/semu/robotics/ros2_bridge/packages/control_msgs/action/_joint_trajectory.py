@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -113,7 +115,7 @@ class JointTrajectory_Goal(metaclass=Metaclass_JointTrajectory_Goal):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def trajectory(self):
         """Message field 'trajectory'."""
         return self._trajectory
@@ -333,6 +335,9 @@ class JointTrajectory_Feedback(metaclass=Metaclass_JointTrajectory_Feedback):
 # Import statements for member types
 
 # already imported above
+# import builtins
+
+# already imported above
 # import rosidl_parser.definition
 
 
@@ -452,7 +457,7 @@ class JointTrajectory_SendGoal_Request(metaclass=Metaclass_JointTrajectory_SendG
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -466,7 +471,7 @@ class JointTrajectory_SendGoal_Request(metaclass=Metaclass_JointTrajectory_SendG
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def goal(self):
         """Message field 'goal'."""
         return self._goal
@@ -482,6 +487,9 @@ class JointTrajectory_SendGoal_Request(metaclass=Metaclass_JointTrajectory_SendG
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -598,7 +606,7 @@ class JointTrajectory_SendGoal_Response(metaclass=Metaclass_JointTrajectory_Send
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def accepted(self):
         """Message field 'accepted'."""
         return self._accepted
@@ -611,7 +619,7 @@ class JointTrajectory_SendGoal_Response(metaclass=Metaclass_JointTrajectory_Send
                 "The 'accepted' field must be of type 'bool'"
         self._accepted = value
 
-    @property
+    @builtins.property
     def stamp(self):
         """Message field 'stamp'."""
         return self._stamp
@@ -663,6 +671,9 @@ class JointTrajectory_SendGoal(metaclass=Metaclass_JointTrajectory_SendGoal):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -773,7 +784,7 @@ class JointTrajectory_GetResult_Request(metaclass=Metaclass_JointTrajectory_GetR
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -789,6 +800,9 @@ class JointTrajectory_GetResult_Request(metaclass=Metaclass_JointTrajectory_GetR
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -905,7 +919,7 @@ class JointTrajectory_GetResult_Response(metaclass=Metaclass_JointTrajectory_Get
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def status(self):
         """Message field 'status'."""
         return self._status
@@ -920,7 +934,7 @@ class JointTrajectory_GetResult_Response(metaclass=Metaclass_JointTrajectory_Get
                 "The 'status' field must be an integer in [-128, 127]"
         self._status = value
 
-    @property
+    @builtins.property
     def result(self):
         """Message field 'result'."""
         return self._result
@@ -972,6 +986,9 @@ class JointTrajectory_GetResult(metaclass=Metaclass_JointTrajectory_GetResult):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1093,7 +1110,7 @@ class JointTrajectory_FeedbackMessage(metaclass=Metaclass_JointTrajectory_Feedba
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -1107,7 +1124,7 @@ class JointTrajectory_FeedbackMessage(metaclass=Metaclass_JointTrajectory_Feedba
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def feedback(self):
         """Message field 'feedback'."""
         return self._feedback

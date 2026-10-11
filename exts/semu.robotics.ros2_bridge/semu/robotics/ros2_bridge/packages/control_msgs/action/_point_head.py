@@ -5,6 +5,10 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
+import math  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -147,7 +151,7 @@ class PointHead_Goal(metaclass=Metaclass_PointHead_Goal):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def target(self):
         """Message field 'target'."""
         return self._target
@@ -161,7 +165,7 @@ class PointHead_Goal(metaclass=Metaclass_PointHead_Goal):
                 "The 'target' field must be a sub message of type 'PointStamped'"
         self._target = value
 
-    @property
+    @builtins.property
     def pointing_axis(self):
         """Message field 'pointing_axis'."""
         return self._pointing_axis
@@ -175,7 +179,7 @@ class PointHead_Goal(metaclass=Metaclass_PointHead_Goal):
                 "The 'pointing_axis' field must be a sub message of type 'Vector3'"
         self._pointing_axis = value
 
-    @property
+    @builtins.property
     def pointing_frame(self):
         """Message field 'pointing_frame'."""
         return self._pointing_frame
@@ -188,7 +192,7 @@ class PointHead_Goal(metaclass=Metaclass_PointHead_Goal):
                 "The 'pointing_frame' field must be of type 'str'"
         self._pointing_frame = value
 
-    @property
+    @builtins.property
     def min_duration(self):
         """Message field 'min_duration'."""
         return self._min_duration
@@ -202,7 +206,7 @@ class PointHead_Goal(metaclass=Metaclass_PointHead_Goal):
                 "The 'min_duration' field must be a sub message of type 'Duration'"
         self._min_duration = value
 
-    @property
+    @builtins.property
     def max_velocity(self):
         """Message field 'max_velocity'."""
         return self._max_velocity
@@ -213,6 +217,8 @@ class PointHead_Goal(metaclass=Metaclass_PointHead_Goal):
             assert \
                 isinstance(value, float), \
                 "The 'max_velocity' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'max_velocity' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._max_velocity = value
 
 
@@ -320,6 +326,12 @@ class PointHead_Result(metaclass=Metaclass_PointHead_Result):
 # Import statements for member types
 
 # already imported above
+# import builtins
+
+# already imported above
+# import math
+
+# already imported above
 # import rosidl_parser.definition
 
 
@@ -423,7 +435,7 @@ class PointHead_Feedback(metaclass=Metaclass_PointHead_Feedback):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def pointing_angle_error(self):
         """Message field 'pointing_angle_error'."""
         return self._pointing_angle_error
@@ -434,10 +446,15 @@ class PointHead_Feedback(metaclass=Metaclass_PointHead_Feedback):
             assert \
                 isinstance(value, float), \
                 "The 'pointing_angle_error' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'pointing_angle_error' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._pointing_angle_error = value
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -559,7 +576,7 @@ class PointHead_SendGoal_Request(metaclass=Metaclass_PointHead_SendGoal_Request)
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -573,7 +590,7 @@ class PointHead_SendGoal_Request(metaclass=Metaclass_PointHead_SendGoal_Request)
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def goal(self):
         """Message field 'goal'."""
         return self._goal
@@ -589,6 +606,9 @@ class PointHead_SendGoal_Request(metaclass=Metaclass_PointHead_SendGoal_Request)
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -705,7 +725,7 @@ class PointHead_SendGoal_Response(metaclass=Metaclass_PointHead_SendGoal_Respons
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def accepted(self):
         """Message field 'accepted'."""
         return self._accepted
@@ -718,7 +738,7 @@ class PointHead_SendGoal_Response(metaclass=Metaclass_PointHead_SendGoal_Respons
                 "The 'accepted' field must be of type 'bool'"
         self._accepted = value
 
-    @property
+    @builtins.property
     def stamp(self):
         """Message field 'stamp'."""
         return self._stamp
@@ -770,6 +790,9 @@ class PointHead_SendGoal(metaclass=Metaclass_PointHead_SendGoal):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -880,7 +903,7 @@ class PointHead_GetResult_Request(metaclass=Metaclass_PointHead_GetResult_Reques
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -896,6 +919,9 @@ class PointHead_GetResult_Request(metaclass=Metaclass_PointHead_GetResult_Reques
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1012,7 +1038,7 @@ class PointHead_GetResult_Response(metaclass=Metaclass_PointHead_GetResult_Respo
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def status(self):
         """Message field 'status'."""
         return self._status
@@ -1027,7 +1053,7 @@ class PointHead_GetResult_Response(metaclass=Metaclass_PointHead_GetResult_Respo
                 "The 'status' field must be an integer in [-128, 127]"
         self._status = value
 
-    @property
+    @builtins.property
     def result(self):
         """Message field 'result'."""
         return self._result
@@ -1079,6 +1105,9 @@ class PointHead_GetResult(metaclass=Metaclass_PointHead_GetResult):
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1200,7 +1229,7 @@ class PointHead_FeedbackMessage(metaclass=Metaclass_PointHead_FeedbackMessage):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -1214,7 +1243,7 @@ class PointHead_FeedbackMessage(metaclass=Metaclass_PointHead_FeedbackMessage):
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def feedback(self):
         """Message field 'feedback'."""
         return self._feedback

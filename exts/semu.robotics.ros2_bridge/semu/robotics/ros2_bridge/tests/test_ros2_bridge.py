@@ -38,8 +38,8 @@ class TestROS2BridgeNode(Node):
     def __init__(self):
         super().__init__('test_ros2_bridge')
 
-        self.get_attribute_service_name = '/get_attribute'
-        self.set_attribute_service_name = '/set_attribute'
+        self.get_attribute_service_name = '/get_prim_attribute'
+        self.set_attribute_service_name = '/set_prim_attribute'
         self.gripper_command_action_name = "/panda_hand_controller/gripper_command"
         self.follow_joint_trajectory_action_name = "/panda_arm_controller/follow_joint_trajectory"
 

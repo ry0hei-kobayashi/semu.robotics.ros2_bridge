@@ -213,3 +213,10 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+# ---- fork (isaac5.1-humble): built artifacts are committed on purpose, like upstream ----
+!src/semu.robotics.ros2_bridge/bin/*.so
+!src/semu.robotics.ros2_bridge/semu/robotics/ros2_bridge/packages/**
+!src/semu.robotics.ros2_bridge/semu/robotics/ros2_bridge/_ros2_bridge.*.so
+!exts/**
+!tools/*.sh

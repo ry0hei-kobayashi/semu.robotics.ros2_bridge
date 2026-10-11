@@ -5,6 +5,10 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
+import math  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -190,7 +194,7 @@ class PidState(metaclass=Metaclass_PidState):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def header(self):
         """Message field 'header'."""
         return self._header
@@ -204,7 +208,7 @@ class PidState(metaclass=Metaclass_PidState):
                 "The 'header' field must be a sub message of type 'Header'"
         self._header = value
 
-    @property
+    @builtins.property
     def timestep(self):
         """Message field 'timestep'."""
         return self._timestep
@@ -218,7 +222,7 @@ class PidState(metaclass=Metaclass_PidState):
                 "The 'timestep' field must be a sub message of type 'Duration'"
         self._timestep = value
 
-    @property
+    @builtins.property
     def error(self):
         """Message field 'error'."""
         return self._error
@@ -229,9 +233,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'error' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'error' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._error = value
 
-    @property
+    @builtins.property
     def error_dot(self):
         """Message field 'error_dot'."""
         return self._error_dot
@@ -242,9 +248,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'error_dot' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'error_dot' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._error_dot = value
 
-    @property
+    @builtins.property
     def p_error(self):
         """Message field 'p_error'."""
         return self._p_error
@@ -255,9 +263,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'p_error' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'p_error' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._p_error = value
 
-    @property
+    @builtins.property
     def i_error(self):
         """Message field 'i_error'."""
         return self._i_error
@@ -268,9 +278,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'i_error' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'i_error' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._i_error = value
 
-    @property
+    @builtins.property
     def d_error(self):
         """Message field 'd_error'."""
         return self._d_error
@@ -281,9 +293,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'd_error' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'd_error' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._d_error = value
 
-    @property
+    @builtins.property
     def p_term(self):
         """Message field 'p_term'."""
         return self._p_term
@@ -294,9 +308,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'p_term' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'p_term' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._p_term = value
 
-    @property
+    @builtins.property
     def i_term(self):
         """Message field 'i_term'."""
         return self._i_term
@@ -307,9 +323,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'i_term' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'i_term' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._i_term = value
 
-    @property
+    @builtins.property
     def d_term(self):
         """Message field 'd_term'."""
         return self._d_term
@@ -320,9 +338,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'd_term' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'd_term' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._d_term = value
 
-    @property
+    @builtins.property
     def i_max(self):
         """Message field 'i_max'."""
         return self._i_max
@@ -333,9 +353,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'i_max' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'i_max' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._i_max = value
 
-    @property
+    @builtins.property
     def i_min(self):
         """Message field 'i_min'."""
         return self._i_min
@@ -346,9 +368,11 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'i_min' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'i_min' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._i_min = value
 
-    @property
+    @builtins.property
     def output(self):
         """Message field 'output'."""
         return self._output
@@ -359,4 +383,6 @@ class PidState(metaclass=Metaclass_PidState):
             assert \
                 isinstance(value, float), \
                 "The 'output' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'output' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._output = value

@@ -5,6 +5,10 @@
 
 # Import statements for member types
 
+import builtins  # noqa: E402, I100
+
+import math  # noqa: E402, I100
+
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -125,7 +129,7 @@ class SingleJointPosition_Goal(metaclass=Metaclass_SingleJointPosition_Goal):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def position(self):
         """Message field 'position'."""
         return self._position
@@ -136,9 +140,11 @@ class SingleJointPosition_Goal(metaclass=Metaclass_SingleJointPosition_Goal):
             assert \
                 isinstance(value, float), \
                 "The 'position' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'position' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._position = value
 
-    @property
+    @builtins.property
     def min_duration(self):
         """Message field 'min_duration'."""
         return self._min_duration
@@ -152,7 +158,7 @@ class SingleJointPosition_Goal(metaclass=Metaclass_SingleJointPosition_Goal):
                 "The 'min_duration' field must be a sub message of type 'Duration'"
         self._min_duration = value
 
-    @property
+    @builtins.property
     def max_velocity(self):
         """Message field 'max_velocity'."""
         return self._max_velocity
@@ -163,6 +169,8 @@ class SingleJointPosition_Goal(metaclass=Metaclass_SingleJointPosition_Goal):
             assert \
                 isinstance(value, float), \
                 "The 'max_velocity' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'max_velocity' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._max_velocity = value
 
 
@@ -268,6 +276,12 @@ class SingleJointPosition_Result(metaclass=Metaclass_SingleJointPosition_Result)
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
+
+# already imported above
+# import math
 
 # already imported above
 # import rosidl_parser.definition
@@ -396,7 +410,7 @@ class SingleJointPosition_Feedback(metaclass=Metaclass_SingleJointPosition_Feedb
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def header(self):
         """Message field 'header'."""
         return self._header
@@ -410,7 +424,7 @@ class SingleJointPosition_Feedback(metaclass=Metaclass_SingleJointPosition_Feedb
                 "The 'header' field must be a sub message of type 'Header'"
         self._header = value
 
-    @property
+    @builtins.property
     def position(self):
         """Message field 'position'."""
         return self._position
@@ -421,9 +435,11 @@ class SingleJointPosition_Feedback(metaclass=Metaclass_SingleJointPosition_Feedb
             assert \
                 isinstance(value, float), \
                 "The 'position' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'position' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._position = value
 
-    @property
+    @builtins.property
     def velocity(self):
         """Message field 'velocity'."""
         return self._velocity
@@ -434,9 +450,11 @@ class SingleJointPosition_Feedback(metaclass=Metaclass_SingleJointPosition_Feedb
             assert \
                 isinstance(value, float), \
                 "The 'velocity' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'velocity' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._velocity = value
 
-    @property
+    @builtins.property
     def error(self):
         """Message field 'error'."""
         return self._error
@@ -447,10 +465,15 @@ class SingleJointPosition_Feedback(metaclass=Metaclass_SingleJointPosition_Feedb
             assert \
                 isinstance(value, float), \
                 "The 'error' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'error' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
         self._error = value
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -572,7 +595,7 @@ class SingleJointPosition_SendGoal_Request(metaclass=Metaclass_SingleJointPositi
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -586,7 +609,7 @@ class SingleJointPosition_SendGoal_Request(metaclass=Metaclass_SingleJointPositi
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def goal(self):
         """Message field 'goal'."""
         return self._goal
@@ -602,6 +625,9 @@ class SingleJointPosition_SendGoal_Request(metaclass=Metaclass_SingleJointPositi
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -718,7 +744,7 @@ class SingleJointPosition_SendGoal_Response(metaclass=Metaclass_SingleJointPosit
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def accepted(self):
         """Message field 'accepted'."""
         return self._accepted
@@ -731,7 +757,7 @@ class SingleJointPosition_SendGoal_Response(metaclass=Metaclass_SingleJointPosit
                 "The 'accepted' field must be of type 'bool'"
         self._accepted = value
 
-    @property
+    @builtins.property
     def stamp(self):
         """Message field 'stamp'."""
         return self._stamp
@@ -783,6 +809,9 @@ class SingleJointPosition_SendGoal(metaclass=Metaclass_SingleJointPosition_SendG
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -893,7 +922,7 @@ class SingleJointPosition_GetResult_Request(metaclass=Metaclass_SingleJointPosit
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -909,6 +938,9 @@ class SingleJointPosition_GetResult_Request(metaclass=Metaclass_SingleJointPosit
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1025,7 +1057,7 @@ class SingleJointPosition_GetResult_Response(metaclass=Metaclass_SingleJointPosi
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def status(self):
         """Message field 'status'."""
         return self._status
@@ -1040,7 +1072,7 @@ class SingleJointPosition_GetResult_Response(metaclass=Metaclass_SingleJointPosi
                 "The 'status' field must be an integer in [-128, 127]"
         self._status = value
 
-    @property
+    @builtins.property
     def result(self):
         """Message field 'result'."""
         return self._result
@@ -1092,6 +1124,9 @@ class SingleJointPosition_GetResult(metaclass=Metaclass_SingleJointPosition_GetR
 
 
 # Import statements for member types
+
+# already imported above
+# import builtins
 
 # already imported above
 # import rosidl_parser.definition
@@ -1213,7 +1248,7 @@ class SingleJointPosition_FeedbackMessage(metaclass=Metaclass_SingleJointPositio
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @property
+    @builtins.property
     def goal_id(self):
         """Message field 'goal_id'."""
         return self._goal_id
@@ -1227,7 +1262,7 @@ class SingleJointPosition_FeedbackMessage(metaclass=Metaclass_SingleJointPositio
                 "The 'goal_id' field must be a sub message of type 'UUID'"
         self._goal_id = value
 
-    @property
+    @builtins.property
     def feedback(self):
         """Message field 'feedback'."""
         return self._feedback

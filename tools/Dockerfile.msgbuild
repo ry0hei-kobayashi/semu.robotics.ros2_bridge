@@ -1,0 +1,41 @@
+# Build control_msgs (humble) and add_on_msgs for Python 3.11 so that the generated
+# modules can be imported by Isaac Sim 5.1's bundled ROS 2 Humble (Python 3.11).
+#
+# Isaac Sim 5.1 ships rclpy for Python 3.11 but no CMake side (no headers, no
+# *.cmake, no *.idl), so messages cannot be generated inside Isaac. We build them
+# in a 22.04 Humble box with a python3.11 venv and point CMake at that interpreter.
+# ABI-independent C libraries (lib*__rosidl_*.so) do not depend on the Python
+# version; only the *_s__rosidl_typesupport_*.cpython-3XX.so Python extensions do.
+FROM ros:humble-ros-base-jammy
+
+ARG DEBIAN_FRONTEND=noninteractive
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        software-properties-common curl git patchelf \
+    && add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt-get update && apt-get install -y --no-install-recommends \
+        python3.11 python3.11-dev python3.11-venv \
+        build-essential cmake \
+        python3-colcon-common-extensions \
+        python3-packaging \
+        ros-humble-rosidl-default-generators \
+        ros-humble-action-msgs \
+        ros-humble-trajectory-msgs \
+        ros-humble-sensor-msgs \
+        ros-humble-geometry-msgs \
+        ros-humble-std-msgs \
+        ros-humble-builtin-interfaces \
+    && rm -rf /var/lib/apt/lists/*
+
+# Keep python3.11 in a venv: pip-installing into the system 3.11 removes the
+# dist-packages 'packaging' that colcon (3.10) needs.
+RUN python3.11 -m venv /py311 \
+    && /py311/bin/pip install --no-cache-dir --upgrade pip \
+    && /py311/bin/pip install --no-cache-dir empy==3.3.4 lark-parser numpy catkin_pkg
+
+WORKDIR /ws/src
+RUN git clone -q --depth 1 -b humble https://github.com/ros-controls/control_msgs.git
+COPY src/add_on_msgs /ws/src/add_on_msgs
+COPY tools/build_msgs.sh /build_msgs.sh
+RUN bash /build_msgs.sh
