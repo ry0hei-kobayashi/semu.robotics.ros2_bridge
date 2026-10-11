@@ -2,6 +2,21 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.1.0-isaac5.1-jazzy] - 2026-10-12 (branch isaac5.1-jazzy)
+### Changed
+- Branch for ROS 2 Jazzy: `bin/`, `packages/` and `exts/` are built against the Jazzy
+  `control_msgs` with Isaac Sim 5.1's bundled Jazzy rclpy (Python 3.11).
+  `tools/build.sh [humble|jazzy]` selects the distro; `packages/ROS_DISTRO` records
+  which one the committed artifacts are for. `extension.toml` is unchanged (Isaac 5.1
+  bundles both distros under `isaacsim.ros2.bridge`).
+
+## [1.0.1-isaac5.1] - 2026-10-12
+### Fixed
+- `JointTrajectoryControllerState` publishing on ROS 2 Jazzy: control_msgs >= 4.6
+  removed the legacy `actual` / `desired` fields, which raised an
+  AttributeError every physics step. They are now written only when present;
+  `feedback` / `reference` / `error` / `output` are always filled.
+
 ## [1.0.0-isaac5.1] - 2026-10-11 (fork: ry0hei-kobayashi, branch isaac5.1-humble)
 ### Changed
 - Rebuilt for Isaac Sim 5.1 / Python 3.11 / ROS 2 Humble: `bin/`, `packages/`

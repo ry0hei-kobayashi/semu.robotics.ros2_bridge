@@ -1092,8 +1092,12 @@ class RosControlFollowJointTrajectory(RosController):
                     vel = 0.0
                 actual_velocities.append(vel)
 
-            msg.actual.positions = list(actual_positions)
-            msg.actual.velocities = list(actual_velocities)
+            # control_msgs >= 4.6 (ROS 2 Jazzy) dropped the legacy `actual` / `desired`
+            # fields of JointTrajectoryControllerState; `feedback` / `reference` / `error` /
+            # `output` (filled below) are the current ones. Keep the legacy fields for Humble.
+            if hasattr(msg, 'actual'):
+                msg.actual.positions = list(actual_positions)
+                msg.actual.velocities = list(actual_velocities)
 
             # desired state from current trajectory point if a goal is active
             desired_positions = list(actual_positions)
@@ -1113,8 +1117,11 @@ class RosControlFollowJointTrajectory(RosController):
                         if i < len(current_point.velocities):
                             desired_velocities[j_idx] = current_point.velocities[i]
 
-            msg.desired.positions = desired_positions
-            msg.desired.velocities = desired_velocities
+            if hasattr(msg, 'desired'):  # legacy field (Humble only), see above
+
+                msg.desired.positions = desired_positions
+
+                msg.desired.velocities = desired_velocities
 
             # error = desired - actual
             error_positions = [

@@ -1,8 +1,8 @@
 ## semu.robotics.ros2_bridge — Isaac Sim 5.1 / ROS 2 Humble port
 
 Fork of [Toni-SM/semu.robotics.ros2_bridge](https://github.com/Toni-SM/semu.robotics.ros2_bridge)
-(MIT License). Branch `isaac5.1-humble` is the same extension rebuilt for Isaac Sim 5.1 /
-Python 3.11 / ROS 2 Humble: the **Attribute** services (`add_on_msgs`), the
+(MIT License). Branches `isaac5.1-humble` and `isaac5.1-jazzy` are the same extension rebuilt
+for Isaac Sim 5.1 / Python 3.11 with the bundled ROS 2 Humble or Jazzy rclpy: the **Attribute** services (`add_on_msgs`), the
 **FollowJointTrajectory** and **GripperCommand** action servers and a
 `joint_trajectory` topic interface for an Isaac Sim articulation. It can be used either
 as a Kit extension (`exts/semu.robotics.ros2_bridge`) or as a plain Python module imported
@@ -34,11 +34,14 @@ for the exact list of changes relative to upstream.
 ### Building (Python 3.11 artifacts)
 
 ```bash
-bash tools/build.sh            # needs Docker; uses nvcr.io/nvidia/isaac-sim:5.1.0
+bash tools/build.sh jazzy      # or humble; needs Docker, uses nvcr.io/nvidia/isaac-sim:5.1.0
 ```
 
-1. `tools/Dockerfile.msgbuild` builds `control_msgs` (humble) and `src/add_on_msgs`
-   for Python 3.11 in a 22.04 Humble box and writes `bin/` + `packages/`
+`packages/ROS_DISTRO` records the distro the committed artifacts were built for
+(`isaac5.1-jazzy` branch: jazzy, `isaac5.1-humble` branch: humble).
+
+1. `tools/Dockerfile.msgbuild` builds `control_msgs` (the distro branch) and `src/add_on_msgs`
+   for Python 3.11 in a `ros:<distro>-ros-base` box and writes `bin/` + `packages/`
    (RUNPATH set to `$ORIGIN/../../bin`, so no `LD_LIBRARY_PATH` is needed).
 2. The Isaac Sim image compiles `ros2_bridge.py` with Cython
    (`compile_extension.bash`) and packages `exts/` (`package_extension.bash`).

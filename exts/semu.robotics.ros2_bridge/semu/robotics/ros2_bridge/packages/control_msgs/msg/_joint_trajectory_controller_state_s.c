@@ -42,22 +42,6 @@ bool trajectory_msgs__msg__joint_trajectory_point__convert_from_py(PyObject * _p
 ROSIDL_GENERATOR_C_IMPORT
 PyObject * trajectory_msgs__msg__joint_trajectory_point__convert_to_py(void * raw_ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-bool trajectory_msgs__msg__joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
-ROSIDL_GENERATOR_C_IMPORT
-PyObject * trajectory_msgs__msg__joint_trajectory_point__convert_to_py(void * raw_ros_message);
-ROSIDL_GENERATOR_C_IMPORT
-bool trajectory_msgs__msg__joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
-ROSIDL_GENERATOR_C_IMPORT
-PyObject * trajectory_msgs__msg__joint_trajectory_point__convert_to_py(void * raw_ros_message);
-ROSIDL_GENERATOR_C_IMPORT
-bool trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
-ROSIDL_GENERATOR_C_IMPORT
-PyObject * trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(void * raw_ros_message);
-ROSIDL_GENERATOR_C_IMPORT
-bool trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
-ROSIDL_GENERATOR_C_IMPORT
-PyObject * trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(void * raw_ros_message);
-ROSIDL_GENERATOR_C_IMPORT
 bool trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(PyObject * _pymsg, void * _ros_message);
 ROSIDL_GENERATOR_C_IMPORT
 PyObject * trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(void * raw_ros_message);
@@ -207,28 +191,6 @@ bool control_msgs__msg__joint_trajectory_controller_state__convert_from_py(PyObj
     }
     Py_DECREF(field);
   }
-  {  // desired
-    PyObject * field = PyObject_GetAttrString(_pymsg, "desired");
-    if (!field) {
-      return false;
-    }
-    if (!trajectory_msgs__msg__joint_trajectory_point__convert_from_py(field, &ros_message->desired)) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_DECREF(field);
-  }
-  {  // actual
-    PyObject * field = PyObject_GetAttrString(_pymsg, "actual");
-    if (!field) {
-      return false;
-    }
-    if (!trajectory_msgs__msg__joint_trajectory_point__convert_from_py(field, &ros_message->actual)) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_DECREF(field);
-  }
   {  // multi_dof_joint_names
     PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_joint_names");
     if (!field) {
@@ -318,26 +280,13 @@ bool control_msgs__msg__joint_trajectory_controller_state__convert_from_py(PyObj
     }
     Py_DECREF(field);
   }
-  {  // multi_dof_desired
-    PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_desired");
+  {  // speed_scaling_factor
+    PyObject * field = PyObject_GetAttrString(_pymsg, "speed_scaling_factor");
     if (!field) {
       return false;
     }
-    if (!trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(field, &ros_message->multi_dof_desired)) {
-      Py_DECREF(field);
-      return false;
-    }
-    Py_DECREF(field);
-  }
-  {  // multi_dof_actual
-    PyObject * field = PyObject_GetAttrString(_pymsg, "multi_dof_actual");
-    if (!field) {
-      return false;
-    }
-    if (!trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_from_py(field, &ros_message->multi_dof_actual)) {
-      Py_DECREF(field);
-      return false;
-    }
+    assert(PyFloat_Check(field));
+    ros_message->speed_scaling_factor = PyFloat_AS_DOUBLE(field);
     Py_DECREF(field);
   }
 
@@ -458,34 +407,6 @@ PyObject * control_msgs__msg__joint_trajectory_controller_state__convert_to_py(v
       }
     }
   }
-  {  // desired
-    PyObject * field = NULL;
-    field = trajectory_msgs__msg__joint_trajectory_point__convert_to_py(&ros_message->desired);
-    if (!field) {
-      return NULL;
-    }
-    {
-      int rc = PyObject_SetAttrString(_pymessage, "desired", field);
-      Py_DECREF(field);
-      if (rc) {
-        return NULL;
-      }
-    }
-  }
-  {  // actual
-    PyObject * field = NULL;
-    field = trajectory_msgs__msg__joint_trajectory_point__convert_to_py(&ros_message->actual);
-    if (!field) {
-      return NULL;
-    }
-    {
-      int rc = PyObject_SetAttrString(_pymessage, "actual", field);
-      Py_DECREF(field);
-      if (rc) {
-        return NULL;
-      }
-    }
-  }
   {  // multi_dof_joint_names
     PyObject * field = NULL;
     size_t size = ros_message->multi_dof_joint_names.size;
@@ -568,28 +489,11 @@ PyObject * control_msgs__msg__joint_trajectory_controller_state__convert_to_py(v
       }
     }
   }
-  {  // multi_dof_desired
+  {  // speed_scaling_factor
     PyObject * field = NULL;
-    field = trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(&ros_message->multi_dof_desired);
-    if (!field) {
-      return NULL;
-    }
+    field = PyFloat_FromDouble(ros_message->speed_scaling_factor);
     {
-      int rc = PyObject_SetAttrString(_pymessage, "multi_dof_desired", field);
-      Py_DECREF(field);
-      if (rc) {
-        return NULL;
-      }
-    }
-  }
-  {  // multi_dof_actual
-    PyObject * field = NULL;
-    field = trajectory_msgs__msg__multi_dof_joint_trajectory_point__convert_to_py(&ros_message->multi_dof_actual);
-    if (!field) {
-      return NULL;
-    }
-    {
-      int rc = PyObject_SetAttrString(_pymessage, "multi_dof_actual", field);
+      int rc = PyObject_SetAttrString(_pymessage, "speed_scaling_factor", field);
       Py_DECREF(field);
       if (rc) {
         return NULL;

@@ -2,10 +2,19 @@
 # with input from control_msgs:msg/JointTrajectoryControllerState.idl
 # generated code does not contain a copyright notice
 
+# This is being done at the module level and not on the instance level to avoid looking
+# for the same variable multiple times on each instance. This variable is not supposed to
+# change during runtime so it makes sense to only look for it once.
+from os import getenv
+
+ros_python_check_fields = getenv('ROS_PYTHON_CHECK_FIELDS', default='')
+
 
 # Import statements for member types
 
 import builtins  # noqa: E402, I100
+
+import math  # noqa: E402, I100
 
 import rosidl_parser.definition  # noqa: E402, I100
 
@@ -73,15 +82,13 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
         '_feedback',
         '_error',
         '_output',
-        '_desired',
-        '_actual',
         '_multi_dof_joint_names',
         '_multi_dof_reference',
         '_multi_dof_feedback',
         '_multi_dof_error',
         '_multi_dof_output',
-        '_multi_dof_desired',
-        '_multi_dof_actual',
+        '_speed_scaling_factor',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -91,17 +98,16 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
         'feedback': 'trajectory_msgs/JointTrajectoryPoint',
         'error': 'trajectory_msgs/JointTrajectoryPoint',
         'output': 'trajectory_msgs/JointTrajectoryPoint',
-        'desired': 'trajectory_msgs/JointTrajectoryPoint',
-        'actual': 'trajectory_msgs/JointTrajectoryPoint',
         'multi_dof_joint_names': 'sequence<string>',
         'multi_dof_reference': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
         'multi_dof_feedback': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
         'multi_dof_error': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
         'multi_dof_output': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
-        'multi_dof_desired': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
-        'multi_dof_actual': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
+        'speed_scaling_factor': 'double',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['std_msgs', 'msg'], 'Header'),  # noqa: E501
         rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.UnboundedString()),  # noqa: E501
@@ -109,21 +115,23 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
-        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
-        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.UnboundedString()),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
-        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
-        rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectoryPoint'),  # noqa: E501
+        rosidl_parser.definition.BasicType('double'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from std_msgs.msg import Header
         self.header = kwargs.get('header', Header())
         self.joint_names = kwargs.get('joint_names', [])
@@ -135,10 +143,6 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
         self.error = kwargs.get('error', JointTrajectoryPoint())
         from trajectory_msgs.msg import JointTrajectoryPoint
         self.output = kwargs.get('output', JointTrajectoryPoint())
-        from trajectory_msgs.msg import JointTrajectoryPoint
-        self.desired = kwargs.get('desired', JointTrajectoryPoint())
-        from trajectory_msgs.msg import JointTrajectoryPoint
-        self.actual = kwargs.get('actual', JointTrajectoryPoint())
         self.multi_dof_joint_names = kwargs.get('multi_dof_joint_names', [])
         from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
         self.multi_dof_reference = kwargs.get('multi_dof_reference', MultiDOFJointTrajectoryPoint())
@@ -148,17 +152,14 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
         self.multi_dof_error = kwargs.get('multi_dof_error', MultiDOFJointTrajectoryPoint())
         from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
         self.multi_dof_output = kwargs.get('multi_dof_output', MultiDOFJointTrajectoryPoint())
-        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
-        self.multi_dof_desired = kwargs.get('multi_dof_desired', MultiDOFJointTrajectoryPoint())
-        from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
-        self.multi_dof_actual = kwargs.get('multi_dof_actual', MultiDOFJointTrajectoryPoint())
+        self.speed_scaling_factor = kwargs.get('speed_scaling_factor', float())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -172,11 +173,12 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -194,10 +196,6 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
             return False
         if self.output != other.output:
             return False
-        if self.desired != other.desired:
-            return False
-        if self.actual != other.actual:
-            return False
         if self.multi_dof_joint_names != other.multi_dof_joint_names:
             return False
         if self.multi_dof_reference != other.multi_dof_reference:
@@ -208,9 +206,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
             return False
         if self.multi_dof_output != other.multi_dof_output:
             return False
-        if self.multi_dof_desired != other.multi_dof_desired:
-            return False
-        if self.multi_dof_actual != other.multi_dof_actual:
+        if self.speed_scaling_factor != other.speed_scaling_factor:
             return False
         return True
 
@@ -226,7 +222,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @header.setter
     def header(self, value):
-        if __debug__:
+        if self._check_fields:
             from std_msgs.msg import Header
             assert \
                 isinstance(value, Header), \
@@ -240,7 +236,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @joint_names.setter
     def joint_names(self, value):
-        if __debug__:
+        if self._check_fields:
             from collections.abc import Sequence
             from collections.abc import Set
             from collections import UserList
@@ -263,7 +259,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @reference.setter
     def reference(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import JointTrajectoryPoint
             assert \
                 isinstance(value, JointTrajectoryPoint), \
@@ -277,7 +273,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @feedback.setter
     def feedback(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import JointTrajectoryPoint
             assert \
                 isinstance(value, JointTrajectoryPoint), \
@@ -291,7 +287,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @error.setter
     def error(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import JointTrajectoryPoint
             assert \
                 isinstance(value, JointTrajectoryPoint), \
@@ -305,40 +301,12 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @output.setter
     def output(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import JointTrajectoryPoint
             assert \
                 isinstance(value, JointTrajectoryPoint), \
                 "The 'output' field must be a sub message of type 'JointTrajectoryPoint'"
         self._output = value
-
-    @builtins.property
-    def desired(self):
-        """Message field 'desired'."""
-        return self._desired
-
-    @desired.setter
-    def desired(self, value):
-        if __debug__:
-            from trajectory_msgs.msg import JointTrajectoryPoint
-            assert \
-                isinstance(value, JointTrajectoryPoint), \
-                "The 'desired' field must be a sub message of type 'JointTrajectoryPoint'"
-        self._desired = value
-
-    @builtins.property
-    def actual(self):
-        """Message field 'actual'."""
-        return self._actual
-
-    @actual.setter
-    def actual(self, value):
-        if __debug__:
-            from trajectory_msgs.msg import JointTrajectoryPoint
-            assert \
-                isinstance(value, JointTrajectoryPoint), \
-                "The 'actual' field must be a sub message of type 'JointTrajectoryPoint'"
-        self._actual = value
 
     @builtins.property
     def multi_dof_joint_names(self):
@@ -347,7 +315,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @multi_dof_joint_names.setter
     def multi_dof_joint_names(self, value):
-        if __debug__:
+        if self._check_fields:
             from collections.abc import Sequence
             from collections.abc import Set
             from collections import UserList
@@ -370,7 +338,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @multi_dof_reference.setter
     def multi_dof_reference(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
             assert \
                 isinstance(value, MultiDOFJointTrajectoryPoint), \
@@ -384,7 +352,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @multi_dof_feedback.setter
     def multi_dof_feedback(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
             assert \
                 isinstance(value, MultiDOFJointTrajectoryPoint), \
@@ -398,7 +366,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @multi_dof_error.setter
     def multi_dof_error(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
             assert \
                 isinstance(value, MultiDOFJointTrajectoryPoint), \
@@ -412,7 +380,7 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
 
     @multi_dof_output.setter
     def multi_dof_output(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
             assert \
                 isinstance(value, MultiDOFJointTrajectoryPoint), \
@@ -420,29 +388,16 @@ class JointTrajectoryControllerState(metaclass=Metaclass_JointTrajectoryControll
         self._multi_dof_output = value
 
     @builtins.property
-    def multi_dof_desired(self):
-        """Message field 'multi_dof_desired'."""
-        return self._multi_dof_desired
+    def speed_scaling_factor(self):
+        """Message field 'speed_scaling_factor'."""
+        return self._speed_scaling_factor
 
-    @multi_dof_desired.setter
-    def multi_dof_desired(self, value):
-        if __debug__:
-            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
+    @speed_scaling_factor.setter
+    def speed_scaling_factor(self, value):
+        if self._check_fields:
             assert \
-                isinstance(value, MultiDOFJointTrajectoryPoint), \
-                "The 'multi_dof_desired' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
-        self._multi_dof_desired = value
-
-    @builtins.property
-    def multi_dof_actual(self):
-        """Message field 'multi_dof_actual'."""
-        return self._multi_dof_actual
-
-    @multi_dof_actual.setter
-    def multi_dof_actual(self, value):
-        if __debug__:
-            from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
-            assert \
-                isinstance(value, MultiDOFJointTrajectoryPoint), \
-                "The 'multi_dof_actual' field must be a sub message of type 'MultiDOFJointTrajectoryPoint'"
-        self._multi_dof_actual = value
+                isinstance(value, float), \
+                "The 'speed_scaling_factor' field must be of type 'float'"
+            assert not (value < -1.7976931348623157e+308 or value > 1.7976931348623157e+308) or math.isinf(value), \
+                "The 'speed_scaling_factor' field must be a double in [-1.7976931348623157e+308, 1.7976931348623157e+308]"
+        self._speed_scaling_factor = value

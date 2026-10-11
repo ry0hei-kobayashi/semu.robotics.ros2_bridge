@@ -26,6 +26,8 @@ cp $extension_tree/tests/test_ros2_bridge.py $extension_dir/$extension_tree/test
 # packages folder
 cp -r $extension_tree/packages/add_on_msgs $extension_dir/$extension_tree/packages
 cp -r $extension_tree/packages/control_msgs $extension_dir/$extension_tree/packages
+# which ROS 2 distro the message artifacts were built for (written by tools/build_msgs.sh)
+cp $extension_tree/packages/ROS_DISTRO $extension_dir/$extension_tree/packages 2>/dev/null || true
 
 # single files
 cp $extension_tree/__init__.py $extension_dir/$extension_tree/

@@ -163,6 +163,145 @@ _register_msg_type__msg__admittance_controller_state(PyObject * pymodule)
 // #include "rosidl_runtime_c/service_type_support_struct.h"
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/battery_state_array__type_support.h"
+#include "control_msgs/msg/detail/battery_state_array__struct.h"
+#include "control_msgs/msg/detail/battery_state_array__functions.h"
+
+static void * control_msgs__msg__battery_state_array__create_ros_message(void)
+{
+  return control_msgs__msg__BatteryStateArray__create();
+}
+
+static void control_msgs__msg__battery_state_array__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__BatteryStateArray * ros_message = (control_msgs__msg__BatteryStateArray *)raw_ros_message;
+  control_msgs__msg__BatteryStateArray__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__battery_state_array__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__battery_state_array__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, BatteryStateArray);
+
+int8_t
+_register_msg_type__msg__battery_state_array(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__battery_state_array__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__battery_state_array",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__battery_state_array__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__battery_state_array",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__battery_state_array__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__battery_state_array",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__battery_state_array__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__battery_state_array",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, BatteryStateArray),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__battery_state_array",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
 #include "control_msgs/msg/detail/dynamic_interface_group_values__type_support.h"
 #include "control_msgs/msg/detail/dynamic_interface_group_values__struct.h"
 #include "control_msgs/msg/detail/dynamic_interface_group_values__functions.h"
@@ -280,6 +419,145 @@ _register_msg_type__msg__dynamic_interface_group_values(PyObject * pymodule)
   err = PyModule_AddObject(
     pymodule,
     "type_support_msg__msg__dynamic_interface_group_values",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/dynamic_interface_values__type_support.h"
+#include "control_msgs/msg/detail/dynamic_interface_values__struct.h"
+#include "control_msgs/msg/detail/dynamic_interface_values__functions.h"
+
+static void * control_msgs__msg__dynamic_interface_values__create_ros_message(void)
+{
+  return control_msgs__msg__DynamicInterfaceValues__create();
+}
+
+static void control_msgs__msg__dynamic_interface_values__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__DynamicInterfaceValues * ros_message = (control_msgs__msg__DynamicInterfaceValues *)raw_ros_message;
+  control_msgs__msg__DynamicInterfaceValues__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__dynamic_interface_values__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__dynamic_interface_values__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, DynamicInterfaceValues);
+
+int8_t
+_register_msg_type__msg__dynamic_interface_values(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__dynamic_interface_values__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__dynamic_interface_values",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__dynamic_interface_values__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__dynamic_interface_values",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__dynamic_interface_values__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__dynamic_interface_values",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__dynamic_interface_values__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__dynamic_interface_values",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, DynamicInterfaceValues),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__dynamic_interface_values",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -719,6 +997,284 @@ _register_msg_type__msg__interface_value(PyObject * pymodule)
 // #include "rosidl_runtime_c/service_type_support_struct.h"
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/keys__type_support.h"
+#include "control_msgs/msg/detail/keys__struct.h"
+#include "control_msgs/msg/detail/keys__functions.h"
+
+static void * control_msgs__msg__keys__create_ros_message(void)
+{
+  return control_msgs__msg__Keys__create();
+}
+
+static void control_msgs__msg__keys__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__Keys * ros_message = (control_msgs__msg__Keys *)raw_ros_message;
+  control_msgs__msg__Keys__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__keys__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__keys__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, Keys);
+
+int8_t
+_register_msg_type__msg__keys(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__keys__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__keys",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__keys__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__keys",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__keys__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__keys",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__keys__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__keys",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, Keys),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__keys",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/float64_values__type_support.h"
+#include "control_msgs/msg/detail/float64_values__struct.h"
+#include "control_msgs/msg/detail/float64_values__functions.h"
+
+static void * control_msgs__msg__float64_values__create_ros_message(void)
+{
+  return control_msgs__msg__Float64Values__create();
+}
+
+static void control_msgs__msg__float64_values__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__Float64Values * ros_message = (control_msgs__msg__Float64Values *)raw_ros_message;
+  control_msgs__msg__Float64Values__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__float64_values__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__float64_values__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, Float64Values);
+
+int8_t
+_register_msg_type__msg__float64_values(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__float64_values__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__float64_values",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__float64_values__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__float64_values",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__float64_values__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__float64_values",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__float64_values__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__float64_values",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, Float64Values),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__float64_values",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
 #include "control_msgs/msg/detail/joint_component_tolerance__type_support.h"
 #include "control_msgs/msg/detail/joint_component_tolerance__struct.h"
 #include "control_msgs/msg/detail/joint_component_tolerance__functions.h"
@@ -836,6 +1392,145 @@ _register_msg_type__msg__joint_component_tolerance(PyObject * pymodule)
   err = PyModule_AddObject(
     pymodule,
     "type_support_msg__msg__joint_component_tolerance",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/joint_command__type_support.h"
+#include "control_msgs/msg/detail/joint_command__struct.h"
+#include "control_msgs/msg/detail/joint_command__functions.h"
+
+static void * control_msgs__msg__joint_command__create_ros_message(void)
+{
+  return control_msgs__msg__JointCommand__create();
+}
+
+static void control_msgs__msg__joint_command__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__JointCommand * ros_message = (control_msgs__msg__JointCommand *)raw_ros_message;
+  control_msgs__msg__JointCommand__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__joint_command__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__joint_command__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, JointCommand);
+
+int8_t
+_register_msg_type__msg__joint_command(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__joint_command__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__joint_command",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__joint_command__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__joint_command",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__joint_command__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__joint_command",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__joint_command__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__joint_command",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, JointCommand),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__joint_command",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -1531,6 +2226,423 @@ _register_msg_type__msg__mecanum_drive_controller_state(PyObject * pymodule)
   err = PyModule_AddObject(
     pymodule,
     "type_support_msg__msg__mecanum_drive_controller_state",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/motion_argument__type_support.h"
+#include "control_msgs/msg/detail/motion_argument__struct.h"
+#include "control_msgs/msg/detail/motion_argument__functions.h"
+
+static void * control_msgs__msg__motion_argument__create_ros_message(void)
+{
+  return control_msgs__msg__MotionArgument__create();
+}
+
+static void control_msgs__msg__motion_argument__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__MotionArgument * ros_message = (control_msgs__msg__MotionArgument *)raw_ros_message;
+  control_msgs__msg__MotionArgument__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__motion_argument__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__motion_argument__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, MotionArgument);
+
+int8_t
+_register_msg_type__msg__motion_argument(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_argument__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__motion_argument",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_argument__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__motion_argument",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_argument__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__motion_argument",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_argument__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__motion_argument",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, MotionArgument),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__motion_argument",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/motion_primitive__type_support.h"
+#include "control_msgs/msg/detail/motion_primitive__struct.h"
+#include "control_msgs/msg/detail/motion_primitive__functions.h"
+
+static void * control_msgs__msg__motion_primitive__create_ros_message(void)
+{
+  return control_msgs__msg__MotionPrimitive__create();
+}
+
+static void control_msgs__msg__motion_primitive__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__MotionPrimitive * ros_message = (control_msgs__msg__MotionPrimitive *)raw_ros_message;
+  control_msgs__msg__MotionPrimitive__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__motion_primitive__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__motion_primitive__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, MotionPrimitive);
+
+int8_t
+_register_msg_type__msg__motion_primitive(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_primitive__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__motion_primitive",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_primitive__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__motion_primitive",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_primitive__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__motion_primitive",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_primitive__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__motion_primitive",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, MotionPrimitive),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__motion_primitive",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/motion_primitive_sequence__type_support.h"
+#include "control_msgs/msg/detail/motion_primitive_sequence__struct.h"
+#include "control_msgs/msg/detail/motion_primitive_sequence__functions.h"
+
+static void * control_msgs__msg__motion_primitive_sequence__create_ros_message(void)
+{
+  return control_msgs__msg__MotionPrimitiveSequence__create();
+}
+
+static void control_msgs__msg__motion_primitive_sequence__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__MotionPrimitiveSequence * ros_message = (control_msgs__msg__MotionPrimitiveSequence *)raw_ros_message;
+  control_msgs__msg__MotionPrimitiveSequence__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__motion_primitive_sequence__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__motion_primitive_sequence__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, MotionPrimitiveSequence);
+
+int8_t
+_register_msg_type__msg__motion_primitive_sequence(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_primitive_sequence__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__motion_primitive_sequence",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_primitive_sequence__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__motion_primitive_sequence",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_primitive_sequence__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__motion_primitive_sequence",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__motion_primitive_sequence__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__motion_primitive_sequence",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, MotionPrimitiveSequence),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__motion_primitive_sequence",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -2387,6 +3499,284 @@ _register_msg_type__msg__steering_controller_status(PyObject * pymodule)
 // #include "rosidl_runtime_c/service_type_support_struct.h"
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/speed_scaling_factor__type_support.h"
+#include "control_msgs/msg/detail/speed_scaling_factor__struct.h"
+#include "control_msgs/msg/detail/speed_scaling_factor__functions.h"
+
+static void * control_msgs__msg__speed_scaling_factor__create_ros_message(void)
+{
+  return control_msgs__msg__SpeedScalingFactor__create();
+}
+
+static void control_msgs__msg__speed_scaling_factor__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__SpeedScalingFactor * ros_message = (control_msgs__msg__SpeedScalingFactor *)raw_ros_message;
+  control_msgs__msg__SpeedScalingFactor__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__speed_scaling_factor__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__speed_scaling_factor__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, SpeedScalingFactor);
+
+int8_t
+_register_msg_type__msg__speed_scaling_factor(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__speed_scaling_factor__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__speed_scaling_factor",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__speed_scaling_factor__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__speed_scaling_factor",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__speed_scaling_factor__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__speed_scaling_factor",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__speed_scaling_factor__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__speed_scaling_factor",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, SpeedScalingFactor),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__speed_scaling_factor",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/msg/detail/vda5050_safety_state__type_support.h"
+#include "control_msgs/msg/detail/vda5050_safety_state__struct.h"
+#include "control_msgs/msg/detail/vda5050_safety_state__functions.h"
+
+static void * control_msgs__msg__vda5050_safety_state__create_ros_message(void)
+{
+  return control_msgs__msg__VDA5050SafetyState__create();
+}
+
+static void control_msgs__msg__vda5050_safety_state__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__msg__VDA5050SafetyState * ros_message = (control_msgs__msg__VDA5050SafetyState *)raw_ros_message;
+  control_msgs__msg__VDA5050SafetyState__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__msg__vda5050_safety_state__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__msg__vda5050_safety_state__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, VDA5050SafetyState);
+
+int8_t
+_register_msg_type__msg__vda5050_safety_state(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__vda5050_safety_state__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__msg__vda5050_safety_state",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__msg__vda5050_safety_state__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__msg__vda5050_safety_state",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__msg__vda5050_safety_state__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__msg__vda5050_safety_state",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__msg__vda5050_safety_state__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__msg__vda5050_safety_state",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, msg, VDA5050SafetyState),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__msg__vda5050_safety_state",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
 #include "control_msgs/srv/detail/query_calibration_state__type_support.h"
 #include "control_msgs/srv/detail/query_calibration_state__struct.h"
 #include "control_msgs/srv/detail/query_calibration_state__functions.h"
@@ -2646,6 +4036,148 @@ _register_msg_type__srv__query_calibration_state__response(PyObject * pymodule)
   err = PyModule_AddObject(
     pymodule,
     "type_support_msg__srv__query_calibration_state__response",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/srv/detail/query_calibration_state__type_support.h"
+// already included above
+// #include "control_msgs/srv/detail/query_calibration_state__struct.h"
+// already included above
+// #include "control_msgs/srv/detail/query_calibration_state__functions.h"
+
+static void * control_msgs__srv__query_calibration_state__event__create_ros_message(void)
+{
+  return control_msgs__srv__QueryCalibrationState_Event__create();
+}
+
+static void control_msgs__srv__query_calibration_state__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__srv__QueryCalibrationState_Event * ros_message = (control_msgs__srv__QueryCalibrationState_Event *)raw_ros_message;
+  control_msgs__srv__QueryCalibrationState_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__srv__query_calibration_state__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__srv__query_calibration_state__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, QueryCalibrationState_Event);
+
+int8_t
+_register_msg_type__srv__query_calibration_state__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__srv__query_calibration_state__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__srv__query_calibration_state__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__srv__query_calibration_state__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__srv__query_calibration_state__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__srv__query_calibration_state__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__srv__query_calibration_state__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__srv__query_calibration_state__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__srv__query_calibration_state__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, QueryCalibrationState_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__srv__query_calibration_state__event",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -2966,6 +4498,148 @@ _register_msg_type__srv__query_trajectory_state__response(PyObject * pymodule)
   return 0;
 }
 
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/srv/detail/query_trajectory_state__type_support.h"
+// already included above
+// #include "control_msgs/srv/detail/query_trajectory_state__struct.h"
+// already included above
+// #include "control_msgs/srv/detail/query_trajectory_state__functions.h"
+
+static void * control_msgs__srv__query_trajectory_state__event__create_ros_message(void)
+{
+  return control_msgs__srv__QueryTrajectoryState_Event__create();
+}
+
+static void control_msgs__srv__query_trajectory_state__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__srv__QueryTrajectoryState_Event * ros_message = (control_msgs__srv__QueryTrajectoryState_Event *)raw_ros_message;
+  control_msgs__srv__QueryTrajectoryState_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__srv__query_trajectory_state__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__srv__query_trajectory_state__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, QueryTrajectoryState_Event);
+
+int8_t
+_register_msg_type__srv__query_trajectory_state__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__srv__query_trajectory_state__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__srv__query_trajectory_state__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__srv__query_trajectory_state__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__srv__query_trajectory_state__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__srv__query_trajectory_state__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__srv__query_trajectory_state__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__srv__query_trajectory_state__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__srv__query_trajectory_state__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, QueryTrajectoryState_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__srv__query_trajectory_state__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, srv, QueryTrajectoryState)();
@@ -3007,39 +4681,39 @@ _register_srv_type__srv__query_trajectory_state(PyObject * pymodule)
 // #include "rosidl_runtime_c/service_type_support_struct.h"
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
-#include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
-#include "control_msgs/action/detail/parallel_gripper_command__struct.h"
-#include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+#include "control_msgs/srv/detail/set_odometry__type_support.h"
+#include "control_msgs/srv/detail/set_odometry__struct.h"
+#include "control_msgs/srv/detail/set_odometry__functions.h"
 
-static void * control_msgs__action__parallel_gripper_command__goal__create_ros_message(void)
+static void * control_msgs__srv__set_odometry__request__create_ros_message(void)
 {
-  return control_msgs__action__ParallelGripperCommand_Goal__create();
+  return control_msgs__srv__SetOdometry_Request__create();
 }
 
-static void control_msgs__action__parallel_gripper_command__goal__destroy_ros_message(void * raw_ros_message)
+static void control_msgs__srv__set_odometry__request__destroy_ros_message(void * raw_ros_message)
 {
-  control_msgs__action__ParallelGripperCommand_Goal * ros_message = (control_msgs__action__ParallelGripperCommand_Goal *)raw_ros_message;
-  control_msgs__action__ParallelGripperCommand_Goal__destroy(ros_message);
+  control_msgs__srv__SetOdometry_Request * ros_message = (control_msgs__srv__SetOdometry_Request *)raw_ros_message;
+  control_msgs__srv__SetOdometry_Request__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool control_msgs__action__parallel_gripper_command__goal__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool control_msgs__srv__set_odometry__request__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * control_msgs__action__parallel_gripper_command__goal__convert_to_py(void * raw_ros_message);
+PyObject * control_msgs__srv__set_odometry__request__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Goal);
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, SetOdometry_Request);
 
 int8_t
-_register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
+_register_msg_type__srv__set_odometry__request(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__goal__create_ros_message,
+    (void *)&control_msgs__srv__set_odometry__request__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3047,7 +4721,7 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__action__parallel_gripper_command__goal",
+    "create_ros_message_msg__srv__set_odometry__request",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3058,7 +4732,7 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__goal__destroy_ros_message,
+    (void *)&control_msgs__srv__set_odometry__request__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3066,7 +4740,7 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__action__parallel_gripper_command__goal",
+    "destroy_ros_message_msg__srv__set_odometry__request",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3077,7 +4751,7 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__goal__convert_from_py,
+    (void *)&control_msgs__srv__set_odometry__request__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3085,7 +4759,7 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__action__parallel_gripper_command__goal",
+    "convert_from_py_msg__srv__set_odometry__request",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3096,7 +4770,7 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__goal__convert_to_py,
+    (void *)&control_msgs__srv__set_odometry__request__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3104,7 +4778,7 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__action__parallel_gripper_command__goal",
+    "convert_to_py_msg__srv__set_odometry__request",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3115,7 +4789,7 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Goal),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, SetOdometry_Request),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -3123,7 +4797,7 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__action__parallel_gripper_command__goal",
+    "type_support_msg__srv__set_odometry__request",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -3147,41 +4821,41 @@ _register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// #include "control_msgs/srv/detail/set_odometry__type_support.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// #include "control_msgs/srv/detail/set_odometry__struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+// #include "control_msgs/srv/detail/set_odometry__functions.h"
 
-static void * control_msgs__action__parallel_gripper_command__result__create_ros_message(void)
+static void * control_msgs__srv__set_odometry__response__create_ros_message(void)
 {
-  return control_msgs__action__ParallelGripperCommand_Result__create();
+  return control_msgs__srv__SetOdometry_Response__create();
 }
 
-static void control_msgs__action__parallel_gripper_command__result__destroy_ros_message(void * raw_ros_message)
+static void control_msgs__srv__set_odometry__response__destroy_ros_message(void * raw_ros_message)
 {
-  control_msgs__action__ParallelGripperCommand_Result * ros_message = (control_msgs__action__ParallelGripperCommand_Result *)raw_ros_message;
-  control_msgs__action__ParallelGripperCommand_Result__destroy(ros_message);
+  control_msgs__srv__SetOdometry_Response * ros_message = (control_msgs__srv__SetOdometry_Response *)raw_ros_message;
+  control_msgs__srv__SetOdometry_Response__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool control_msgs__action__parallel_gripper_command__result__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool control_msgs__srv__set_odometry__response__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * control_msgs__action__parallel_gripper_command__result__convert_to_py(void * raw_ros_message);
+PyObject * control_msgs__srv__set_odometry__response__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Result);
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, SetOdometry_Response);
 
 int8_t
-_register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule)
+_register_msg_type__srv__set_odometry__response(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__result__create_ros_message,
+    (void *)&control_msgs__srv__set_odometry__response__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3189,7 +4863,7 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__action__parallel_gripper_command__result",
+    "create_ros_message_msg__srv__set_odometry__response",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3200,7 +4874,7 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__result__destroy_ros_message,
+    (void *)&control_msgs__srv__set_odometry__response__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3208,7 +4882,7 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__action__parallel_gripper_command__result",
+    "destroy_ros_message_msg__srv__set_odometry__response",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3219,7 +4893,7 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__result__convert_from_py,
+    (void *)&control_msgs__srv__set_odometry__response__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3227,7 +4901,7 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__action__parallel_gripper_command__result",
+    "convert_from_py_msg__srv__set_odometry__response",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3238,7 +4912,7 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__result__convert_to_py,
+    (void *)&control_msgs__srv__set_odometry__response__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3246,7 +4920,7 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__action__parallel_gripper_command__result",
+    "convert_to_py_msg__srv__set_odometry__response",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3257,7 +4931,7 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Result),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, SetOdometry_Response),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -3265,7 +4939,7 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__action__parallel_gripper_command__result",
+    "type_support_msg__srv__set_odometry__response",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -3289,41 +4963,41 @@ _register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// #include "control_msgs/srv/detail/set_odometry__type_support.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// #include "control_msgs/srv/detail/set_odometry__struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+// #include "control_msgs/srv/detail/set_odometry__functions.h"
 
-static void * control_msgs__action__parallel_gripper_command__feedback__create_ros_message(void)
+static void * control_msgs__srv__set_odometry__event__create_ros_message(void)
 {
-  return control_msgs__action__ParallelGripperCommand_Feedback__create();
+  return control_msgs__srv__SetOdometry_Event__create();
 }
 
-static void control_msgs__action__parallel_gripper_command__feedback__destroy_ros_message(void * raw_ros_message)
+static void control_msgs__srv__set_odometry__event__destroy_ros_message(void * raw_ros_message)
 {
-  control_msgs__action__ParallelGripperCommand_Feedback * ros_message = (control_msgs__action__ParallelGripperCommand_Feedback *)raw_ros_message;
-  control_msgs__action__ParallelGripperCommand_Feedback__destroy(ros_message);
+  control_msgs__srv__SetOdometry_Event * ros_message = (control_msgs__srv__SetOdometry_Event *)raw_ros_message;
+  control_msgs__srv__SetOdometry_Event__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool control_msgs__action__parallel_gripper_command__feedback__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool control_msgs__srv__set_odometry__event__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * control_msgs__action__parallel_gripper_command__feedback__convert_to_py(void * raw_ros_message);
+PyObject * control_msgs__srv__set_odometry__event__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Feedback);
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, SetOdometry_Event);
 
 int8_t
-_register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodule)
+_register_msg_type__srv__set_odometry__event(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__feedback__create_ros_message,
+    (void *)&control_msgs__srv__set_odometry__event__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3331,7 +5005,7 @@ _register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodu
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__action__parallel_gripper_command__feedback",
+    "create_ros_message_msg__srv__set_odometry__event",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3342,7 +5016,7 @@ _register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodu
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__feedback__destroy_ros_message,
+    (void *)&control_msgs__srv__set_odometry__event__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3350,7 +5024,7 @@ _register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodu
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__action__parallel_gripper_command__feedback",
+    "destroy_ros_message_msg__srv__set_odometry__event",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3361,7 +5035,7 @@ _register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodu
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__feedback__convert_from_py,
+    (void *)&control_msgs__srv__set_odometry__event__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3369,7 +5043,7 @@ _register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodu
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__action__parallel_gripper_command__feedback",
+    "convert_from_py_msg__srv__set_odometry__event",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3380,7 +5054,7 @@ _register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodu
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__feedback__convert_to_py,
+    (void *)&control_msgs__srv__set_odometry__event__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3388,7 +5062,7 @@ _register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodu
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__action__parallel_gripper_command__feedback",
+    "convert_to_py_msg__srv__set_odometry__event",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3399,7 +5073,7 @@ _register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodu
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Feedback),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, srv, SetOdometry_Event),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -3407,291 +5081,7 @@ _register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodu
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__action__parallel_gripper_command__feedback",
-    pyobject_type_support);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_type_support);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-  return 0;
-}
-
-// already included above
-// #include <stdbool.h>
-// already included above
-// #include <stdint.h>
-// already included above
-// #include "rosidl_runtime_c/visibility_control.h"
-// already included above
-// #include "rosidl_runtime_c/message_type_support_struct.h"
-// already included above
-// #include "rosidl_runtime_c/service_type_support_struct.h"
-// already included above
-// #include "rosidl_runtime_c/action_type_support_struct.h"
-// already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
-// already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
-// already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
-
-static void * control_msgs__action__parallel_gripper_command__send_goal__request__create_ros_message(void)
-{
-  return control_msgs__action__ParallelGripperCommand_SendGoal_Request__create();
-}
-
-static void control_msgs__action__parallel_gripper_command__send_goal__request__destroy_ros_message(void * raw_ros_message)
-{
-  control_msgs__action__ParallelGripperCommand_SendGoal_Request * ros_message = (control_msgs__action__ParallelGripperCommand_SendGoal_Request *)raw_ros_message;
-  control_msgs__action__ParallelGripperCommand_SendGoal_Request__destroy(ros_message);
-}
-
-ROSIDL_GENERATOR_C_IMPORT
-bool control_msgs__action__parallel_gripper_command__send_goal__request__convert_from_py(PyObject * _pymsg, void * ros_message);
-ROSIDL_GENERATOR_C_IMPORT
-PyObject * control_msgs__action__parallel_gripper_command__send_goal__request__convert_to_py(void * raw_ros_message);
-
-
-ROSIDL_GENERATOR_C_IMPORT
-const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Request);
-
-int8_t
-_register_msg_type__action__parallel_gripper_command__send_goal__request(PyObject * pymodule)
-{
-  int8_t err;
-
-  PyObject * pyobject_create_ros_message = NULL;
-  pyobject_create_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__send_goal__request__create_ros_message,
-    NULL, NULL);
-  if (!pyobject_create_ros_message) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "create_ros_message_msg__action__parallel_gripper_command__send_goal__request",
-    pyobject_create_ros_message);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_create_ros_message);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-
-  PyObject * pyobject_destroy_ros_message = NULL;
-  pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__send_goal__request__destroy_ros_message,
-    NULL, NULL);
-  if (!pyobject_destroy_ros_message) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "destroy_ros_message_msg__action__parallel_gripper_command__send_goal__request",
-    pyobject_destroy_ros_message);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_destroy_ros_message);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-
-  PyObject * pyobject_convert_from_py = NULL;
-  pyobject_convert_from_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__send_goal__request__convert_from_py,
-    NULL, NULL);
-  if (!pyobject_convert_from_py) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "convert_from_py_msg__action__parallel_gripper_command__send_goal__request",
-    pyobject_convert_from_py);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_convert_from_py);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-
-  PyObject * pyobject_convert_to_py = NULL;
-  pyobject_convert_to_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__send_goal__request__convert_to_py,
-    NULL, NULL);
-  if (!pyobject_convert_to_py) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "convert_to_py_msg__action__parallel_gripper_command__send_goal__request",
-    pyobject_convert_to_py);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_convert_to_py);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-
-  PyObject * pyobject_type_support = NULL;
-  pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Request),
-    NULL, NULL);
-  if (!pyobject_type_support) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "type_support_msg__action__parallel_gripper_command__send_goal__request",
-    pyobject_type_support);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_type_support);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-  return 0;
-}
-
-// already included above
-// #include <stdbool.h>
-// already included above
-// #include <stdint.h>
-// already included above
-// #include "rosidl_runtime_c/visibility_control.h"
-// already included above
-// #include "rosidl_runtime_c/message_type_support_struct.h"
-// already included above
-// #include "rosidl_runtime_c/service_type_support_struct.h"
-// already included above
-// #include "rosidl_runtime_c/action_type_support_struct.h"
-// already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
-// already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
-// already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
-
-static void * control_msgs__action__parallel_gripper_command__send_goal__response__create_ros_message(void)
-{
-  return control_msgs__action__ParallelGripperCommand_SendGoal_Response__create();
-}
-
-static void control_msgs__action__parallel_gripper_command__send_goal__response__destroy_ros_message(void * raw_ros_message)
-{
-  control_msgs__action__ParallelGripperCommand_SendGoal_Response * ros_message = (control_msgs__action__ParallelGripperCommand_SendGoal_Response *)raw_ros_message;
-  control_msgs__action__ParallelGripperCommand_SendGoal_Response__destroy(ros_message);
-}
-
-ROSIDL_GENERATOR_C_IMPORT
-bool control_msgs__action__parallel_gripper_command__send_goal__response__convert_from_py(PyObject * _pymsg, void * ros_message);
-ROSIDL_GENERATOR_C_IMPORT
-PyObject * control_msgs__action__parallel_gripper_command__send_goal__response__convert_to_py(void * raw_ros_message);
-
-
-ROSIDL_GENERATOR_C_IMPORT
-const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Response);
-
-int8_t
-_register_msg_type__action__parallel_gripper_command__send_goal__response(PyObject * pymodule)
-{
-  int8_t err;
-
-  PyObject * pyobject_create_ros_message = NULL;
-  pyobject_create_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__send_goal__response__create_ros_message,
-    NULL, NULL);
-  if (!pyobject_create_ros_message) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "create_ros_message_msg__action__parallel_gripper_command__send_goal__response",
-    pyobject_create_ros_message);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_create_ros_message);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-
-  PyObject * pyobject_destroy_ros_message = NULL;
-  pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__send_goal__response__destroy_ros_message,
-    NULL, NULL);
-  if (!pyobject_destroy_ros_message) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "destroy_ros_message_msg__action__parallel_gripper_command__send_goal__response",
-    pyobject_destroy_ros_message);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_destroy_ros_message);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-
-  PyObject * pyobject_convert_from_py = NULL;
-  pyobject_convert_from_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__send_goal__response__convert_from_py,
-    NULL, NULL);
-  if (!pyobject_convert_from_py) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "convert_from_py_msg__action__parallel_gripper_command__send_goal__response",
-    pyobject_convert_from_py);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_convert_from_py);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-
-  PyObject * pyobject_convert_to_py = NULL;
-  pyobject_convert_to_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__send_goal__response__convert_to_py,
-    NULL, NULL);
-  if (!pyobject_convert_to_py) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "convert_to_py_msg__action__parallel_gripper_command__send_goal__response",
-    pyobject_convert_to_py);
-  if (err) {
-    // the created capsule needs to be decremented
-    Py_XDECREF(pyobject_convert_to_py);
-    // previously added objects will be removed when the module is destroyed
-    return err;
-  }
-
-  PyObject * pyobject_type_support = NULL;
-  pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Response),
-    NULL, NULL);
-  if (!pyobject_type_support) {
-    // previously added objects will be removed when the module is destroyed
-    return -1;
-  }
-  err = PyModule_AddObject(
-    pymodule,
-    "type_support_msg__action__parallel_gripper_command__send_goal__response",
+    "type_support_msg__srv__set_odometry__event",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -3704,15 +5094,15 @@ _register_msg_type__action__parallel_gripper_command__send_goal__response(PyObje
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
-ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand_SendGoal)();
+ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, srv, SetOdometry)();
 
 int8_t
-_register_srv_type__action__parallel_gripper_command__send_goal(PyObject * pymodule)
+_register_srv_type__srv__set_odometry(PyObject * pymodule)
 {
   int8_t err;
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand_SendGoal)(),
+    (void *)ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, srv, SetOdometry)(),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -3720,7 +5110,146 @@ _register_srv_type__action__parallel_gripper_command__send_goal(PyObject * pymod
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_srv__action__parallel_gripper_command__send_goal",
+    "type_support_srv__srv__set_odometry",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
+#include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
+#include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
+
+static void * control_msgs__action__execute_motion_primitive_sequence__goal__create_ros_message(void)
+{
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_Goal__create();
+}
+
+static void control_msgs__action__execute_motion_primitive_sequence__goal__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ExecuteMotionPrimitiveSequence_Goal * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_Goal *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_Goal__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__execute_motion_primitive_sequence__goal__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__execute_motion_primitive_sequence__goal__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_Goal);
+
+int8_t
+_register_msg_type__action__execute_motion_primitive_sequence__goal(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__goal__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__goal",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__goal__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__goal",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__goal__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__goal",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__goal__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__goal",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_Goal),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__execute_motion_primitive_sequence__goal",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -3744,41 +5273,41 @@ _register_srv_type__action__parallel_gripper_command__send_goal(PyObject * pymod
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
 
-static void * control_msgs__action__parallel_gripper_command__get_result__request__create_ros_message(void)
+static void * control_msgs__action__execute_motion_primitive_sequence__result__create_ros_message(void)
 {
-  return control_msgs__action__ParallelGripperCommand_GetResult_Request__create();
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_Result__create();
 }
 
-static void control_msgs__action__parallel_gripper_command__get_result__request__destroy_ros_message(void * raw_ros_message)
+static void control_msgs__action__execute_motion_primitive_sequence__result__destroy_ros_message(void * raw_ros_message)
 {
-  control_msgs__action__ParallelGripperCommand_GetResult_Request * ros_message = (control_msgs__action__ParallelGripperCommand_GetResult_Request *)raw_ros_message;
-  control_msgs__action__ParallelGripperCommand_GetResult_Request__destroy(ros_message);
+  control_msgs__action__ExecuteMotionPrimitiveSequence_Result * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_Result *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_Result__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool control_msgs__action__parallel_gripper_command__get_result__request__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool control_msgs__action__execute_motion_primitive_sequence__result__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * control_msgs__action__parallel_gripper_command__get_result__request__convert_to_py(void * raw_ros_message);
+PyObject * control_msgs__action__execute_motion_primitive_sequence__result__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Request);
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_Result);
 
 int8_t
-_register_msg_type__action__parallel_gripper_command__get_result__request(PyObject * pymodule)
+_register_msg_type__action__execute_motion_primitive_sequence__result(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__get_result__request__create_ros_message,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__result__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3786,7 +5315,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__action__parallel_gripper_command__get_result__request",
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__result",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3797,7 +5326,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__get_result__request__destroy_ros_message,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__result__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3805,7 +5334,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__action__parallel_gripper_command__get_result__request",
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__result",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3816,7 +5345,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__get_result__request__convert_from_py,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__result__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3824,7 +5353,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__action__parallel_gripper_command__get_result__request",
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__result",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3835,7 +5364,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__get_result__request__convert_to_py,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__result__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3843,7 +5372,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__action__parallel_gripper_command__get_result__request",
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__result",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3854,7 +5383,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Request),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_Result),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -3862,7 +5391,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__action__parallel_gripper_command__get_result__request",
+    "type_support_msg__action__execute_motion_primitive_sequence__result",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -3886,41 +5415,41 @@ _register_msg_type__action__parallel_gripper_command__get_result__request(PyObje
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
 
-static void * control_msgs__action__parallel_gripper_command__get_result__response__create_ros_message(void)
+static void * control_msgs__action__execute_motion_primitive_sequence__feedback__create_ros_message(void)
 {
-  return control_msgs__action__ParallelGripperCommand_GetResult_Response__create();
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_Feedback__create();
 }
 
-static void control_msgs__action__parallel_gripper_command__get_result__response__destroy_ros_message(void * raw_ros_message)
+static void control_msgs__action__execute_motion_primitive_sequence__feedback__destroy_ros_message(void * raw_ros_message)
 {
-  control_msgs__action__ParallelGripperCommand_GetResult_Response * ros_message = (control_msgs__action__ParallelGripperCommand_GetResult_Response *)raw_ros_message;
-  control_msgs__action__ParallelGripperCommand_GetResult_Response__destroy(ros_message);
+  control_msgs__action__ExecuteMotionPrimitiveSequence_Feedback * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_Feedback *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_Feedback__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool control_msgs__action__parallel_gripper_command__get_result__response__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool control_msgs__action__execute_motion_primitive_sequence__feedback__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * control_msgs__action__parallel_gripper_command__get_result__response__convert_to_py(void * raw_ros_message);
+PyObject * control_msgs__action__execute_motion_primitive_sequence__feedback__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Response);
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_Feedback);
 
 int8_t
-_register_msg_type__action__parallel_gripper_command__get_result__response(PyObject * pymodule)
+_register_msg_type__action__execute_motion_primitive_sequence__feedback(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__get_result__response__create_ros_message,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__feedback__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3928,7 +5457,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__action__parallel_gripper_command__get_result__response",
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__feedback",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3939,7 +5468,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__get_result__response__destroy_ros_message,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__feedback__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -3947,7 +5476,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__action__parallel_gripper_command__get_result__response",
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__feedback",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -3958,7 +5487,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__get_result__response__convert_from_py,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__feedback__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3966,7 +5495,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__action__parallel_gripper_command__get_result__response",
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__feedback",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3977,7 +5506,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__get_result__response__convert_to_py,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__feedback__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -3985,7 +5514,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__action__parallel_gripper_command__get_result__response",
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__feedback",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -3996,7 +5525,7 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Response),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_Feedback),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -4004,7 +5533,433 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__action__parallel_gripper_command__get_result__response",
+    "type_support_msg__action__execute_motion_primitive_sequence__feedback",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
+
+static void * control_msgs__action__execute_motion_primitive_sequence__send_goal__request__create_ros_message(void)
+{
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Request__create();
+}
+
+static void control_msgs__action__execute_motion_primitive_sequence__send_goal__request__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Request * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Request *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Request__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__execute_motion_primitive_sequence__send_goal__request__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__execute_motion_primitive_sequence__send_goal__request__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_SendGoal_Request);
+
+int8_t
+_register_msg_type__action__execute_motion_primitive_sequence__send_goal__request(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__request__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__send_goal__request",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__request__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__send_goal__request",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__request__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__send_goal__request",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__request__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__send_goal__request",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_SendGoal_Request),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__execute_motion_primitive_sequence__send_goal__request",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
+
+static void * control_msgs__action__execute_motion_primitive_sequence__send_goal__response__create_ros_message(void)
+{
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Response__create();
+}
+
+static void control_msgs__action__execute_motion_primitive_sequence__send_goal__response__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Response * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Response *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Response__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__execute_motion_primitive_sequence__send_goal__response__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__execute_motion_primitive_sequence__send_goal__response__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_SendGoal_Response);
+
+int8_t
+_register_msg_type__action__execute_motion_primitive_sequence__send_goal__response(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__response__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__send_goal__response",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__response__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__send_goal__response",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__response__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__send_goal__response",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__response__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__send_goal__response",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_SendGoal_Response),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__execute_motion_primitive_sequence__send_goal__response",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
+
+static void * control_msgs__action__execute_motion_primitive_sequence__send_goal__event__create_ros_message(void)
+{
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Event__create();
+}
+
+static void control_msgs__action__execute_motion_primitive_sequence__send_goal__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Event * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Event *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_SendGoal_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__execute_motion_primitive_sequence__send_goal__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__execute_motion_primitive_sequence__send_goal__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_SendGoal_Event);
+
+int8_t
+_register_msg_type__action__execute_motion_primitive_sequence__send_goal__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__send_goal__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__send_goal__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__send_goal__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__send_goal__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__send_goal__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_SendGoal_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__execute_motion_primitive_sequence__send_goal__event",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -4017,15 +5972,15 @@ _register_msg_type__action__parallel_gripper_command__get_result__response(PyObj
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
-ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand_GetResult)();
+ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ExecuteMotionPrimitiveSequence_SendGoal)();
 
 int8_t
-_register_srv_type__action__parallel_gripper_command__get_result(PyObject * pymodule)
+_register_srv_type__action__execute_motion_primitive_sequence__send_goal(PyObject * pymodule)
 {
   int8_t err;
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand_GetResult)(),
+    (void *)ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ExecuteMotionPrimitiveSequence_SendGoal)(),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -4033,7 +5988,7 @@ _register_srv_type__action__parallel_gripper_command__get_result(PyObject * pymo
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_srv__action__parallel_gripper_command__get_result",
+    "type_support_srv__action__execute_motion_primitive_sequence__send_goal",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -4057,41 +6012,41 @@ _register_srv_type__action__parallel_gripper_command__get_result(PyObject * pymo
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
 // already included above
-// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
 
-static void * control_msgs__action__parallel_gripper_command__feedback_message__create_ros_message(void)
+static void * control_msgs__action__execute_motion_primitive_sequence__get_result__request__create_ros_message(void)
 {
-  return control_msgs__action__ParallelGripperCommand_FeedbackMessage__create();
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Request__create();
 }
 
-static void control_msgs__action__parallel_gripper_command__feedback_message__destroy_ros_message(void * raw_ros_message)
+static void control_msgs__action__execute_motion_primitive_sequence__get_result__request__destroy_ros_message(void * raw_ros_message)
 {
-  control_msgs__action__ParallelGripperCommand_FeedbackMessage * ros_message = (control_msgs__action__ParallelGripperCommand_FeedbackMessage *)raw_ros_message;
-  control_msgs__action__ParallelGripperCommand_FeedbackMessage__destroy(ros_message);
+  control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Request * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Request *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Request__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool control_msgs__action__parallel_gripper_command__feedback_message__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool control_msgs__action__execute_motion_primitive_sequence__get_result__request__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * control_msgs__action__parallel_gripper_command__feedback_message__convert_to_py(void * raw_ros_message);
+PyObject * control_msgs__action__execute_motion_primitive_sequence__get_result__request__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_FeedbackMessage);
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_GetResult_Request);
 
 int8_t
-_register_msg_type__action__parallel_gripper_command__feedback_message(PyObject * pymodule)
+_register_msg_type__action__execute_motion_primitive_sequence__get_result__request(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__feedback_message__create_ros_message,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__request__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -4099,7 +6054,7 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__action__parallel_gripper_command__feedback_message",
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__get_result__request",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -4110,7 +6065,7 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__feedback_message__destroy_ros_message,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__request__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -4118,7 +6073,7 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__action__parallel_gripper_command__feedback_message",
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__get_result__request",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -4129,7 +6084,7 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__feedback_message__convert_from_py,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__request__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -4137,7 +6092,7 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__action__parallel_gripper_command__feedback_message",
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__get_result__request",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -4148,7 +6103,7 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&control_msgs__action__parallel_gripper_command__feedback_message__convert_to_py,
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__request__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -4156,7 +6111,7 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__action__parallel_gripper_command__feedback_message",
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__get_result__request",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -4167,7 +6122,7 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_FeedbackMessage),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_GetResult_Request),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -4175,7 +6130,462 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__action__parallel_gripper_command__feedback_message",
+    "type_support_msg__action__execute_motion_primitive_sequence__get_result__request",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
+
+static void * control_msgs__action__execute_motion_primitive_sequence__get_result__response__create_ros_message(void)
+{
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Response__create();
+}
+
+static void control_msgs__action__execute_motion_primitive_sequence__get_result__response__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Response * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Response *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Response__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__execute_motion_primitive_sequence__get_result__response__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__execute_motion_primitive_sequence__get_result__response__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_GetResult_Response);
+
+int8_t
+_register_msg_type__action__execute_motion_primitive_sequence__get_result__response(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__response__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__get_result__response",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__response__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__get_result__response",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__response__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__get_result__response",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__response__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__get_result__response",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_GetResult_Response),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__execute_motion_primitive_sequence__get_result__response",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
+
+static void * control_msgs__action__execute_motion_primitive_sequence__get_result__event__create_ros_message(void)
+{
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Event__create();
+}
+
+static void control_msgs__action__execute_motion_primitive_sequence__get_result__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Event * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Event *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_GetResult_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__execute_motion_primitive_sequence__get_result__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__execute_motion_primitive_sequence__get_result__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_GetResult_Event);
+
+int8_t
+_register_msg_type__action__execute_motion_primitive_sequence__get_result__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__get_result__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__get_result__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__get_result__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__get_result__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__get_result__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_GetResult_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__execute_motion_primitive_sequence__get_result__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_service_type_support_t *
+ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ExecuteMotionPrimitiveSequence_GetResult)();
+
+int8_t
+_register_srv_type__action__execute_motion_primitive_sequence__get_result(PyObject * pymodule)
+{
+  int8_t err;
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ExecuteMotionPrimitiveSequence_GetResult)(),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_srv__action__execute_motion_primitive_sequence__get_result",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__struct.h"
+// already included above
+// #include "control_msgs/action/detail/execute_motion_primitive_sequence__functions.h"
+
+static void * control_msgs__action__execute_motion_primitive_sequence__feedback_message__create_ros_message(void)
+{
+  return control_msgs__action__ExecuteMotionPrimitiveSequence_FeedbackMessage__create();
+}
+
+static void control_msgs__action__execute_motion_primitive_sequence__feedback_message__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ExecuteMotionPrimitiveSequence_FeedbackMessage * ros_message = (control_msgs__action__ExecuteMotionPrimitiveSequence_FeedbackMessage *)raw_ros_message;
+  control_msgs__action__ExecuteMotionPrimitiveSequence_FeedbackMessage__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__execute_motion_primitive_sequence__feedback_message__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__execute_motion_primitive_sequence__feedback_message__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_FeedbackMessage);
+
+int8_t
+_register_msg_type__action__execute_motion_primitive_sequence__feedback_message(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__feedback_message__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__execute_motion_primitive_sequence__feedback_message",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__feedback_message__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__execute_motion_primitive_sequence__feedback_message",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__feedback_message__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__execute_motion_primitive_sequence__feedback_message",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__execute_motion_primitive_sequence__feedback_message__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__execute_motion_primitive_sequence__feedback_message",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ExecuteMotionPrimitiveSequence_FeedbackMessage),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__execute_motion_primitive_sequence__feedback_message",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -4188,12 +6598,12 @@ _register_msg_type__action__parallel_gripper_command__feedback_message(PyObject 
 
 
 int8_t
-_register_action_type__action__parallel_gripper_command(PyObject * pymodule)
+_register_action_type__action__execute_motion_primitive_sequence(PyObject * pymodule)
 {
   int8_t err;
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_TYPESUPPORT_INTERFACE__ACTION_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand)(),
+    (void *)ROSIDL_TYPESUPPORT_INTERFACE__ACTION_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ExecuteMotionPrimitiveSequence)(),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -4201,7 +6611,7 @@ _register_action_type__action__parallel_gripper_command(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_action__action__parallel_gripper_command",
+    "type_support_action__action__execute_motion_primitive_sequence",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -4919,6 +7329,148 @@ _register_msg_type__action__follow_joint_trajectory__send_goal__response(PyObjec
   return 0;
 }
 
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/follow_joint_trajectory__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/follow_joint_trajectory__struct.h"
+// already included above
+// #include "control_msgs/action/detail/follow_joint_trajectory__functions.h"
+
+static void * control_msgs__action__follow_joint_trajectory__send_goal__event__create_ros_message(void)
+{
+  return control_msgs__action__FollowJointTrajectory_SendGoal_Event__create();
+}
+
+static void control_msgs__action__follow_joint_trajectory__send_goal__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__FollowJointTrajectory_SendGoal_Event * ros_message = (control_msgs__action__FollowJointTrajectory_SendGoal_Event *)raw_ros_message;
+  control_msgs__action__FollowJointTrajectory_SendGoal_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__follow_joint_trajectory__send_goal__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__follow_joint_trajectory__send_goal__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, FollowJointTrajectory_SendGoal_Event);
+
+int8_t
+_register_msg_type__action__follow_joint_trajectory__send_goal__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__follow_joint_trajectory__send_goal__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__follow_joint_trajectory__send_goal__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__follow_joint_trajectory__send_goal__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__follow_joint_trajectory__send_goal__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__follow_joint_trajectory__send_goal__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__follow_joint_trajectory__send_goal__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__follow_joint_trajectory__send_goal__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__follow_joint_trajectory__send_goal__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, FollowJointTrajectory_SendGoal_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__follow_joint_trajectory__send_goal__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, FollowJointTrajectory_SendGoal)();
@@ -5222,6 +7774,148 @@ _register_msg_type__action__follow_joint_trajectory__get_result__response(PyObje
   err = PyModule_AddObject(
     pymodule,
     "type_support_msg__action__follow_joint_trajectory__get_result__response",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/follow_joint_trajectory__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/follow_joint_trajectory__struct.h"
+// already included above
+// #include "control_msgs/action/detail/follow_joint_trajectory__functions.h"
+
+static void * control_msgs__action__follow_joint_trajectory__get_result__event__create_ros_message(void)
+{
+  return control_msgs__action__FollowJointTrajectory_GetResult_Event__create();
+}
+
+static void control_msgs__action__follow_joint_trajectory__get_result__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__FollowJointTrajectory_GetResult_Event * ros_message = (control_msgs__action__FollowJointTrajectory_GetResult_Event *)raw_ros_message;
+  control_msgs__action__FollowJointTrajectory_GetResult_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__follow_joint_trajectory__get_result__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__follow_joint_trajectory__get_result__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, FollowJointTrajectory_GetResult_Event);
+
+int8_t
+_register_msg_type__action__follow_joint_trajectory__get_result__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__follow_joint_trajectory__get_result__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__follow_joint_trajectory__get_result__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__follow_joint_trajectory__get_result__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__follow_joint_trajectory__get_result__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__follow_joint_trajectory__get_result__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__follow_joint_trajectory__get_result__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__follow_joint_trajectory__get_result__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__follow_joint_trajectory__get_result__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, FollowJointTrajectory_GetResult_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__follow_joint_trajectory__get_result__event",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -6136,6 +8830,148 @@ _register_msg_type__action__gripper_command__send_goal__response(PyObject * pymo
   return 0;
 }
 
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/gripper_command__functions.h"
+
+static void * control_msgs__action__gripper_command__send_goal__event__create_ros_message(void)
+{
+  return control_msgs__action__GripperCommand_SendGoal_Event__create();
+}
+
+static void control_msgs__action__gripper_command__send_goal__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__GripperCommand_SendGoal_Event * ros_message = (control_msgs__action__GripperCommand_SendGoal_Event *)raw_ros_message;
+  control_msgs__action__GripperCommand_SendGoal_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__gripper_command__send_goal__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__gripper_command__send_goal__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, GripperCommand_SendGoal_Event);
+
+int8_t
+_register_msg_type__action__gripper_command__send_goal__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__gripper_command__send_goal__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__gripper_command__send_goal__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__gripper_command__send_goal__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__gripper_command__send_goal__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__gripper_command__send_goal__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__gripper_command__send_goal__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__gripper_command__send_goal__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__gripper_command__send_goal__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, GripperCommand_SendGoal_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__gripper_command__send_goal__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, GripperCommand_SendGoal)();
@@ -6439,6 +9275,148 @@ _register_msg_type__action__gripper_command__get_result__response(PyObject * pym
   err = PyModule_AddObject(
     pymodule,
     "type_support_msg__action__gripper_command__get_result__response",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/gripper_command__functions.h"
+
+static void * control_msgs__action__gripper_command__get_result__event__create_ros_message(void)
+{
+  return control_msgs__action__GripperCommand_GetResult_Event__create();
+}
+
+static void control_msgs__action__gripper_command__get_result__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__GripperCommand_GetResult_Event * ros_message = (control_msgs__action__GripperCommand_GetResult_Event *)raw_ros_message;
+  control_msgs__action__GripperCommand_GetResult_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__gripper_command__get_result__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__gripper_command__get_result__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, GripperCommand_GetResult_Event);
+
+int8_t
+_register_msg_type__action__gripper_command__get_result__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__gripper_command__get_result__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__gripper_command__get_result__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__gripper_command__get_result__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__gripper_command__get_result__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__gripper_command__get_result__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__gripper_command__get_result__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__gripper_command__get_result__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__gripper_command__get_result__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, GripperCommand_GetResult_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__gripper_command__get_result__event",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -7353,6 +10331,148 @@ _register_msg_type__action__joint_trajectory__send_goal__response(PyObject * pym
   return 0;
 }
 
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/joint_trajectory__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/joint_trajectory__struct.h"
+// already included above
+// #include "control_msgs/action/detail/joint_trajectory__functions.h"
+
+static void * control_msgs__action__joint_trajectory__send_goal__event__create_ros_message(void)
+{
+  return control_msgs__action__JointTrajectory_SendGoal_Event__create();
+}
+
+static void control_msgs__action__joint_trajectory__send_goal__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__JointTrajectory_SendGoal_Event * ros_message = (control_msgs__action__JointTrajectory_SendGoal_Event *)raw_ros_message;
+  control_msgs__action__JointTrajectory_SendGoal_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__joint_trajectory__send_goal__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__joint_trajectory__send_goal__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, JointTrajectory_SendGoal_Event);
+
+int8_t
+_register_msg_type__action__joint_trajectory__send_goal__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__joint_trajectory__send_goal__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__joint_trajectory__send_goal__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__joint_trajectory__send_goal__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__joint_trajectory__send_goal__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__joint_trajectory__send_goal__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__joint_trajectory__send_goal__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__joint_trajectory__send_goal__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__joint_trajectory__send_goal__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, JointTrajectory_SendGoal_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__joint_trajectory__send_goal__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, JointTrajectory_SendGoal)();
@@ -7666,6 +10786,148 @@ _register_msg_type__action__joint_trajectory__get_result__response(PyObject * py
   return 0;
 }
 
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/joint_trajectory__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/joint_trajectory__struct.h"
+// already included above
+// #include "control_msgs/action/detail/joint_trajectory__functions.h"
+
+static void * control_msgs__action__joint_trajectory__get_result__event__create_ros_message(void)
+{
+  return control_msgs__action__JointTrajectory_GetResult_Event__create();
+}
+
+static void control_msgs__action__joint_trajectory__get_result__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__JointTrajectory_GetResult_Event * ros_message = (control_msgs__action__JointTrajectory_GetResult_Event *)raw_ros_message;
+  control_msgs__action__JointTrajectory_GetResult_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__joint_trajectory__get_result__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__joint_trajectory__get_result__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, JointTrajectory_GetResult_Event);
+
+int8_t
+_register_msg_type__action__joint_trajectory__get_result__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__joint_trajectory__get_result__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__joint_trajectory__get_result__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__joint_trajectory__get_result__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__joint_trajectory__get_result__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__joint_trajectory__get_result__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__joint_trajectory__get_result__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__joint_trajectory__get_result__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__joint_trajectory__get_result__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, JointTrajectory_GetResult_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__joint_trajectory__get_result__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, JointTrajectory_GetResult)();
@@ -7853,6 +11115,1507 @@ _register_action_type__action__joint_trajectory(PyObject * pymodule)
   err = PyModule_AddObject(
     pymodule,
     "type_support_action__action__joint_trajectory",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+#include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+#include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+#include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__goal__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_Goal__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__goal__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_Goal * ros_message = (control_msgs__action__ParallelGripperCommand_Goal *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_Goal__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__goal__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__goal__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Goal);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__goal(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__goal__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__goal",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__goal__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__goal",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__goal__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__goal",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__goal__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__goal",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Goal),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__goal",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__result__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_Result__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__result__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_Result * ros_message = (control_msgs__action__ParallelGripperCommand_Result *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_Result__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__result__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__result__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Result);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__result(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__result__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__result",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__result__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__result",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__result__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__result",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__result__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__result",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Result),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__result",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__feedback__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_Feedback__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__feedback__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_Feedback * ros_message = (control_msgs__action__ParallelGripperCommand_Feedback *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_Feedback__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__feedback__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__feedback__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Feedback);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__feedback(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__feedback__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__feedback",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__feedback__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__feedback",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__feedback__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__feedback",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__feedback__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__feedback",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_Feedback),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__feedback",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__send_goal__request__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_SendGoal_Request__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__send_goal__request__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_SendGoal_Request * ros_message = (control_msgs__action__ParallelGripperCommand_SendGoal_Request *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_SendGoal_Request__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__send_goal__request__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__send_goal__request__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Request);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__send_goal__request(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__request__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__send_goal__request",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__request__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__send_goal__request",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__request__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__send_goal__request",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__request__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__send_goal__request",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Request),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__send_goal__request",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__send_goal__response__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_SendGoal_Response__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__send_goal__response__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_SendGoal_Response * ros_message = (control_msgs__action__ParallelGripperCommand_SendGoal_Response *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_SendGoal_Response__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__send_goal__response__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__send_goal__response__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Response);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__send_goal__response(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__response__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__send_goal__response",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__response__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__send_goal__response",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__response__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__send_goal__response",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__response__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__send_goal__response",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Response),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__send_goal__response",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__send_goal__event__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_SendGoal_Event__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__send_goal__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_SendGoal_Event * ros_message = (control_msgs__action__ParallelGripperCommand_SendGoal_Event *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_SendGoal_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__send_goal__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__send_goal__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Event);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__send_goal__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__send_goal__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__send_goal__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__send_goal__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__send_goal__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__send_goal__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_SendGoal_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__send_goal__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_service_type_support_t *
+ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand_SendGoal)();
+
+int8_t
+_register_srv_type__action__parallel_gripper_command__send_goal(PyObject * pymodule)
+{
+  int8_t err;
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand_SendGoal)(),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_srv__action__parallel_gripper_command__send_goal",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__get_result__request__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_GetResult_Request__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__get_result__request__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_GetResult_Request * ros_message = (control_msgs__action__ParallelGripperCommand_GetResult_Request *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_GetResult_Request__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__get_result__request__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__get_result__request__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Request);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__get_result__request(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__request__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__get_result__request",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__request__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__get_result__request",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__request__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__get_result__request",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__request__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__get_result__request",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Request),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__get_result__request",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__get_result__response__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_GetResult_Response__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__get_result__response__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_GetResult_Response * ros_message = (control_msgs__action__ParallelGripperCommand_GetResult_Response *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_GetResult_Response__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__get_result__response__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__get_result__response__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Response);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__get_result__response(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__response__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__get_result__response",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__response__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__get_result__response",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__response__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__get_result__response",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__response__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__get_result__response",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Response),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__get_result__response",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__get_result__event__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_GetResult_Event__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__get_result__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_GetResult_Event * ros_message = (control_msgs__action__ParallelGripperCommand_GetResult_Event *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_GetResult_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__get_result__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__get_result__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Event);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__get_result__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__get_result__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__get_result__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__get_result__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__get_result__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__get_result__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_GetResult_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__get_result__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_service_type_support_t *
+ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand_GetResult)();
+
+int8_t
+_register_srv_type__action__parallel_gripper_command__get_result(PyObject * pymodule)
+{
+  int8_t err;
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand_GetResult)(),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_srv__action__parallel_gripper_command__get_result",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__struct.h"
+// already included above
+// #include "control_msgs/action/detail/parallel_gripper_command__functions.h"
+
+static void * control_msgs__action__parallel_gripper_command__feedback_message__create_ros_message(void)
+{
+  return control_msgs__action__ParallelGripperCommand_FeedbackMessage__create();
+}
+
+static void control_msgs__action__parallel_gripper_command__feedback_message__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__ParallelGripperCommand_FeedbackMessage * ros_message = (control_msgs__action__ParallelGripperCommand_FeedbackMessage *)raw_ros_message;
+  control_msgs__action__ParallelGripperCommand_FeedbackMessage__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__parallel_gripper_command__feedback_message__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__parallel_gripper_command__feedback_message__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_FeedbackMessage);
+
+int8_t
+_register_msg_type__action__parallel_gripper_command__feedback_message(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__feedback_message__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__parallel_gripper_command__feedback_message",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__feedback_message__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__parallel_gripper_command__feedback_message",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__feedback_message__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__parallel_gripper_command__feedback_message",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__parallel_gripper_command__feedback_message__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__parallel_gripper_command__feedback_message",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, ParallelGripperCommand_FeedbackMessage),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__parallel_gripper_command__feedback_message",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+
+int8_t
+_register_action_type__action__parallel_gripper_command(PyObject * pymodule)
+{
+  int8_t err;
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_TYPESUPPORT_INTERFACE__ACTION_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, ParallelGripperCommand)(),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_action__action__parallel_gripper_command",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -8570,6 +13333,148 @@ _register_msg_type__action__point_head__send_goal__response(PyObject * pymodule)
   return 0;
 }
 
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/point_head__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/point_head__struct.h"
+// already included above
+// #include "control_msgs/action/detail/point_head__functions.h"
+
+static void * control_msgs__action__point_head__send_goal__event__create_ros_message(void)
+{
+  return control_msgs__action__PointHead_SendGoal_Event__create();
+}
+
+static void control_msgs__action__point_head__send_goal__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__PointHead_SendGoal_Event * ros_message = (control_msgs__action__PointHead_SendGoal_Event *)raw_ros_message;
+  control_msgs__action__PointHead_SendGoal_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__point_head__send_goal__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__point_head__send_goal__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, PointHead_SendGoal_Event);
+
+int8_t
+_register_msg_type__action__point_head__send_goal__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__point_head__send_goal__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__point_head__send_goal__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__point_head__send_goal__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__point_head__send_goal__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__point_head__send_goal__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__point_head__send_goal__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__point_head__send_goal__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__point_head__send_goal__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, PointHead_SendGoal_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__point_head__send_goal__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, PointHead_SendGoal)();
@@ -8873,6 +13778,148 @@ _register_msg_type__action__point_head__get_result__response(PyObject * pymodule
   err = PyModule_AddObject(
     pymodule,
     "type_support_msg__action__point_head__get_result__response",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/point_head__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/point_head__struct.h"
+// already included above
+// #include "control_msgs/action/detail/point_head__functions.h"
+
+static void * control_msgs__action__point_head__get_result__event__create_ros_message(void)
+{
+  return control_msgs__action__PointHead_GetResult_Event__create();
+}
+
+static void control_msgs__action__point_head__get_result__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__PointHead_GetResult_Event * ros_message = (control_msgs__action__PointHead_GetResult_Event *)raw_ros_message;
+  control_msgs__action__PointHead_GetResult_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__point_head__get_result__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__point_head__get_result__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, PointHead_GetResult_Event);
+
+int8_t
+_register_msg_type__action__point_head__get_result__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__point_head__get_result__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__point_head__get_result__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__point_head__get_result__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__point_head__get_result__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__point_head__get_result__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__point_head__get_result__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__point_head__get_result__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__point_head__get_result__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, PointHead_GetResult_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__point_head__get_result__event",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -9787,6 +14834,148 @@ _register_msg_type__action__single_joint_position__send_goal__response(PyObject 
   return 0;
 }
 
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/single_joint_position__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/single_joint_position__struct.h"
+// already included above
+// #include "control_msgs/action/detail/single_joint_position__functions.h"
+
+static void * control_msgs__action__single_joint_position__send_goal__event__create_ros_message(void)
+{
+  return control_msgs__action__SingleJointPosition_SendGoal_Event__create();
+}
+
+static void control_msgs__action__single_joint_position__send_goal__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__SingleJointPosition_SendGoal_Event * ros_message = (control_msgs__action__SingleJointPosition_SendGoal_Event *)raw_ros_message;
+  control_msgs__action__SingleJointPosition_SendGoal_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__single_joint_position__send_goal__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__single_joint_position__send_goal__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, SingleJointPosition_SendGoal_Event);
+
+int8_t
+_register_msg_type__action__single_joint_position__send_goal__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__single_joint_position__send_goal__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__single_joint_position__send_goal__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__single_joint_position__send_goal__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__single_joint_position__send_goal__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__single_joint_position__send_goal__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__single_joint_position__send_goal__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__single_joint_position__send_goal__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__single_joint_position__send_goal__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, SingleJointPosition_SendGoal_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__single_joint_position__send_goal__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, SingleJointPosition_SendGoal)();
@@ -10100,6 +15289,148 @@ _register_msg_type__action__single_joint_position__get_result__response(PyObject
   return 0;
 }
 
+// already included above
+// #include <stdbool.h>
+// already included above
+// #include <stdint.h>
+// already included above
+// #include "rosidl_runtime_c/visibility_control.h"
+// already included above
+// #include "rosidl_runtime_c/message_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/service_type_support_struct.h"
+// already included above
+// #include "rosidl_runtime_c/action_type_support_struct.h"
+// already included above
+// #include "control_msgs/action/detail/single_joint_position__type_support.h"
+// already included above
+// #include "control_msgs/action/detail/single_joint_position__struct.h"
+// already included above
+// #include "control_msgs/action/detail/single_joint_position__functions.h"
+
+static void * control_msgs__action__single_joint_position__get_result__event__create_ros_message(void)
+{
+  return control_msgs__action__SingleJointPosition_GetResult_Event__create();
+}
+
+static void control_msgs__action__single_joint_position__get_result__event__destroy_ros_message(void * raw_ros_message)
+{
+  control_msgs__action__SingleJointPosition_GetResult_Event * ros_message = (control_msgs__action__SingleJointPosition_GetResult_Event *)raw_ros_message;
+  control_msgs__action__SingleJointPosition_GetResult_Event__destroy(ros_message);
+}
+
+ROSIDL_GENERATOR_C_IMPORT
+bool control_msgs__action__single_joint_position__get_result__event__convert_from_py(PyObject * _pymsg, void * ros_message);
+ROSIDL_GENERATOR_C_IMPORT
+PyObject * control_msgs__action__single_joint_position__get_result__event__convert_to_py(void * raw_ros_message);
+
+
+ROSIDL_GENERATOR_C_IMPORT
+const rosidl_message_type_support_t *
+ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, SingleJointPosition_GetResult_Event);
+
+int8_t
+_register_msg_type__action__single_joint_position__get_result__event(PyObject * pymodule)
+{
+  int8_t err;
+
+  PyObject * pyobject_create_ros_message = NULL;
+  pyobject_create_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__single_joint_position__get_result__event__create_ros_message,
+    NULL, NULL);
+  if (!pyobject_create_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "create_ros_message_msg__action__single_joint_position__get_result__event",
+    pyobject_create_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_create_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_destroy_ros_message = NULL;
+  pyobject_destroy_ros_message = PyCapsule_New(
+    (void *)&control_msgs__action__single_joint_position__get_result__event__destroy_ros_message,
+    NULL, NULL);
+  if (!pyobject_destroy_ros_message) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "destroy_ros_message_msg__action__single_joint_position__get_result__event",
+    pyobject_destroy_ros_message);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_destroy_ros_message);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_from_py = NULL;
+  pyobject_convert_from_py = PyCapsule_New(
+    (void *)&control_msgs__action__single_joint_position__get_result__event__convert_from_py,
+    NULL, NULL);
+  if (!pyobject_convert_from_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_from_py_msg__action__single_joint_position__get_result__event",
+    pyobject_convert_from_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_from_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_convert_to_py = NULL;
+  pyobject_convert_to_py = PyCapsule_New(
+    (void *)&control_msgs__action__single_joint_position__get_result__event__convert_to_py,
+    NULL, NULL);
+  if (!pyobject_convert_to_py) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "convert_to_py_msg__action__single_joint_position__get_result__event",
+    pyobject_convert_to_py);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_convert_to_py);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+
+  PyObject * pyobject_type_support = NULL;
+  pyobject_type_support = PyCapsule_New(
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(control_msgs, action, SingleJointPosition_GetResult_Event),
+    NULL, NULL);
+  if (!pyobject_type_support) {
+    // previously added objects will be removed when the module is destroyed
+    return -1;
+  }
+  err = PyModule_AddObject(
+    pymodule,
+    "type_support_msg__action__single_joint_position__get_result__event",
+    pyobject_type_support);
+  if (err) {
+    // the created capsule needs to be decremented
+    Py_XDECREF(pyobject_type_support);
+    // previously added objects will be removed when the module is destroyed
+    return err;
+  }
+  return 0;
+}
+
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_service_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__SERVICE_SYMBOL_NAME(rosidl_typesupport_c, control_msgs, action, SingleJointPosition_GetResult)();
@@ -10313,7 +15644,19 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__msg__battery_state_array(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_msg_type__msg__dynamic_interface_group_values(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__dynamic_interface_values(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
@@ -10337,7 +15680,25 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__msg__keys(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__float64_values(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_msg_type__msg__joint_component_tolerance(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__joint_command(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
@@ -10368,6 +15729,24 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
   }
 
   err = _register_msg_type__msg__mecanum_drive_controller_state(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__motion_argument(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__motion_primitive(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__motion_primitive_sequence(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
@@ -10409,6 +15788,18 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__msg__speed_scaling_factor(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__msg__vda5050_safety_state(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_msg_type__srv__query_calibration_state__request(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
@@ -10416,6 +15807,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
   }
 
   err = _register_msg_type__srv__query_calibration_state__response(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__srv__query_calibration_state__event(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
@@ -10439,73 +15836,115 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__srv__query_trajectory_state__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_srv_type__srv__query_trajectory_state(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__action__parallel_gripper_command__goal(pymodule);
+  err = _register_msg_type__srv__set_odometry__request(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__action__parallel_gripper_command__result(pymodule);
+  err = _register_msg_type__srv__set_odometry__response(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__action__parallel_gripper_command__feedback(pymodule);
+  err = _register_msg_type__srv__set_odometry__event(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__action__parallel_gripper_command__send_goal__request(pymodule);
+  err = _register_srv_type__srv__set_odometry(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__action__parallel_gripper_command__send_goal__response(pymodule);
+  err = _register_msg_type__action__execute_motion_primitive_sequence__goal(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_srv_type__action__parallel_gripper_command__send_goal(pymodule);
+  err = _register_msg_type__action__execute_motion_primitive_sequence__result(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__action__parallel_gripper_command__get_result__request(pymodule);
+  err = _register_msg_type__action__execute_motion_primitive_sequence__feedback(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__action__parallel_gripper_command__get_result__response(pymodule);
+  err = _register_msg_type__action__execute_motion_primitive_sequence__send_goal__request(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_srv_type__action__parallel_gripper_command__get_result(pymodule);
+  err = _register_msg_type__action__execute_motion_primitive_sequence__send_goal__response(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__action__parallel_gripper_command__feedback_message(pymodule);
+  err = _register_msg_type__action__execute_motion_primitive_sequence__send_goal__event(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_action_type__action__parallel_gripper_command(pymodule);
+  err = _register_srv_type__action__execute_motion_primitive_sequence__send_goal(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__execute_motion_primitive_sequence__get_result__request(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__execute_motion_primitive_sequence__get_result__response(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__execute_motion_primitive_sequence__get_result__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_srv_type__action__execute_motion_primitive_sequence__get_result(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__execute_motion_primitive_sequence__feedback_message(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_action_type__action__execute_motion_primitive_sequence(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
@@ -10541,6 +15980,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__action__follow_joint_trajectory__send_goal__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_srv_type__action__follow_joint_trajectory__send_goal(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
@@ -10554,6 +15999,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
   }
 
   err = _register_msg_type__action__follow_joint_trajectory__get_result__response(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__follow_joint_trajectory__get_result__event(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
@@ -10607,6 +16058,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__action__gripper_command__send_goal__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_srv_type__action__gripper_command__send_goal(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
@@ -10620,6 +16077,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
   }
 
   err = _register_msg_type__action__gripper_command__get_result__response(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__gripper_command__get_result__event(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
@@ -10673,6 +16136,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__action__joint_trajectory__send_goal__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_srv_type__action__joint_trajectory__send_goal(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
@@ -10691,6 +16160,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__action__joint_trajectory__get_result__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_srv_type__action__joint_trajectory__get_result(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
@@ -10704,6 +16179,84 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
   }
 
   err = _register_action_type__action__joint_trajectory(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__goal(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__result(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__feedback(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__send_goal__request(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__send_goal__response(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__send_goal__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_srv_type__action__parallel_gripper_command__send_goal(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__get_result__request(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__get_result__response(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__get_result__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_srv_type__action__parallel_gripper_command__get_result(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__parallel_gripper_command__feedback_message(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_action_type__action__parallel_gripper_command(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
@@ -10739,6 +16292,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__action__point_head__send_goal__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_srv_type__action__point_head__send_goal(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
@@ -10752,6 +16311,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
   }
 
   err = _register_msg_type__action__point_head__get_result__response(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__point_head__get_result__event(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
@@ -10805,6 +16370,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
     return NULL;
   }
 
+  err = _register_msg_type__action__single_joint_position__send_goal__event(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
   err = _register_srv_type__action__single_joint_position__send_goal(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
@@ -10818,6 +16389,12 @@ PyInit_control_msgs_s__rosidl_typesupport_introspection_c(void)
   }
 
   err = _register_msg_type__action__single_joint_position__get_result__response(pymodule);
+  if (err) {
+    Py_XDECREF(pymodule);
+    return NULL;
+  }
+
+  err = _register_msg_type__action__single_joint_position__get_result__event(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;

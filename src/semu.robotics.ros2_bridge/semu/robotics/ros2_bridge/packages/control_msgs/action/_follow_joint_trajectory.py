@@ -2,6 +2,13 @@
 # with input from control_msgs:action/FollowJointTrajectory.idl
 # generated code does not contain a copyright notice
 
+# This is being done at the module level and not on the instance level to avoid looking
+# for the same variable multiple times on each instance. This variable is not supposed to
+# change during runtime so it makes sense to only look for it once.
+from os import getenv
+
+ros_python_check_fields = getenv('ROS_PYTHON_CHECK_FIELDS', default='')
+
 
 # Import statements for member types
 
@@ -82,6 +89,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
         '_goal_tolerance',
         '_component_goal_tolerance',
         '_goal_time_tolerance',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -94,6 +102,8 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
         'goal_time_tolerance': 'builtin_interfaces/Duration',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'JointTrajectory'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['trajectory_msgs', 'msg'], 'MultiDOFJointTrajectory'),  # noqa: E501
@@ -105,9 +115,14 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from trajectory_msgs.msg import JointTrajectory
         self.trajectory = kwargs.get('trajectory', JointTrajectory())
         from trajectory_msgs.msg import MultiDOFJointTrajectory
@@ -124,7 +139,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -138,11 +153,12 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -176,7 +192,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
 
     @trajectory.setter
     def trajectory(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import JointTrajectory
             assert \
                 isinstance(value, JointTrajectory), \
@@ -190,7 +206,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
 
     @multi_dof_trajectory.setter
     def multi_dof_trajectory(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import MultiDOFJointTrajectory
             assert \
                 isinstance(value, MultiDOFJointTrajectory), \
@@ -204,7 +220,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
 
     @path_tolerance.setter
     def path_tolerance(self, value):
-        if __debug__:
+        if self._check_fields:
             from control_msgs.msg import JointTolerance
             from collections.abc import Sequence
             from collections.abc import Set
@@ -228,7 +244,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
 
     @component_path_tolerance.setter
     def component_path_tolerance(self, value):
-        if __debug__:
+        if self._check_fields:
             from control_msgs.msg import JointComponentTolerance
             from collections.abc import Sequence
             from collections.abc import Set
@@ -252,7 +268,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
 
     @goal_tolerance.setter
     def goal_tolerance(self, value):
-        if __debug__:
+        if self._check_fields:
             from control_msgs.msg import JointTolerance
             from collections.abc import Sequence
             from collections.abc import Set
@@ -276,7 +292,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
 
     @component_goal_tolerance.setter
     def component_goal_tolerance(self, value):
-        if __debug__:
+        if self._check_fields:
             from control_msgs.msg import JointComponentTolerance
             from collections.abc import Sequence
             from collections.abc import Set
@@ -300,7 +316,7 @@ class FollowJointTrajectory_Goal(metaclass=Metaclass_FollowJointTrajectory_Goal)
 
     @goal_time_tolerance.setter
     def goal_time_tolerance(self, value):
-        if __debug__:
+        if self._check_fields:
             from builtin_interfaces.msg import Duration
             assert \
                 isinstance(value, Duration), \
@@ -416,6 +432,7 @@ class FollowJointTrajectory_Result(metaclass=Metaclass_FollowJointTrajectory_Res
     __slots__ = [
         '_error_code',
         '_error_string',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -423,15 +440,22 @@ class FollowJointTrajectory_Result(metaclass=Metaclass_FollowJointTrajectory_Res
         'error_string': 'string',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.BasicType('int32'),  # noqa: E501
         rosidl_parser.definition.UnboundedString(),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         self.error_code = kwargs.get('error_code', int())
         self.error_string = kwargs.get('error_string', str())
 
@@ -440,7 +464,7 @@ class FollowJointTrajectory_Result(metaclass=Metaclass_FollowJointTrajectory_Res
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -454,11 +478,12 @@ class FollowJointTrajectory_Result(metaclass=Metaclass_FollowJointTrajectory_Res
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -482,7 +507,7 @@ class FollowJointTrajectory_Result(metaclass=Metaclass_FollowJointTrajectory_Res
 
     @error_code.setter
     def error_code(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, int), \
                 "The 'error_code' field must be of type 'int'"
@@ -497,7 +522,7 @@ class FollowJointTrajectory_Result(metaclass=Metaclass_FollowJointTrajectory_Res
 
     @error_string.setter
     def error_string(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, str), \
                 "The 'error_string' field must be of type 'str'"
@@ -579,6 +604,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
         '_multi_dof_desired',
         '_multi_dof_actual',
         '_multi_dof_error',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -593,6 +619,8 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
         'multi_dof_error': 'trajectory_msgs/MultiDOFJointTrajectoryPoint',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['std_msgs', 'msg'], 'Header'),  # noqa: E501
         rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.UnboundedString()),  # noqa: E501
@@ -606,9 +634,14 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from std_msgs.msg import Header
         self.header = kwargs.get('header', Header())
         self.joint_names = kwargs.get('joint_names', [])
@@ -631,7 +664,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -645,11 +678,12 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -687,7 +721,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
 
     @header.setter
     def header(self, value):
-        if __debug__:
+        if self._check_fields:
             from std_msgs.msg import Header
             assert \
                 isinstance(value, Header), \
@@ -701,7 +735,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
 
     @joint_names.setter
     def joint_names(self, value):
-        if __debug__:
+        if self._check_fields:
             from collections.abc import Sequence
             from collections.abc import Set
             from collections import UserList
@@ -724,7 +758,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
 
     @desired.setter
     def desired(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import JointTrajectoryPoint
             assert \
                 isinstance(value, JointTrajectoryPoint), \
@@ -738,7 +772,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
 
     @actual.setter
     def actual(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import JointTrajectoryPoint
             assert \
                 isinstance(value, JointTrajectoryPoint), \
@@ -752,7 +786,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
 
     @error.setter
     def error(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import JointTrajectoryPoint
             assert \
                 isinstance(value, JointTrajectoryPoint), \
@@ -766,7 +800,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
 
     @multi_dof_joint_names.setter
     def multi_dof_joint_names(self, value):
-        if __debug__:
+        if self._check_fields:
             from collections.abc import Sequence
             from collections.abc import Set
             from collections import UserList
@@ -789,7 +823,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
 
     @multi_dof_desired.setter
     def multi_dof_desired(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
             assert \
                 isinstance(value, MultiDOFJointTrajectoryPoint), \
@@ -803,7 +837,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
 
     @multi_dof_actual.setter
     def multi_dof_actual(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
             assert \
                 isinstance(value, MultiDOFJointTrajectoryPoint), \
@@ -817,7 +851,7 @@ class FollowJointTrajectory_Feedback(metaclass=Metaclass_FollowJointTrajectory_F
 
     @multi_dof_error.setter
     def multi_dof_error(self, value):
-        if __debug__:
+        if self._check_fields:
             from trajectory_msgs.msg import MultiDOFJointTrajectoryPoint
             assert \
                 isinstance(value, MultiDOFJointTrajectoryPoint), \
@@ -889,6 +923,7 @@ class FollowJointTrajectory_SendGoal_Request(metaclass=Metaclass_FollowJointTraj
     __slots__ = [
         '_goal_id',
         '_goal',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -896,15 +931,22 @@ class FollowJointTrajectory_SendGoal_Request(metaclass=Metaclass_FollowJointTraj
         'goal': 'control_msgs/FollowJointTrajectory_Goal',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['unique_identifier_msgs', 'msg'], 'UUID'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['control_msgs', 'action'], 'FollowJointTrajectory_Goal'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from unique_identifier_msgs.msg import UUID
         self.goal_id = kwargs.get('goal_id', UUID())
         from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_Goal
@@ -915,7 +957,7 @@ class FollowJointTrajectory_SendGoal_Request(metaclass=Metaclass_FollowJointTraj
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -929,11 +971,12 @@ class FollowJointTrajectory_SendGoal_Request(metaclass=Metaclass_FollowJointTraj
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -957,7 +1000,7 @@ class FollowJointTrajectory_SendGoal_Request(metaclass=Metaclass_FollowJointTraj
 
     @goal_id.setter
     def goal_id(self, value):
-        if __debug__:
+        if self._check_fields:
             from unique_identifier_msgs.msg import UUID
             assert \
                 isinstance(value, UUID), \
@@ -971,7 +1014,7 @@ class FollowJointTrajectory_SendGoal_Request(metaclass=Metaclass_FollowJointTraj
 
     @goal.setter
     def goal(self, value):
-        if __debug__:
+        if self._check_fields:
             from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_Goal
             assert \
                 isinstance(value, FollowJointTrajectory_Goal), \
@@ -1039,6 +1082,7 @@ class FollowJointTrajectory_SendGoal_Response(metaclass=Metaclass_FollowJointTra
     __slots__ = [
         '_accepted',
         '_stamp',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -1046,15 +1090,22 @@ class FollowJointTrajectory_SendGoal_Response(metaclass=Metaclass_FollowJointTra
         'stamp': 'builtin_interfaces/Time',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.BasicType('boolean'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['builtin_interfaces', 'msg'], 'Time'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         self.accepted = kwargs.get('accepted', bool())
         from builtin_interfaces.msg import Time
         self.stamp = kwargs.get('stamp', Time())
@@ -1064,7 +1115,7 @@ class FollowJointTrajectory_SendGoal_Response(metaclass=Metaclass_FollowJointTra
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -1078,11 +1129,12 @@ class FollowJointTrajectory_SendGoal_Response(metaclass=Metaclass_FollowJointTra
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -1106,7 +1158,7 @@ class FollowJointTrajectory_SendGoal_Response(metaclass=Metaclass_FollowJointTra
 
     @accepted.setter
     def accepted(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, bool), \
                 "The 'accepted' field must be of type 'bool'"
@@ -1119,12 +1171,212 @@ class FollowJointTrajectory_SendGoal_Response(metaclass=Metaclass_FollowJointTra
 
     @stamp.setter
     def stamp(self, value):
-        if __debug__:
+        if self._check_fields:
             from builtin_interfaces.msg import Time
             assert \
                 isinstance(value, Time), \
                 "The 'stamp' field must be a sub message of type 'Time'"
         self._stamp = value
+
+
+# Import statements for member types
+
+# already imported above
+# import builtins
+
+# already imported above
+# import rosidl_parser.definition
+
+
+class Metaclass_FollowJointTrajectory_SendGoal_Event(type):
+    """Metaclass of message 'FollowJointTrajectory_SendGoal_Event'."""
+
+    _CREATE_ROS_MESSAGE = None
+    _CONVERT_FROM_PY = None
+    _CONVERT_TO_PY = None
+    _DESTROY_ROS_MESSAGE = None
+    _TYPE_SUPPORT = None
+
+    __constants = {
+    }
+
+    @classmethod
+    def __import_type_support__(cls):
+        try:
+            from rosidl_generator_py import import_type_support
+            module = import_type_support('control_msgs')
+        except ImportError:
+            import logging
+            import traceback
+            logger = logging.getLogger(
+                'control_msgs.action.FollowJointTrajectory_SendGoal_Event')
+            logger.debug(
+                'Failed to import needed modules for type support:\n' +
+                traceback.format_exc())
+        else:
+            cls._CREATE_ROS_MESSAGE = module.create_ros_message_msg__action__follow_joint_trajectory__send_goal__event
+            cls._CONVERT_FROM_PY = module.convert_from_py_msg__action__follow_joint_trajectory__send_goal__event
+            cls._CONVERT_TO_PY = module.convert_to_py_msg__action__follow_joint_trajectory__send_goal__event
+            cls._TYPE_SUPPORT = module.type_support_msg__action__follow_joint_trajectory__send_goal__event
+            cls._DESTROY_ROS_MESSAGE = module.destroy_ros_message_msg__action__follow_joint_trajectory__send_goal__event
+
+            from service_msgs.msg import ServiceEventInfo
+            if ServiceEventInfo.__class__._TYPE_SUPPORT is None:
+                ServiceEventInfo.__class__.__import_type_support__()
+
+    @classmethod
+    def __prepare__(cls, name, bases, **kwargs):
+        # list constant names here so that they appear in the help text of
+        # the message class under "Data and other attributes defined here:"
+        # as well as populate each message instance
+        return {
+        }
+
+
+class FollowJointTrajectory_SendGoal_Event(metaclass=Metaclass_FollowJointTrajectory_SendGoal_Event):
+    """Message class 'FollowJointTrajectory_SendGoal_Event'."""
+
+    __slots__ = [
+        '_info',
+        '_request',
+        '_response',
+        '_check_fields',
+    ]
+
+    _fields_and_field_types = {
+        'info': 'service_msgs/ServiceEventInfo',
+        'request': 'sequence<control_msgs/FollowJointTrajectory_SendGoal_Request, 1>',
+        'response': 'sequence<control_msgs/FollowJointTrajectory_SendGoal_Response, 1>',
+    }
+
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
+    SLOT_TYPES = (
+        rosidl_parser.definition.NamespacedType(['service_msgs', 'msg'], 'ServiceEventInfo'),  # noqa: E501
+        rosidl_parser.definition.BoundedSequence(rosidl_parser.definition.NamespacedType(['control_msgs', 'action'], 'FollowJointTrajectory_SendGoal_Request'), 1),  # noqa: E501
+        rosidl_parser.definition.BoundedSequence(rosidl_parser.definition.NamespacedType(['control_msgs', 'action'], 'FollowJointTrajectory_SendGoal_Response'), 1),  # noqa: E501
+    )
+
+    def __init__(self, **kwargs):
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        from service_msgs.msg import ServiceEventInfo
+        self.info = kwargs.get('info', ServiceEventInfo())
+        self.request = kwargs.get('request', [])
+        self.response = kwargs.get('response', [])
+
+    def __repr__(self):
+        typename = self.__class__.__module__.split('.')
+        typename.pop()
+        typename.append(self.__class__.__name__)
+        args = []
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
+            field = getattr(self, s)
+            fieldstr = repr(field)
+            # We use Python array type for fields that can be directly stored
+            # in them, and "normal" sequences for everything else.  If it is
+            # a type that we store in an array, strip off the 'array' portion.
+            if (
+                isinstance(t, rosidl_parser.definition.AbstractSequence) and
+                isinstance(t.value_type, rosidl_parser.definition.BasicType) and
+                t.value_type.typename in ['float', 'double', 'int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64']
+            ):
+                if len(field) == 0:
+                    fieldstr = '[]'
+                else:
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
+                    prefix = "array('X', "
+                    suffix = ')'
+                    fieldstr = fieldstr[len(prefix):-len(suffix)]
+            args.append(s + '=' + fieldstr)
+        return '%s(%s)' % ('.'.join(typename), ', '.join(args))
+
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        if self.info != other.info:
+            return False
+        if self.request != other.request:
+            return False
+        if self.response != other.response:
+            return False
+        return True
+
+    @classmethod
+    def get_fields_and_field_types(cls):
+        from copy import copy
+        return copy(cls._fields_and_field_types)
+
+    @builtins.property
+    def info(self):
+        """Message field 'info'."""
+        return self._info
+
+    @info.setter
+    def info(self, value):
+        if self._check_fields:
+            from service_msgs.msg import ServiceEventInfo
+            assert \
+                isinstance(value, ServiceEventInfo), \
+                "The 'info' field must be a sub message of type 'ServiceEventInfo'"
+        self._info = value
+
+    @builtins.property
+    def request(self):
+        """Message field 'request'."""
+        return self._request
+
+    @request.setter
+    def request(self, value):
+        if self._check_fields:
+            from control_msgs.action import FollowJointTrajectory_SendGoal_Request
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
+            assert \
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 len(value) <= 1 and
+                 all(isinstance(v, FollowJointTrajectory_SendGoal_Request) for v in value) and
+                 True), \
+                "The 'request' field must be a set or sequence with length <= 1 and each value of type 'FollowJointTrajectory_SendGoal_Request'"
+        self._request = value
+
+    @builtins.property
+    def response(self):
+        """Message field 'response'."""
+        return self._response
+
+    @response.setter
+    def response(self, value):
+        if self._check_fields:
+            from control_msgs.action import FollowJointTrajectory_SendGoal_Response
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
+            assert \
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 len(value) <= 1 and
+                 all(isinstance(v, FollowJointTrajectory_SendGoal_Response) for v in value) and
+                 True), \
+                "The 'response' field must be a set or sequence with length <= 1 and each value of type 'FollowJointTrajectory_SendGoal_Response'"
+        self._response = value
 
 
 class Metaclass_FollowJointTrajectory_SendGoal(type):
@@ -1153,11 +1405,14 @@ class Metaclass_FollowJointTrajectory_SendGoal(type):
                 _follow_joint_trajectory.Metaclass_FollowJointTrajectory_SendGoal_Request.__import_type_support__()
             if _follow_joint_trajectory.Metaclass_FollowJointTrajectory_SendGoal_Response._TYPE_SUPPORT is None:
                 _follow_joint_trajectory.Metaclass_FollowJointTrajectory_SendGoal_Response.__import_type_support__()
+            if _follow_joint_trajectory.Metaclass_FollowJointTrajectory_SendGoal_Event._TYPE_SUPPORT is None:
+                _follow_joint_trajectory.Metaclass_FollowJointTrajectory_SendGoal_Event.__import_type_support__()
 
 
 class FollowJointTrajectory_SendGoal(metaclass=Metaclass_FollowJointTrajectory_SendGoal):
     from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_SendGoal_Request as Request
     from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_SendGoal_Response as Response
+    from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_SendGoal_Event as Event
 
     def __init__(self):
         raise NotImplementedError('Service classes can not be instantiated')
@@ -1222,20 +1477,28 @@ class FollowJointTrajectory_GetResult_Request(metaclass=Metaclass_FollowJointTra
 
     __slots__ = [
         '_goal_id',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
         'goal_id': 'unique_identifier_msgs/UUID',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['unique_identifier_msgs', 'msg'], 'UUID'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from unique_identifier_msgs.msg import UUID
         self.goal_id = kwargs.get('goal_id', UUID())
 
@@ -1244,7 +1507,7 @@ class FollowJointTrajectory_GetResult_Request(metaclass=Metaclass_FollowJointTra
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -1258,11 +1521,12 @@ class FollowJointTrajectory_GetResult_Request(metaclass=Metaclass_FollowJointTra
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -1284,7 +1548,7 @@ class FollowJointTrajectory_GetResult_Request(metaclass=Metaclass_FollowJointTra
 
     @goal_id.setter
     def goal_id(self, value):
-        if __debug__:
+        if self._check_fields:
             from unique_identifier_msgs.msg import UUID
             assert \
                 isinstance(value, UUID), \
@@ -1352,6 +1616,7 @@ class FollowJointTrajectory_GetResult_Response(metaclass=Metaclass_FollowJointTr
     __slots__ = [
         '_status',
         '_result',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -1359,15 +1624,22 @@ class FollowJointTrajectory_GetResult_Response(metaclass=Metaclass_FollowJointTr
         'result': 'control_msgs/FollowJointTrajectory_Result',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.BasicType('int8'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['control_msgs', 'action'], 'FollowJointTrajectory_Result'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         self.status = kwargs.get('status', int())
         from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_Result
         self.result = kwargs.get('result', FollowJointTrajectory_Result())
@@ -1377,7 +1649,7 @@ class FollowJointTrajectory_GetResult_Response(metaclass=Metaclass_FollowJointTr
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -1391,11 +1663,12 @@ class FollowJointTrajectory_GetResult_Response(metaclass=Metaclass_FollowJointTr
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -1419,7 +1692,7 @@ class FollowJointTrajectory_GetResult_Response(metaclass=Metaclass_FollowJointTr
 
     @status.setter
     def status(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, int), \
                 "The 'status' field must be of type 'int'"
@@ -1434,12 +1707,212 @@ class FollowJointTrajectory_GetResult_Response(metaclass=Metaclass_FollowJointTr
 
     @result.setter
     def result(self, value):
-        if __debug__:
+        if self._check_fields:
             from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_Result
             assert \
                 isinstance(value, FollowJointTrajectory_Result), \
                 "The 'result' field must be a sub message of type 'FollowJointTrajectory_Result'"
         self._result = value
+
+
+# Import statements for member types
+
+# already imported above
+# import builtins
+
+# already imported above
+# import rosidl_parser.definition
+
+
+class Metaclass_FollowJointTrajectory_GetResult_Event(type):
+    """Metaclass of message 'FollowJointTrajectory_GetResult_Event'."""
+
+    _CREATE_ROS_MESSAGE = None
+    _CONVERT_FROM_PY = None
+    _CONVERT_TO_PY = None
+    _DESTROY_ROS_MESSAGE = None
+    _TYPE_SUPPORT = None
+
+    __constants = {
+    }
+
+    @classmethod
+    def __import_type_support__(cls):
+        try:
+            from rosidl_generator_py import import_type_support
+            module = import_type_support('control_msgs')
+        except ImportError:
+            import logging
+            import traceback
+            logger = logging.getLogger(
+                'control_msgs.action.FollowJointTrajectory_GetResult_Event')
+            logger.debug(
+                'Failed to import needed modules for type support:\n' +
+                traceback.format_exc())
+        else:
+            cls._CREATE_ROS_MESSAGE = module.create_ros_message_msg__action__follow_joint_trajectory__get_result__event
+            cls._CONVERT_FROM_PY = module.convert_from_py_msg__action__follow_joint_trajectory__get_result__event
+            cls._CONVERT_TO_PY = module.convert_to_py_msg__action__follow_joint_trajectory__get_result__event
+            cls._TYPE_SUPPORT = module.type_support_msg__action__follow_joint_trajectory__get_result__event
+            cls._DESTROY_ROS_MESSAGE = module.destroy_ros_message_msg__action__follow_joint_trajectory__get_result__event
+
+            from service_msgs.msg import ServiceEventInfo
+            if ServiceEventInfo.__class__._TYPE_SUPPORT is None:
+                ServiceEventInfo.__class__.__import_type_support__()
+
+    @classmethod
+    def __prepare__(cls, name, bases, **kwargs):
+        # list constant names here so that they appear in the help text of
+        # the message class under "Data and other attributes defined here:"
+        # as well as populate each message instance
+        return {
+        }
+
+
+class FollowJointTrajectory_GetResult_Event(metaclass=Metaclass_FollowJointTrajectory_GetResult_Event):
+    """Message class 'FollowJointTrajectory_GetResult_Event'."""
+
+    __slots__ = [
+        '_info',
+        '_request',
+        '_response',
+        '_check_fields',
+    ]
+
+    _fields_and_field_types = {
+        'info': 'service_msgs/ServiceEventInfo',
+        'request': 'sequence<control_msgs/FollowJointTrajectory_GetResult_Request, 1>',
+        'response': 'sequence<control_msgs/FollowJointTrajectory_GetResult_Response, 1>',
+    }
+
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
+    SLOT_TYPES = (
+        rosidl_parser.definition.NamespacedType(['service_msgs', 'msg'], 'ServiceEventInfo'),  # noqa: E501
+        rosidl_parser.definition.BoundedSequence(rosidl_parser.definition.NamespacedType(['control_msgs', 'action'], 'FollowJointTrajectory_GetResult_Request'), 1),  # noqa: E501
+        rosidl_parser.definition.BoundedSequence(rosidl_parser.definition.NamespacedType(['control_msgs', 'action'], 'FollowJointTrajectory_GetResult_Response'), 1),  # noqa: E501
+    )
+
+    def __init__(self, **kwargs):
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        from service_msgs.msg import ServiceEventInfo
+        self.info = kwargs.get('info', ServiceEventInfo())
+        self.request = kwargs.get('request', [])
+        self.response = kwargs.get('response', [])
+
+    def __repr__(self):
+        typename = self.__class__.__module__.split('.')
+        typename.pop()
+        typename.append(self.__class__.__name__)
+        args = []
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
+            field = getattr(self, s)
+            fieldstr = repr(field)
+            # We use Python array type for fields that can be directly stored
+            # in them, and "normal" sequences for everything else.  If it is
+            # a type that we store in an array, strip off the 'array' portion.
+            if (
+                isinstance(t, rosidl_parser.definition.AbstractSequence) and
+                isinstance(t.value_type, rosidl_parser.definition.BasicType) and
+                t.value_type.typename in ['float', 'double', 'int8', 'uint8', 'int16', 'uint16', 'int32', 'uint32', 'int64', 'uint64']
+            ):
+                if len(field) == 0:
+                    fieldstr = '[]'
+                else:
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
+                    prefix = "array('X', "
+                    suffix = ')'
+                    fieldstr = fieldstr[len(prefix):-len(suffix)]
+            args.append(s + '=' + fieldstr)
+        return '%s(%s)' % ('.'.join(typename), ', '.join(args))
+
+    def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
+        if self.info != other.info:
+            return False
+        if self.request != other.request:
+            return False
+        if self.response != other.response:
+            return False
+        return True
+
+    @classmethod
+    def get_fields_and_field_types(cls):
+        from copy import copy
+        return copy(cls._fields_and_field_types)
+
+    @builtins.property
+    def info(self):
+        """Message field 'info'."""
+        return self._info
+
+    @info.setter
+    def info(self, value):
+        if self._check_fields:
+            from service_msgs.msg import ServiceEventInfo
+            assert \
+                isinstance(value, ServiceEventInfo), \
+                "The 'info' field must be a sub message of type 'ServiceEventInfo'"
+        self._info = value
+
+    @builtins.property
+    def request(self):
+        """Message field 'request'."""
+        return self._request
+
+    @request.setter
+    def request(self, value):
+        if self._check_fields:
+            from control_msgs.action import FollowJointTrajectory_GetResult_Request
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
+            assert \
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 len(value) <= 1 and
+                 all(isinstance(v, FollowJointTrajectory_GetResult_Request) for v in value) and
+                 True), \
+                "The 'request' field must be a set or sequence with length <= 1 and each value of type 'FollowJointTrajectory_GetResult_Request'"
+        self._request = value
+
+    @builtins.property
+    def response(self):
+        """Message field 'response'."""
+        return self._response
+
+    @response.setter
+    def response(self, value):
+        if self._check_fields:
+            from control_msgs.action import FollowJointTrajectory_GetResult_Response
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
+            assert \
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 len(value) <= 1 and
+                 all(isinstance(v, FollowJointTrajectory_GetResult_Response) for v in value) and
+                 True), \
+                "The 'response' field must be a set or sequence with length <= 1 and each value of type 'FollowJointTrajectory_GetResult_Response'"
+        self._response = value
 
 
 class Metaclass_FollowJointTrajectory_GetResult(type):
@@ -1468,11 +1941,14 @@ class Metaclass_FollowJointTrajectory_GetResult(type):
                 _follow_joint_trajectory.Metaclass_FollowJointTrajectory_GetResult_Request.__import_type_support__()
             if _follow_joint_trajectory.Metaclass_FollowJointTrajectory_GetResult_Response._TYPE_SUPPORT is None:
                 _follow_joint_trajectory.Metaclass_FollowJointTrajectory_GetResult_Response.__import_type_support__()
+            if _follow_joint_trajectory.Metaclass_FollowJointTrajectory_GetResult_Event._TYPE_SUPPORT is None:
+                _follow_joint_trajectory.Metaclass_FollowJointTrajectory_GetResult_Event.__import_type_support__()
 
 
 class FollowJointTrajectory_GetResult(metaclass=Metaclass_FollowJointTrajectory_GetResult):
     from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_GetResult_Request as Request
     from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_GetResult_Response as Response
+    from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_GetResult_Event as Event
 
     def __init__(self):
         raise NotImplementedError('Service classes can not be instantiated')
@@ -1542,6 +2018,7 @@ class FollowJointTrajectory_FeedbackMessage(metaclass=Metaclass_FollowJointTraje
     __slots__ = [
         '_goal_id',
         '_feedback',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -1549,15 +2026,22 @@ class FollowJointTrajectory_FeedbackMessage(metaclass=Metaclass_FollowJointTraje
         'feedback': 'control_msgs/FollowJointTrajectory_Feedback',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['unique_identifier_msgs', 'msg'], 'UUID'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['control_msgs', 'action'], 'FollowJointTrajectory_Feedback'),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from unique_identifier_msgs.msg import UUID
         self.goal_id = kwargs.get('goal_id', UUID())
         from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_Feedback
@@ -1568,7 +2052,7 @@ class FollowJointTrajectory_FeedbackMessage(metaclass=Metaclass_FollowJointTraje
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -1582,11 +2066,12 @@ class FollowJointTrajectory_FeedbackMessage(metaclass=Metaclass_FollowJointTraje
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -1610,7 +2095,7 @@ class FollowJointTrajectory_FeedbackMessage(metaclass=Metaclass_FollowJointTraje
 
     @goal_id.setter
     def goal_id(self, value):
-        if __debug__:
+        if self._check_fields:
             from unique_identifier_msgs.msg import UUID
             assert \
                 isinstance(value, UUID), \
@@ -1624,7 +2109,7 @@ class FollowJointTrajectory_FeedbackMessage(metaclass=Metaclass_FollowJointTraje
 
     @feedback.setter
     def feedback(self, value):
-        if __debug__:
+        if self._check_fields:
             from control_msgs.action._follow_joint_trajectory import FollowJointTrajectory_Feedback
             assert \
                 isinstance(value, FollowJointTrajectory_Feedback), \

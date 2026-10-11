@@ -2,6 +2,13 @@
 # with input from control_msgs:msg/SteeringControllerStatus.idl
 # generated code does not contain a copyright notice
 
+# This is being done at the module level and not on the instance level to avoid looking
+# for the same variable multiple times on each instance. This variable is not supposed to
+# change during runtime so it makes sense to only look for it once.
+from os import getenv
+
+ros_python_check_fields = getenv('ROS_PYTHON_CHECK_FIELDS', default='')
+
 
 # Import statements for member types
 
@@ -74,6 +81,7 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
         '_steer_positions',
         '_linear_velocity_command',
         '_steering_angle_command',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -85,6 +93,8 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
         'steering_angle_command': 'sequence<double>',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['std_msgs', 'msg'], 'Header'),  # noqa: E501
         rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('double')),  # noqa: E501
@@ -95,9 +105,14 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from std_msgs.msg import Header
         self.header = kwargs.get('header', Header())
         self.traction_wheels_position = array.array('d', kwargs.get('traction_wheels_position', []))
@@ -111,7 +126,7 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -125,11 +140,12 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -161,7 +177,7 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
 
     @header.setter
     def header(self, value):
-        if __debug__:
+        if self._check_fields:
             from std_msgs.msg import Header
             assert \
                 isinstance(value, Header), \
@@ -175,12 +191,12 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
 
     @traction_wheels_position.setter
     def traction_wheels_position(self, value):
-        if isinstance(value, array.array):
-            assert value.typecode == 'd', \
-                "The 'traction_wheels_position' array.array() must have the type code of 'd'"
-            self._traction_wheels_position = value
-            return
-        if __debug__:
+        if self._check_fields:
+            if isinstance(value, array.array):
+                assert value.typecode == 'd', \
+                    "The 'traction_wheels_position' array.array() must have the type code of 'd'"
+                self._traction_wheels_position = value
+                return
             from collections.abc import Sequence
             from collections.abc import Set
             from collections import UserList
@@ -203,12 +219,12 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
 
     @traction_wheels_velocity.setter
     def traction_wheels_velocity(self, value):
-        if isinstance(value, array.array):
-            assert value.typecode == 'd', \
-                "The 'traction_wheels_velocity' array.array() must have the type code of 'd'"
-            self._traction_wheels_velocity = value
-            return
-        if __debug__:
+        if self._check_fields:
+            if isinstance(value, array.array):
+                assert value.typecode == 'd', \
+                    "The 'traction_wheels_velocity' array.array() must have the type code of 'd'"
+                self._traction_wheels_velocity = value
+                return
             from collections.abc import Sequence
             from collections.abc import Set
             from collections import UserList
@@ -231,12 +247,12 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
 
     @steer_positions.setter
     def steer_positions(self, value):
-        if isinstance(value, array.array):
-            assert value.typecode == 'd', \
-                "The 'steer_positions' array.array() must have the type code of 'd'"
-            self._steer_positions = value
-            return
-        if __debug__:
+        if self._check_fields:
+            if isinstance(value, array.array):
+                assert value.typecode == 'd', \
+                    "The 'steer_positions' array.array() must have the type code of 'd'"
+                self._steer_positions = value
+                return
             from collections.abc import Sequence
             from collections.abc import Set
             from collections import UserList
@@ -259,12 +275,12 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
 
     @linear_velocity_command.setter
     def linear_velocity_command(self, value):
-        if isinstance(value, array.array):
-            assert value.typecode == 'd', \
-                "The 'linear_velocity_command' array.array() must have the type code of 'd'"
-            self._linear_velocity_command = value
-            return
-        if __debug__:
+        if self._check_fields:
+            if isinstance(value, array.array):
+                assert value.typecode == 'd', \
+                    "The 'linear_velocity_command' array.array() must have the type code of 'd'"
+                self._linear_velocity_command = value
+                return
             from collections.abc import Sequence
             from collections.abc import Set
             from collections import UserList
@@ -287,12 +303,12 @@ class SteeringControllerStatus(metaclass=Metaclass_SteeringControllerStatus):
 
     @steering_angle_command.setter
     def steering_angle_command(self, value):
-        if isinstance(value, array.array):
-            assert value.typecode == 'd', \
-                "The 'steering_angle_command' array.array() must have the type code of 'd'"
-            self._steering_angle_command = value
-            return
-        if __debug__:
+        if self._check_fields:
+            if isinstance(value, array.array):
+                assert value.typecode == 'd', \
+                    "The 'steering_angle_command' array.array() must have the type code of 'd'"
+                self._steering_angle_command = value
+                return
             from collections.abc import Sequence
             from collections.abc import Set
             from collections import UserList

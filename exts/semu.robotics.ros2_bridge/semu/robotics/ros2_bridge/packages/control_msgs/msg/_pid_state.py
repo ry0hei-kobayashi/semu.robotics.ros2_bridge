@@ -2,6 +2,13 @@
 # with input from control_msgs:msg/PidState.idl
 # generated code does not contain a copyright notice
 
+# This is being done at the module level and not on the instance level to avoid looking
+# for the same variable multiple times on each instance. This variable is not supposed to
+# change during runtime so it makes sense to only look for it once.
+from os import getenv
+
+ros_python_check_fields = getenv('ROS_PYTHON_CHECK_FIELDS', default='')
+
 
 # Import statements for member types
 
@@ -78,6 +85,7 @@ class PidState(metaclass=Metaclass_PidState):
         '_i_max',
         '_i_min',
         '_output',
+        '_check_fields',
     ]
 
     _fields_and_field_types = {
@@ -96,6 +104,8 @@ class PidState(metaclass=Metaclass_PidState):
         'output': 'double',
     }
 
+    # This attribute is used to store an rosidl_parser.definition variable
+    # related to the data type of each of the components the message.
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['std_msgs', 'msg'], 'Header'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['builtin_interfaces', 'msg'], 'Duration'),  # noqa: E501
@@ -113,9 +123,14 @@ class PidState(metaclass=Metaclass_PidState):
     )
 
     def __init__(self, **kwargs):
-        assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
-            'Invalid arguments passed to constructor: %s' % \
-            ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
+        if 'check_fields' in kwargs:
+            self._check_fields = kwargs['check_fields']
+        else:
+            self._check_fields = ros_python_check_fields == '1'
+        if self._check_fields:
+            assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
+                'Invalid arguments passed to constructor: %s' % \
+                ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
         from std_msgs.msg import Header
         self.header = kwargs.get('header', Header())
         from builtin_interfaces.msg import Duration
@@ -137,7 +152,7 @@ class PidState(metaclass=Metaclass_PidState):
         typename.pop()
         typename.append(self.__class__.__name__)
         args = []
-        for s, t in zip(self.__slots__, self.SLOT_TYPES):
+        for s, t in zip(self.get_fields_and_field_types().keys(), self.SLOT_TYPES):
             field = getattr(self, s)
             fieldstr = repr(field)
             # We use Python array type for fields that can be directly stored
@@ -151,11 +166,12 @@ class PidState(metaclass=Metaclass_PidState):
                 if len(field) == 0:
                     fieldstr = '[]'
                 else:
-                    assert fieldstr.startswith('array(')
+                    if self._check_fields:
+                        assert fieldstr.startswith('array(')
                     prefix = "array('X', "
                     suffix = ')'
                     fieldstr = fieldstr[len(prefix):-len(suffix)]
-            args.append(s[1:] + '=' + fieldstr)
+            args.append(s + '=' + fieldstr)
         return '%s(%s)' % ('.'.join(typename), ', '.join(args))
 
     def __eq__(self, other):
@@ -201,7 +217,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @header.setter
     def header(self, value):
-        if __debug__:
+        if self._check_fields:
             from std_msgs.msg import Header
             assert \
                 isinstance(value, Header), \
@@ -215,7 +231,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @timestep.setter
     def timestep(self, value):
-        if __debug__:
+        if self._check_fields:
             from builtin_interfaces.msg import Duration
             assert \
                 isinstance(value, Duration), \
@@ -229,7 +245,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @error.setter
     def error(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'error' field must be of type 'float'"
@@ -244,7 +260,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @error_dot.setter
     def error_dot(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'error_dot' field must be of type 'float'"
@@ -259,7 +275,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @p_error.setter
     def p_error(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'p_error' field must be of type 'float'"
@@ -274,7 +290,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @i_error.setter
     def i_error(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'i_error' field must be of type 'float'"
@@ -289,7 +305,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @d_error.setter
     def d_error(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'd_error' field must be of type 'float'"
@@ -304,7 +320,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @p_term.setter
     def p_term(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'p_term' field must be of type 'float'"
@@ -319,7 +335,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @i_term.setter
     def i_term(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'i_term' field must be of type 'float'"
@@ -334,7 +350,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @d_term.setter
     def d_term(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'd_term' field must be of type 'float'"
@@ -349,7 +365,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @i_max.setter
     def i_max(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'i_max' field must be of type 'float'"
@@ -364,7 +380,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @i_min.setter
     def i_min(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'i_min' field must be of type 'float'"
@@ -379,7 +395,7 @@ class PidState(metaclass=Metaclass_PidState):
 
     @output.setter
     def output(self, value):
-        if __debug__:
+        if self._check_fields:
             assert \
                 isinstance(value, float), \
                 "The 'output' field must be of type 'float'"
